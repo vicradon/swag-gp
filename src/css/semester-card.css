@@ -1,0 +1,40 @@
+:root {
+  --primary-light:rgba(45, 145, 185, 0.8);
+}
+.semester-card {
+  padding: 0.5rem;
+  background-color: #ffffff86;
+  border-radius: 0.3rem;
+  border: 1px solid #2d91b998;
+}
+.summary {
+  width: 100% !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: left;
+  height: 100px;
+  background-color: #fff !important;
+  margin:0 !important;
+  border: none !important;
+  padding: 1rem 2rem;
+}
+
+.edit-course {
+  color: var(--primary-light);
+  margin-right: 0.2rem;
+  cursor: pointer;
+}
+.delete-course{
+  color: lightcoral;
+  cursor: pointer;
+}
+
+@media(max-width:450px){
+  .summary {
+    grid-template-columns: 1fr;
+    height: 120px;
+  }
+  .summary * {
+    line-height: 1.1rem;
+  }
+}

@@ -1,0 +1,80 @@
+:root {
+  --header-color:#ddd;
+  --hover-color:#fff;
+  --hover-font-size:20px;
+  --hover-icon-font-size:2.3rem;
+}
+aside {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+aside {
+  background-color:#2d92b9 !important ;
+  border-top: 6.5px solid #277ea0;
+}
+aside * {
+  margin: 1rem 0;
+  cursor: pointer;
+}
+header {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 0.3rem;
+  justify-content: space-between;
+}
+header * {
+  cursor: pointer;
+}
+#swag-gp-logo {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background-color: var(--header-color);
+  font-size: 1.3rem;
+  color: rgba(45, 145, 185, 0.8);
+  padding: 0 0.2rem;
+}
+#user-icon {
+  font-size: 2rem;
+  color: #eee;
+}
+#user-icon:hover, #show-chart:hover {
+  color: var(--hover-color);
+}
+.user-actions {
+  display: flex;
+  align-items: center;
+}
+.user-actions * {
+  padding: 0 0.5rem;
+}
+#about, #donate {
+  text-decoration: none;
+  color: var(--header-color);
+}
+#about:hover, #donate:hover {
+  color: var(--hover-color);
+  font-size: var(--hover-font-size);
+}
+.invisible {
+  display: none;
+}
+@media (max-width:700px){
+  aside {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    border-top: none;
+  }
+}
+@media(max-width:450px){
+  .user-actions {
+    display: none;
+  }
+  .invisible {
+    display: block;
+  }
+  .semester-card {
+    min-width: 95% !important;
+  }
+}
