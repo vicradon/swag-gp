@@ -1,43 +1,90 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../../css/pop-ups.css'
+import { connect } from 'react-redux'
+import { getLevelsDetails } from './summary-modal';
+import { addNewLevel, handleLevelChange } from '../../redux/actions';
 
 
-export default function SemesterMenu() {
+const mapState = state => {
+  return {
+    levelsDetails: getLevelsDetails(state),
+    activeLevel: state.currentLevel[0].level
+  }
+}
+const dispatch = {
+  addNewLevel,
+  handleLevelChange
+}
+
+
+function displayLevels(levelsDetails) {
+  let tempArr = [];
+  for (let i in levelsDetails) {
+    const firstElem = levelsDetails[i][Object.keys(levelsDetails[i])[0]];
+    tempArr.push(
+      <div key={firstElem.levelid} data-id={firstElem.levelid} className="level">
+        <p className="level-name">{firstElem.level} Level</p>
+        <p className="levels-actions">
+          <i className="material-icons delete-level">delete</i>
+        </p>
+      </div>
+    )
+  }
+  return tempArr;
+}
+function displaySelect(levelsDetails) {
+  const levels = [100, 200, 300, 400, 500, 600, 700];
+  const unavailableLevels = [];
+  for (let i in levelsDetails) {
+    const firstElem = levelsDetails[i][Object.keys(levelsDetails[i])[0]];
+    unavailableLevels.push(firstElem.level);
+  }
+  const availableLevels = levels.map(x => !unavailableLevels.includes(x) ? x : null).filter(Boolean);
+
+  const tempArr = availableLevels.map(x => <option key={x} value={x}>{x}</option>)
+
+  return {
+  optionComponents:tempArr,
+    firstLevel:availableLevels[0]
+  }
+}
+
+function SemesterMenu({ levelsDetails, addNewLevel, handleLevelChange, activeLevel }) {
+  const handleLevelNav = (event) => {
+    if (event.target.classList.contains('level-name')){
+      handleLevelChange(event.target.parentNode.dataset.id)
+    }
+  }
+  const {optionComponents, firstLevel} = displaySelect(levelsDetails);
+  const [selectValue, setSelectValue] = useState(firstLevel);
+
+  const handleAdd = event => {
+    event.preventDefault();
+    /* THE ERROR IS POSSIBLY FROM HERE */
+    addNewLevel(selectValue)
+  }
+
   return (
-    <div className = "levels-cont">
+    <div className="levels-cont">
       <div className="levels">
         <span className="active-lev-cont level">
-          <span>Active Level</span><span className="level active-level wobble-hor-bottom">200 Level</span>
+          <span>Active Level</span><span className="level active-level wobble-hor-bottom">{activeLevel} Level</span>
         </span>
-        <span className="main-levels">
-          <div data-id="1" className="level">
-            <p data-anijs="if: click, do: wobble-hor-bottom, to: .active-level" className="level-name">100 Level</p>
-            <p className="levels-actions">
-              <i className="material-icons delete-level">delete</i>
-            </p>
-          </div>
-          <div data-id="2" className="level">
-            <p data-anijs="if: click, do: wobble-hor-bottom, to: .active-level" className="level-name">200 Level</p>
-            <p className="levels-actions">
-              <i className="material-icons delete-level">delete</i>
-            </p>
-          </div></span>
+        <span onClick = {handleLevelNav} className="main-levels">
+          {displayLevels(levelsDetails)}
+        </span>
         <form className="level add-level-form">
-          <select name="level-select" id="level-select">
+
+          <select value = {selectValue} onChange = {event => setSelectValue(event.target.value)} name="level-select" id="level-select">
             <option disabled>Choose Level</option>
-            <option value="100">100</option>
-            <option value="200">200</option>
-            <option value="300">300</option>
-            <option value="400">400</option>
-            <option value="500">500</option>
-            <option value="600">600</option>
-            <option value="700">700</option>
-            <option value="800">800</option>
-            <option value="900">900</option>
-          </select>
-          <button className="add-level-but">Add New</button>
+            {optionComponents}
+          </select >
+
+          <button onClick={handleAdd} className="add-level-but">Add New</button>
         </form>
       </div>
     </div>
   );
 }
+
+export default connect(mapState, dispatch)(SemesterMenu);

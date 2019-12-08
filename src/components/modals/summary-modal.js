@@ -2,7 +2,7 @@ import React from 'react'
 import '../../css/pop-ups.css'
 import { connect } from 'react-redux'
 
-const mapState = state => {
+export function getLevelsDetails(state){
   const levelsDetails = {}
   for (let i in state.levels) {
     let temp = {}
@@ -13,53 +13,68 @@ const mapState = state => {
         "gpa": j.details.gpa,
         "level": j.level,
         "id": j.id,
-        "name": j.name
+        "name": j.name,
+        "levelid":+i
       }
     }
     levelsDetails[i] = temp;
     temp = {}
   }
-  return { levelsDetails }
+  return levelsDetails;
 }
-/*
-{
-  1:{
-    1: { tnu: 10, tgp: 44, gpa: 4.4, level: 100 }
-    2: { tnu: 4, tgp: 17, gpa: 4.25, level: 100 }
+
+const mapState = state => {
+  const levelsDetails = getLevelsDetails(state);
+  return { levelsDetails, cgpa:state.cummulative.cgpa }
+}
+function getLevelCummulative(levObj){
+  let ctnu = null; let ctgp = null;
+  for (let i in levObj){
+    ctnu += levObj[i].tnu;
+    ctgp += levObj[i].tgp
   }
+  let cgpa = +(ctgp/ctnu).toFixed(2);
+  if (isNaN(cgpa)) cgpa = null;
+  return cgpa;
 }
-*/
+
 function displaySummaries(levelsDetails) {
-  let nodes = [];
+  let temp = [];
   for (let i in levelsDetails) {
-    const keys = Object.keys(levelsDetails[i]);
-    let node = keys.map(x => levelsDetails[i][x])
-    // const level = 
-    console.log(node)
-    // .map(x => {
-    //   return (
-    //     <div key = {x.id} data-id={x.id} className="level">
-    //       <p data-anijs="if: click, do: wobble-hor-bottom, to: .active-level" className="level-name">{x.level} Level</p>
-    //       <div>
-
-    //       </div>
-    //       <div className="level-gpa levels-actions">
-    //         <p>{x.name}{" "}{x.gpa}</p>
-    //       </div>
-    //     </div>
-    //   )
-    // })
-    // nodes.push(...node)
+    const firstElem = levelsDetails[i][Object.keys(levelsDetails[i])[0]];
+    console.log(firstElem)
+    let tempArr = [];
+    for (let j in levelsDetails[i]){
+      tempArr.push(
+        <div className = "summary-semester-details" key = {levelsDetails[i][j].id}>
+          <p className = 'holder'><span>Name</span> <span>{levelsDetails[i][j].name}</span></p>
+          <p className = 'holder'><span>GPA</span> <span>{levelsDetails[i][j].gpa}</span></p>
+        </div>
+      )
+    }
+    const cgpa = getLevelCummulative(levelsDetails[i]);
+    temp.push (
+      <div  className = "summary-level" key = {i}>
+        <p>Level {firstElem.level}</p>
+        <div className="summary-semesters">
+          <p><u>Semesters</u></p>
+          {
+            tempArr
+          }
+        </div>
+      <div className="level-cummulative">Level's Cummulative {cgpa}</div>
+      </div>
+    )
   }
-  return nodes;
+  return temp;
 }
 
-function SummaryModal({ levelsDetails }) {
+function SummaryModal({ levelsDetails, cgpa }) {
   return (
     <div className="levels-cont">
-      <div className="levels">
-        <span className="active-lev-cont level">
-          <span>CGPA</span><span className="level active-level wobble-hor-bottom">4.76</span>
+      <div className="levels summaries">
+        <span className="active-lev-cont active-summary-cont level">
+          <span>CGPA</span><span className="level active-level summary-cgpa wobble-hor-bottom">{cgpa}</span>
         </span>
         <span className="main-levels">
           {displaySummaries(levelsDetails)}
@@ -69,10 +84,3 @@ function SummaryModal({ levelsDetails }) {
   );
 }
 export default connect(mapState)(SummaryModal);
-
-
- // i.map(x => ({
-      //   [tnu]: x.details.tnu,
-      //   [tgp]: x.details.tgp,
-      //   [gpa]: x.details.gpa,
-      // }))

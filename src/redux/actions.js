@@ -67,3 +67,19 @@ export function handleUpdateSemesterDetails(name, semesterid, levelid){
     }
   }
 }
+
+export function addNewLevel(newLevel){
+  return {
+    type:'ADD_NEW_LEVEL',
+    newLevel:newLevel
+  }
+}
+
+export function handleLevelChange(levelid){
+  return {
+    type:'HANDLE_LEVEL_CHANGE',
+    payload:{
+      levelid:levelid
+    }
+  }
+}

@@ -38,14 +38,17 @@ export function updateDetails(courses) {
 
 export function updateCummulative(state) {
   let levelsKeys = Object.keys(state.levels);
-  const levDetails = levelsKeys.map(item => state.levels[item].map(item => [item.details.tnu, item.details.tgp]))[0];
+  const levDetails = levelsKeys.map(item => state.levels[item].map(item => [item.details.tnu, item.details.tgp]));
+
   let ctnu = 0, ctgp = 0;
   if (levDetails.length !== 0) {
-    ctnu = +levDetails.map(x => x[0]).reduce((x, y) => x + y);
-    ctgp = +levDetails.map(x => x[1]).reduce((x, y) => x + y);
+    levDetails.forEach(item => {
+      ctnu = +item.map(x => x[0]).reduce((x, y) => x + y);
+      ctgp = +item.map(x => x[1]).reduce((x, y) => x + y);
+    })
   }
   let cgpa = +(ctgp / ctnu).toFixed(2);
-  if (isNaN(cgpa)){
+  if (isNaN(cgpa)) {
     cgpa = null
   }
   return {
@@ -61,25 +64,37 @@ export function handleCummulative(state) {
   }
 }
 
+function arrangeCourses(semester){
+  const courses = semester.courses;
+  const temp = courses.map(x => x.id).sort((a, b) => a - b);
+
+  let temp1 = [];
+  courses.forEach((q, ind) => {
+    let y = courses.filter((x, i) => x.id === temp[ind]);
+    temp1 = [...temp1, ...y]
+  });
+  return {...semester, courses:temp1};
+}
+
 export function handlePosition(state, updatedSemester, otherSemester, action) {
   if (updatedSemester.id < otherSemester.id) {
     return {
       ...state,
-      levels :{
+      levels: {
         ...state.levels,
         [+action.payload.levelid]: [updatedSemester, otherSemester],
       },
-      currentLevel: [updatedSemester, otherSemester]
+      currentLevel: [arrangeCourses(updatedSemester), otherSemester]
     }
   }
   else {
     return {
       ...state,
-      levels :{
+      levels: {
         ...state.levels,
         [+action.payload.levelid]: [updatedSemester, otherSemester],
       },
-      currentLevel: [otherSemester, updatedSemester]
+      currentLevel: [otherSemester, arrangeCourses(updatedSemester)]
     }
   }
 }
@@ -148,50 +163,65 @@ export function handleUpdate(state, action) {
     otherSemester: otherSemester
   }
 }
-export function handleAddLevel(state, action) {
-  let levels = Object.keys(state).map(x => +x).filter(x => x / 1 === x);
-  let newID = 0;
+
+export function handleAddNewLevel(state, action) {
+  let levels = Object.keys(state.levels);
+  let newid = 0;
+
   if (levels.length > 0) {
-    newID = levels[levels.length - 1] + 1;
+    newid = Math.max(...levels) + 1;
   }
   else {
-    newID = 1
+    newid = 1
   }
-  return newID;
-}
-export function handleNewLevel(newID, name) {
-  return [
-    {
-      name: 'Enter Semester name',
-      id: 1,
-      parentID: newID,
-      level: name,
-      courses: [],
-      form: {
-        name: '',
-        grade: '',
-        units: ''
+  return {
+    ...state,
+    levels: {
+      ...state.levels,
+      [newid]: [{
+        id: 1,
+        name: `${action.newLevel} Level First Semester`,
+        levelid: newid,
+        level: action.newLevel,
+        courses: [
+        ],
+        form: {
+          name: '',
+          grade: '',
+          units: '',
+          courseid: null
+        },
+        details: {
+          tnu: null,
+          tgp: null,
+          gpa: null,
+          noc: null
+        },
+        editing: false,
       },
-      tnu: '',
-      tgp: '',
-      gpa: ''
-    },
-    {
-      name: 'Enter Semester name',
-      id: 2,
-      parentID: newID,
-      level: name,
-      courses: [],
-      form: {
-        name: '',
-        grade: '',
-        units: ''
-      },
-      tnu: '',
-      tgp: '',
-      gpa: ''
+      {
+        id: 2,
+        name: `${action.newLevel} Level Second Semester`,
+        levelid: newid,
+        level: action.newLevel,
+        courses: [
+        ],
+        form: {
+          name: '',
+          grade: '',
+          units: '',
+          courseid: null
+        },
+        details: {
+          tnu: null,
+          tgp: null,
+          gpa: null,
+          noc: null
+        },
+        editing: false
+      }]
     }
-  ]
+  }
 }
 
 export function handleEdit(state, action) {
@@ -285,4 +315,12 @@ export function handleSemesterDetails(state, action) {
     updatedSemester: updatedSemester,
     otherSemester: otherSemester
   }
+}
+
+export function disableScroll() {
+  document.querySelector('html').style.overflow = 'hidden';
+}
+
+export function revertScroll() {
+  document.querySelector('html').style.overflow = 'visible';
 }

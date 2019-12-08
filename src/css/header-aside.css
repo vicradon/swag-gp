@@ -3,6 +3,7 @@
   --hover-color:#fff;
   --hover-font-size:20px;
   --hover-icon-font-size:2.3rem;
+  --primary-color:#2d92b9;
 }
 aside {
   display: flex;
@@ -10,12 +11,18 @@ aside {
   margin-top: 2rem;
 }
 aside {
-  background-color:#2d92b9 !important ;
+  background-color:var(--primary-color) !important ;
   border-top: 6.5px solid #277ea0;
 }
-aside * {
-  margin: 1rem 0;
+.close-menu-cont {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.3rem;
+}
+.add-icon {
   cursor: pointer;
+  margin: 1rem 0;
+
 }
 header {
   display: flex;
@@ -58,6 +65,44 @@ header * {
 .invisible {
   display: none;
 }
+:root {
+  --side-menu-width: 70vw;
+  --negative-width:-70vw;
+}
+.side-menu {
+  position: fixed;
+  z-index: 5;
+  height: 100% !important;
+  width: var(--side-menu-width);
+  background-color: white !important;
+  text-align: left;
+  overflow: auto;
+  transition: margin .5s;
+  margin-left: var(--negative-width) !important;
+}
+.side-menu.is-nav-open {
+  margin: 0 !important;
+}
+
+.user-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem 0 1rem;
+}
+.user-icon {
+  font-size: 5rem;
+  color: var(--primary-color);
+}
+.side-menu-links {
+  padding: 0 1rem;
+}
+
+.side-menu-links a {
+  color: black !important;
+  text-decoration: none !important;
+}
+
 @media (max-width:700px){
   aside {
     display: flex;

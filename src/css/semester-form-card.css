@@ -79,7 +79,7 @@
 }
 @media(max-width:700px){
   .semester-card {
-    width:440px;
+    width:calc(100vw - 50px)
   }
   #semester-form-course {
     grid-column: 1/-1;

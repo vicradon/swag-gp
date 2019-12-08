@@ -1,18 +1,48 @@
 :root {
   --primary-light:rgba(45, 145, 185, 0.8);
+  --level-cont-width:20rem;
+  --level-cont-width-small:17rem;
 }
 .levels-cont {
   margin: 0;
 }
-
+.summaries {
+  width: var(--level-cont-width) !important;
+}
+.summary-semesters {
+  margin: 0.4rem 0;
+}
+.level-cummulative {
+  margin: 0.4rem 0;
+}
 .levels {
   border: 1px solid #888;
   width: 17rem;
   position: relative;
-  margin: calc(100vh - 500px) auto 0 auto;
+  margin: calc(100vh - 550px) auto 0 auto;
   background-color: rgba(255, 255, 255, 0.53);
 }
-
+.summary-cgpa {
+  font-weight: 1000;
+  font-size: 1.5rem;
+}
+.summary-level {
+  background-color: white !important;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  margin-top: -8px;
+  margin-bottom: 20px;
+}
+.summary-semester-details {
+  margin: 5px 0 !important;
+}
+.summary-semester-details .holder{
+  display: grid;
+  grid-template-columns: 3rem auto;
+}
+.summary-semester-details .holder span {
+  margin: 0 !important;
+}
 .level {
   display: flex;
   align-items: center;
@@ -45,6 +75,9 @@
   padding: 0.4rem 0.4rem;
   text-align: center;
 }
+.main-levels {
+  color: #000;
+}
 
 .close-levels, .close-summary{
   justify-content: flex-end;
@@ -62,6 +95,11 @@
   padding: 0;
   background-color: var(--primary-light);
   color:white;
+}
+.active-summary-cont{
+  margin-left: -1px !important;
+  margin-right: -1px !important;
+  margin-top: -2px !important;
 }
 .active-level {
   background-color: var(--primary-light);
@@ -142,5 +180,14 @@
   75% {
     -webkit-transform: translateX(-6px) rotate(-1.2deg);
             transform: translateX(-6px) rotate(-1.2deg);
+  }
+}
+
+@media(max-width:450px){
+  .summaries {
+    width: var(--level-cont-width-small) !important;
+  }
+  .summary-level {
+    font-size: 0.9rem;
   }
 }

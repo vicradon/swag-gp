@@ -3,6 +3,7 @@ import '../../css/semester-form-card.css'
 import PopUp from '../pop-up';
 import { handleUpdateSemesterDetails } from '../../redux/actions';
 import { connect } from 'react-redux'
+import { disableScroll } from '../../redux/utility-functions';
 
 const dispatch = {
   handleUpdateSemesterDetails
@@ -84,8 +85,8 @@ function SemesterActions({ semesterid, levelid, semestername, handleUpdateSemest
   }
   return (
     <div className="semester-actions">
-      <button onClick={() => setEditPopup(true)} type="submit" className="semester-button edit-semester">Edit</button>
-      <button onClick={() => setDeletePopup(true)} className="semester-button delete-semester">Delete</button>
+      <button onClick={() => {setEditPopup(true); disableScroll()}} type="submit" className="semester-button edit-semester">Edit</button>
+      <button onClick={() => {setDeletePopup(true); disableScroll()}} className="semester-button delete-semester">Delete</button>
       {
         setPopUp()
       }
