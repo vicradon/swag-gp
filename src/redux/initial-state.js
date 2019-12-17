@@ -6,20 +6,26 @@ const initialState = {
       levelid: 1,
       level: 100,
       courses: [
-        { id: 1, name: 'MTH 101', grade: 'A', units: 4 },
-        { id: 2, name: 'PHY 101', grade: 'B', units: 6 }
+        // { id: 1, name: 'MTH 101', grade: 'A', units: 4 },
+        // { id: 2, name: 'PHY 101', grade: 'B', units: 6 }
       ],
       form: {
-        name: '',
-        grade: '',
-        units: '',
-        courseid: null
+        name: 'MTH 101',
+        grade: 'A',
+        units: 4,
+        courseid: 1
       },
+      // details: {
+      //   tnu: 10,
+      //   tgp: 44,
+      //   gpa: 4.4,
+      //   noc: 2
+      // },
       details: {
-        tnu: 10,
-        tgp: 44,
-        gpa: 4.4,
-        noc: 2
+        tnu: null,
+        tgp: null,
+        gpa: null,
+        noc: null
       },
       editing: false,
     },
@@ -29,8 +35,8 @@ const initialState = {
       levelid: 1,
       level: 100,
       courses: [
-        { id: 1, name: 'MTH 102', grade: 'C', units: 3 },
-        { id: 2, name: 'PHY 102', grade: 'B', units: 2 }
+        // { id: 1, name: 'MTH 102', grade: 'C', units: 3 },
+        // { id: 2, name: 'PHY 102', grade: 'B', units: 2 }
       ],
       form: {
         name: '',
@@ -38,11 +44,17 @@ const initialState = {
         units: '',
         courseid: null
       },
+      // details: {
+      //   tnu: 4,
+      //   tgp: 17,
+      //   gpa: 4.25,
+      //   noc: 2
+      // },
       details: {
-        tnu: 4,
-        tgp: 17,
-        gpa: 4.25,
-        noc: 2
+        tnu: null,
+        tgp: null,
+        gpa: null,
+        noc: null
       },
       editing: false
     }]
@@ -52,7 +64,8 @@ const initialState = {
   cummulative: {
     ctnu: null,
     ctgp: null,
-    cgpa: 4.36
+    // cgpa: 4.36,
+    cgpa: null
   }
 }
 

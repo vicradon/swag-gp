@@ -43,8 +43,8 @@ export function updateCummulative(state) {
   let ctnu = 0, ctgp = 0;
   if (levDetails.length !== 0) {
     levDetails.forEach(item => {
-      ctnu = +item.map(x => x[0]).reduce((x, y) => x + y);
-      ctgp = +item.map(x => x[1]).reduce((x, y) => x + y);
+      ctnu += +item.map(x => x[0]).reduce((x, y) => x + y);
+      ctgp += +item.map(x => x[1]).reduce((x, y) => x + y);
     })
   }
   let cgpa = +(ctgp / ctnu).toFixed(2);
@@ -64,7 +64,7 @@ export function handleCummulative(state) {
   }
 }
 
-function arrangeCourses(semester){
+function arrangeCourses(semester) {
   const courses = semester.courses;
   const temp = courses.map(x => x.id).sort((a, b) => a - b);
 
@@ -73,7 +73,7 @@ function arrangeCourses(semester){
     let y = courses.filter((x, i) => x.id === temp[ind]);
     temp1 = [...temp1, ...y]
   });
-  return {...semester, courses:temp1};
+  return { ...semester, courses: temp1 };
 }
 
 export function handlePosition(state, updatedSemester, otherSemester, action) {
@@ -323,4 +323,41 @@ export function disableScroll() {
 
 export function revertScroll() {
   document.querySelector('html').style.overflow = 'visible';
+}
+
+export function handleDeleteSemester(state, action) {
+  const updatedLevel = state.levels[action.payload.levelid].filter(x => x.id !== +action.payload.semesterid);
+  return {
+    ...state,
+    levels: {
+      ...state.levels,
+      [action.payload.levelid]: updatedLevel
+    },
+    currentLevel: updatedLevel
+  }
+}
+export function setCurrentUsingLevel(state, action) {
+  let a = null;
+  for (let i in state.levels) {
+    if (state.levels[i][0].level === +action.level) {
+      a = state.levels[i]
+    }
+  }
+  // return {
+  //   ...state,
+  //   currentLevel:a
+  // }
+  
+  if (a[0].id < a[1].id) {
+    return {
+      ...state,
+      currentLevel: [arrangeCourses(a[0]), a[1]]
+    }
+  }
+  else {
+    return {
+      ...state,
+      currentLevel: [a[1], arrangeCourses(a[0])]
+    }
+  }
 }

@@ -60,6 +60,17 @@
 .update-form {
   margin-right: 0.3rem;
 }
+.update-semester-details-cont {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center !important;
+  margin-bottom: 1rem;
+}
+.update-semester-details {
+  width: 5rem !important;
+  margin: 0 !important;
+  border-radius: 5px;
+}
 .delete-actions {
   display: flex;
   width: 100%;

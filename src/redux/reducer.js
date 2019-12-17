@@ -8,7 +8,9 @@ import {
   handleAdd,
   handlePosition,
   handleDelete,
-  handleAddNewLevel
+  handleAddNewLevel,
+  handleDeleteSemester,
+  setCurrentUsingLevel
 } from './utility-functions'
 
 function Reducer(state = initialState, action) {
@@ -68,7 +70,16 @@ function Reducer(state = initialState, action) {
       return {
         ...state,
         currentLevel: state.levels[action.payload.levelid],
-      };
+      }
+    case 'DELETE_SEMESTER':
+      return handleDeleteSemester(state, action)
+
+    case 'SET_CURRENT_USING_LEVEL':
+      return (
+        // handleCummulative(
+        setCurrentUsingLevel(state, action)
+        // )
+      )
     default:
       return state
   }

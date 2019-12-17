@@ -42,7 +42,6 @@ function displaySummaries(levelsDetails) {
   let temp = [];
   for (let i in levelsDetails) {
     const firstElem = levelsDetails[i][Object.keys(levelsDetails[i])[0]];
-    console.log(firstElem)
     let tempArr = [];
     for (let j in levelsDetails[i]){
       tempArr.push(

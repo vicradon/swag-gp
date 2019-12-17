@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../css/mdi/mdi.css'
-import '../css/header-aside.css'
+import '../css/nav-aside.css'
 import '../css/popup.css'
 import SemesterMenu from './modals/sem-menu'
 import SummaryModal from './modals/summary-modal'
@@ -37,7 +37,7 @@ export default function Aside() {
           id={1}
           className={className}
         >
-          <SemesterMenu />
+          <SemesterMenu modalid = {1} closeModal = {closeModal} />
         </PopUp>
       )
     }

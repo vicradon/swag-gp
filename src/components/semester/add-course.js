@@ -22,7 +22,7 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
 
   const handleAdd = event => {
     event.preventDefault();
-    if (data.name.trim().length !== 0 && data.grade.length !== 0 && data.grade !== "Select Grade" && data.units.trim().length !== 0){
+    if (data.name.trim().length !== 0 && data.grade.length !== 0 && data.grade !== "Select Grade" && data.units !== 0){
       handleCourseAdd(data, semesterid, levelid);
       setData(form)
     }
@@ -31,7 +31,6 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
     <form>
       <div className="input-select">
         <input
-          id="semester-form-course"
           type="text"
           className="semester-form-input"
           placeholder="Course Name"
@@ -39,7 +38,7 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
           name = "name"
           onChange = {handleInputChange}
         />
-        <select onChange = {handleInputChange} value = {data.grade} name="grade" id="grade-select">
+        <select onChange = {handleInputChange} value = {data.grade} name="grade" >
           <option>Select Grade</option>
           <option value="A">A</option>
           <option value="B">B</option>
@@ -49,7 +48,6 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
         </select>
 
         <input
-          id="semester-form-credits"
           type="number"
           min="1"
           max = "10"

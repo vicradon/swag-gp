@@ -1,0 +1,24 @@
+.about {
+  text-align: left;
+}
+.about-paragraph:not(:last-child) {
+  margin: 1rem 0;
+}
+.about-contact {
+  margin: 2rem 0;
+  display: flex;
+  flex-flow: column wrap;
+}
+.about-contact-button {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 1px solid var(--primary);
+  width: 6rem;
+}
+.about-contact-button:hover {
+  background-color: #fff;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}

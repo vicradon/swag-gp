@@ -83,3 +83,20 @@ export function handleLevelChange(levelid){
     }
   }
 }
+
+export function deleteSemester(semesterid, levelid){
+  return {
+    type:'DELETE_SEMESTER',
+    payload:{
+      semesterid:semesterid,
+      levelid:levelid
+    }
+  }
+}
+
+export function setCurrentUsingLevel(level){
+  return {
+    type:'SET_CURRENT_USING_LEVEL',
+    level:level
+  }
+}
