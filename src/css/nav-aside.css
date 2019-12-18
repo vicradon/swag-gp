@@ -82,6 +82,14 @@ nav * {
 .side-nav.is-nav-open {
   margin: 0 !important;
 }
+.close-side-nav {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.5rem 1rem;
+}
+.close-side-nav .close-button {
+  cursor: pointer;
+}
 
 .user-details {
   display: flex;

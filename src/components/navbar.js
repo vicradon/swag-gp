@@ -11,28 +11,42 @@ function Navbar() {
   function closeNav() {
     sideNav.current.classList.remove('is-nav-open');
   }
-  const bodyClickClose = () => {
-    const body = document.querySelector('body');
-    body.addEventListener('click', event => {
-      const a = (stuff) => event.target.classList.contains(stuff);
-      if (!(
-        a('side-menu') ||
-        a('close-menu-cont') ||
-        a('user-details') ||
-        a('user-icon') ||
-        a('hor-line') ||
-        a('username') ||
-        a('side-menu-links')
-      )) closeNav();
-    })
-  }
-  bodyClickClose();
+  /* DO NOT DELETE THIS COMMENT! */
+
+  // const bodyClickClose = () => {
+  //   const body = document.querySelector('body');
+  //   body.addEventListener('click', event => {
+  //     // const a = (stuff) => event.target.classList.contains(stuff);
+  //     // if (!(
+  //     //   a('side-menu') ||
+  //     //   a('close-menu-cont') ||`
+  //     //   a('user-details') ||
+  //     //   a('user-icon') ||
+  //     //   a('hor-line') ||
+  //     //   a('username') ||
+  //     //   a('side-menu-links')
+  //     // )) closeNav();
+  //     console.log(event.target.style.zIndex)
+
+  //     if (event.target.tagName === 'main'){
+  //       console.log(event.target)
+  //       closeNav()
+  //     }
+  //   })
+  // }
+  // bodyClickClose();
   const sideNav = useRef(null);
 
   const SideNav = () => {
 
     return (
       <div ref={sideNav} className="side-nav">
+        <div className = "close-side-nav">
+          <p className = 'close-button'>
+            <i onClick = {closeNav} className = "material-icons">close</i>
+          </p>
+        
+        </div>
         <div className="user-details">
           <p className="username">Username</p>
           <i className="material-icons user-icon">person_pin</i>
