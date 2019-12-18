@@ -20,6 +20,7 @@ function Navbar() {
         a('close-menu-cont') ||
         a('user-details') ||
         a('user-icon') ||
+        a('hor-line') ||
         a('username') ||
         a('side-menu-links')
       )) closeNav();
@@ -36,7 +37,7 @@ function Navbar() {
           <p className="username">Username</p>
           <i className="material-icons user-icon">person_pin</i>
         </div>
-        <p style={{ border: "1px solid var(--primary-color)", margin: "2rem 0" }}></p>
+        <p className="hor-line" style={{ border: "1px solid var(--primary-color)", margin: "2rem 0" }}></p>
         <div className='side-nav-links'>
           <a className="side-nav-link" href="/pages/about">ABOUT</a>
           <a className="side-nav-link auth-page" href="/pages/auth">LOGIN/SIGNUP</a>
@@ -80,7 +81,7 @@ function Navbar() {
 }
 
 const mapStateToProps = (state) => {
-  return{
+  return {
     // auth: state.firebase.auth,
     // profile: state.firebase.profile
   }

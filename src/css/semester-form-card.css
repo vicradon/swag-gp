@@ -27,6 +27,9 @@
   width: 100%;
   padding: 0.3rem;
 }
+.semester-form select {
+  border: none !important;
+}
 .input-select {
   display: grid;
   grid-template-columns: 2.5fr 2fr 1fr;
@@ -35,6 +38,7 @@
 }
 .input-select input {
   padding: 0.5rem 0.5rem;
+  border: 1px solid #999 !important;
 }
 .form-actions, .semester-actions  {
   display: flex !important;
@@ -95,10 +99,6 @@
   #semester-form-course {
     grid-column: 1/-1;
   }
-  .input-select {
-    row-gap: 0.3rem ;
-    grid-template-columns: 3fr 1fr;
-  }
 }
 @media(max-width:450px){
   .semester-card {
@@ -117,5 +117,12 @@
   }
   .dab {
     font-size: 0.7rem;
+  }
+  .input-select {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 0.5rem;
+  }
+  .full-width {
+    grid-column: span 2;
   }
 }

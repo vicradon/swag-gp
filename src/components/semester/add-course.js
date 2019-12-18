@@ -32,13 +32,17 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
       <div className="input-select">
         <input
           type="text"
-          className="semester-form-input"
+          className="semester-form-input full-width"
           placeholder="Course Name"
           value={data.name}
           name = "name"
           onChange = {handleInputChange}
         />
-        <select onChange = {handleInputChange} value = {data.grade} name="grade" >
+        <select 
+          onChange = {handleInputChange} 
+          value = {data.grade} 
+          name="grade" 
+        >
           <option>Select Grade</option>
           <option value="A">A</option>
           <option value="B">B</option>
@@ -52,7 +56,7 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
           min="1"
           max = "10"
           className="semester-form-input"
-          placeholder="Credits"
+          placeholder="Units"
           onChange = {handleInputChange}
           value={data.units}
           name = "units"

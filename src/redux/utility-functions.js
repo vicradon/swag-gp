@@ -343,6 +343,7 @@ export function setCurrentUsingLevel(state, action) {
       a = state.levels[i]
     }
   }
+  console.log(a);
   // return {
   //   ...state,
   //   currentLevel:a
