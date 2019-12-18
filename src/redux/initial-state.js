@@ -10,10 +10,10 @@ const initialState = {
         // { id: 2, name: 'PHY 101', grade: 'B', units: 6 }
       ],
       form: {
-        name: 'MTH 101',
-        grade: 'A',
-        units: 4,
-        courseid: 1
+        name: '',
+        grade: '',
+        units: '',
+        courseid: null
       },
       // details: {
       //   tnu: 10,
