@@ -19,7 +19,7 @@
   border: 1px solid #888;
   width: 17rem;
   position: relative;
-  margin: calc(100vh - 550px) auto 0 auto;
+  margin: calc(100vh - 500px) auto 0 auto;
   background-color: rgba(255, 255, 255, 0.53);
 }
 .summary-cgpa {
@@ -245,6 +245,12 @@
   }
 }
 
+@media(max-width:500px){
+  .levels {
+    margin: calc(100vh - 100vw) auto 0 auto;
+  }
+}
+
 @media(max-width:450px){
   .summaries {
     width: var(--level-cont-width-small) !important;
@@ -253,6 +259,12 @@
     font-size: 0.9rem;
   }
   .levels {
-    margin: calc(100vh - 150vw) auto 0 auto;
+    margin: calc(100vh - 110vw) auto 0 auto;
+  }
+}
+
+@media(max-width:400px){
+  .levels {
+    margin: calc(100vh - 125vw) auto 0 auto;
   }
 }
