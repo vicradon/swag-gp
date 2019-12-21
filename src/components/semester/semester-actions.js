@@ -3,7 +3,7 @@ import '../../css/semester-form-card.css'
 import PopUp from '../pop-up';
 import { handleUpdateSemesterDetails, deleteSemester } from '../../redux/actions';
 import { connect } from 'react-redux'
-import { disableScroll } from '../../redux/utility-functions';
+import { disableScroll, revertScroll } from '../../redux/utility-functions';
 
 const dispatch = {
   handleUpdateSemesterDetails,
@@ -33,6 +33,7 @@ function SemesterActions({ semesterid, levelid, semestername, handleUpdateSemest
     if (name.trim().length !== 0) {
       handleUpdateSemesterDetails(name, semesterid, levelid);
       closePopup(1);
+      revertScroll();
     }
   }
   const handleDelete = event => {

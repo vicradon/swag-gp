@@ -4,6 +4,9 @@
 		margin: 0;
 		font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+:root {
+  --primary-color:#2d92b9;
+}
 body {
     background-color: #87cfeb70;
 }
@@ -13,6 +16,13 @@ a {
 	-webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+}
+
+select {
+	background-color: #fff;
+	border: 1px solid var(--primary-color);
+	outline: 0;
+	border-radius: 2px;
 }
 
 a:focus {
