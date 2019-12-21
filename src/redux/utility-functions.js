@@ -336,6 +336,7 @@ export function handleDeleteSemester(state, action) {
     currentLevel: updatedLevel
   }
 }
+
 export function setCurrentUsingLevel(state, action) {
   let a = null;
   for (let i in state.levels) {
@@ -343,22 +344,17 @@ export function setCurrentUsingLevel(state, action) {
       a = state.levels[i]
     }
   }
-  console.log(a);
-  // return {
-  //   ...state,
-  //   currentLevel:a
-  // }
-  
-  if (a[0].id < a[1].id) {
-    return {
-      ...state,
-      currentLevel: [arrangeCourses(a[0]), a[1]]
-    }
+  return {
+    ...state,
+    currentLevel: a
+  }
+}
+
+export function arrangeLevel(level){
+  if (level[0].id < level[1].id) {
+    return [level[0], level[1]]
   }
   else {
-    return {
-      ...state,
-      currentLevel: [a[1], arrangeCourses(a[0])]
-    }
+    return [level[1], level[0]]
   }
 }

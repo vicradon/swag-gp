@@ -10,7 +10,8 @@ import {
   handleDelete,
   handleAddNewLevel,
   handleDeleteSemester,
-  setCurrentUsingLevel
+  setCurrentUsingLevel,
+  arrangeLevel
 } from './utility-functions'
 
 function Reducer(state = initialState, action) {
@@ -69,7 +70,7 @@ function Reducer(state = initialState, action) {
     case 'HANDLE_LEVEL_CHANGE':
       return {
         ...state,
-        currentLevel: state.levels[action.payload.levelid],
+        currentLevel: arrangeLevel(state.levels[action.payload.levelid])
       }
     case 'DELETE_SEMESTER':
       return handleDeleteSemester(state, action)
