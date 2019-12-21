@@ -18,17 +18,6 @@ a {
   -moz-transition: all 0.4s;
 }
 
-select {
-	background-color: #fff;
-	border: 1px solid var(--primary-color);
-	outline: 0;
-	border-radius: 2px;
-}
-
-a:focus {
-	outline: none !important;
-}
-
 a:hover {
 	text-decoration: none;
 }
@@ -48,7 +37,6 @@ ul, li {
 input {
   display: block;
 	outline: none;
-	border: none !important;
 }
 
 textarea {

@@ -9,7 +9,7 @@ const dispatchProps = {
 
 function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
   const [data, setData] = useState(form);
-  
+
   const handleInputChange = event => {
     const { name, value } = event.target
     setData({ ...data, [name]: value })
@@ -22,7 +22,7 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
 
   const handleAdd = event => {
     event.preventDefault();
-    if (data.name.trim().length !== 0 && data.grade.length !== 0 && data.grade !== "Select Grade" && data.units !== 0){
+    if (data.name.trim().length !== 0 && data.grade.length !== 0 && data.grade !== "Select Grade" && data.units > 0 && data.units <= 10) {
       handleCourseAdd(data, semesterid, levelid);
       setData(form)
     }
@@ -30,37 +30,42 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
   return (
     <form>
       <div className="input-select">
-        <input
-          type="text"
-          className="semester-form-input full-width"
-          placeholder="Course Name"
-          value={data.name}
-          name = "name"
-          onChange = {handleInputChange}
-        />
-        <select 
-          onChange = {handleInputChange} 
-          value = {data.grade} 
-          name="grade" 
-        >
-          <option>Select Grade</option>
-          <option value="A">A</option>
-          <option value="B">B</option>
-          <option value="C">C</option>
-          <option value="D">D</option>
-          <option value="F">F</option>
-        </select>
-
-        <input
-          type="number"
-          min="1"
-          max = "10"
-          className="semester-form-input"
-          placeholder="Units"
-          onChange = {handleInputChange}
-          value={data.units}
-          name = "units"
-        />
+        <label className = "full-width">
+          <input
+            type="text"
+            className="semester-form-input"
+            placeholder="Course Name"
+            value={data.name}
+            name="name"
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          <select
+            onChange={handleInputChange}
+            value={data.grade}
+            name="grade"
+          >
+            <option>Select Grade</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+          </select>
+        </label>
+        <label>
+          <input
+            type="number"
+            min="1"
+            max="10"
+            className="semester-form-input"
+            placeholder="Units"
+            onChange={handleInputChange}
+            value={data.units}
+            name="units"
+          />
+        </label>
       </div>
 
       <div className="form-actions">
