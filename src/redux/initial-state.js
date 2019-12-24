@@ -1,3 +1,5 @@
+import localforage from 'localforage';
+
 const initialState = {
   levels: {
     1: [{
@@ -66,7 +68,39 @@ const initialState = {
     ctgp: null,
     // cgpa: 4.36,
     cgpa: null
+  },
+  sync: {
+    isSaved: true
   }
 }
 
-export default initialState;
+
+// export default initialState;
+
+// localforage.getItem('initialState')
+//   .then(res => {
+//     if(res) {
+//       console.log(res)
+//     }
+//     else {
+//       localforage.setItem('initialState', initialState).then(() => {
+//         // localforage.setItem('isSaved', true)
+//       })
+//     }
+//   })
+//   .catch(err => console.log(err))
+
+// localStorage.setItem('initialState', `${initialState}`)
+
+localforage.getItem('app state')
+  .then(res => {
+    if (res) {
+      console.log(res)
+      return;
+    }
+    else {
+      console.log('About to set item')
+      localforage.setItem('app state', `${initialState}`).then(res => console.log(res))
+    }
+  })
+  .catch(err => console.log(err))

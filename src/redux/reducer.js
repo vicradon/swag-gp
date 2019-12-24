@@ -1,4 +1,4 @@
-import initialState from './initial-state'
+// import initialState from './initial-state';
 import {
   handleCummulative,
   handleEdit,
@@ -13,14 +13,115 @@ import {
   setCurrentUsingLevel,
   arrangeLevel
 } from './utility-functions'
+import localforage from 'localforage'
 
-function Reducer(state = initialState, action) {
+const initialState = {
+  levels: {
+    1: [{
+      id: 1,
+      name: '100 Level First Semester',
+      levelid: 1,
+      level: 100,
+      courses: [
+        // { id: 1, name: 'MTH 101', grade: 'A', units: 4 },
+        // { id: 2, name: 'PHY 101', grade: 'B', units: 6 }
+      ],
+      form: {
+        name: '',
+        grade: '',
+        units: '',
+        courseid: null
+      },
+      // details: {
+      //   tnu: 10,
+      //   tgp: 44,
+      //   gpa: 4.4,
+      //   noc: 2
+      // },
+      details: {
+        tnu: null,
+        tgp: null,
+        gpa: null,
+        noc: null
+      },
+      editing: false,
+    },
+    {
+      id: 2,
+      name: '100 Level Second Semester',
+      levelid: 1,
+      level: 100,
+      courses: [
+        // { id: 1, name: 'MTH 102', grade: 'C', units: 3 },
+        // { id: 2, name: 'PHY 102', grade: 'B', units: 2 }
+      ],
+      form: {
+        name: '',
+        grade: '',
+        units: '',
+        courseid: null
+      },
+      // details: {
+      //   tnu: 4,
+      //   tgp: 17,
+      //   gpa: 4.25,
+      //   noc: 2
+      // },
+      details: {
+        tnu: null,
+        tgp: null,
+        gpa: null,
+        noc: null
+      },
+      editing: false
+    }]
+  },
+  currentLevelId: 1,
+  currentLevel: [],
+  cummulative: {
+    ctnu: null,
+    ctgp: null,
+    // cgpa: 4.36,
+    cgpa: null
+  },
+  sync: {
+    isSaved: true
+  }
+}
+
+localforage.getItem('app state')
+  .then(res => {
+    if (res) {
+      console.log(res)
+      return;
+    }
+    else {
+      console.log('About to set item')
+      localforage.setItem('app state', `${initialState}`).then(res => console.log(res))
+    }
+  })
+  .catch(err => console.log(err))
+
+
+async function getInitialState(){
+  const res = await localforage.getItem('app state');
+  console.log(res)
+  return res;
+}
+getInitialState()
+
+function Reducer(state = getInitialState(), action) {
   switch (action.type) {
     case "SET_CURRENT":
+      // sendToBrowserStore({
+      //   ...state,
+      //   currentLevel: state.levels[action.id],
+      // })
       return {
         ...state,
         currentLevel: state.levels[action.id],
       };
+      
 
     case 'DELETE_COURSE':
       return handleCummulative(handlePosition(
@@ -77,9 +178,7 @@ function Reducer(state = initialState, action) {
 
     case 'SET_CURRENT_USING_LEVEL':
       return (
-        // handleCummulative(
         setCurrentUsingLevel(state, action)
-        // )
       )
     default:
       return state
