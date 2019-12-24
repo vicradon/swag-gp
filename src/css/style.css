@@ -44,9 +44,9 @@ textarea {
   outline: none;
 }
 
-textarea:focus, input:focus {
+/* textarea:focus, input:focus {
   border-color: transparent !important;
-}
+} */
 
 /* ------------------------------------ */
 button {

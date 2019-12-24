@@ -1,0 +1,46 @@
+.auth-container {
+  background-color: white !important;
+  width: 500px;
+  margin: 2rem auto;
+  border-radius: 10px;
+  /* box-shadow: 1 1 1 1 #000; */
+}
+.signin-form {
+  display: grid;
+  row-gap: 2rem;
+  padding: 2rem 1rem;
+}
+.signin-form label {
+  display: grid;
+  grid-template-columns: 30% auto;
+  column-gap: 1rem;
+  align-items: center;
+}
+.signin-form label input {
+  padding:5px;
+}
+
+.signin-form__submit {
+  background-color: var(--primary);
+  color: white;
+  padding: 5px;
+  border: 1px solid var(--primary);
+}
+.signin-form__submit:hover {
+  background-color: white;
+  color:  var(--primary);
+}
+.signin-form__misc {
+  font-size: small;
+}
+
+@media(max-width:700px){
+  .auth-container {
+    width: 400px;
+  } 
+}
+@media(max-width:450px){
+  .auth-container {
+    width: calc(100vw - 50px);
+  } 
+}

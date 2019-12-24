@@ -1,6 +1,6 @@
-import localforage from 'localforage';
+import {auth, db} from '../firebase/index'
 
-const initialState = {
+let initialState = {
   levels: {
     1: [{
       id: 1,
@@ -74,33 +74,10 @@ const initialState = {
   }
 }
 
+if (localStorage.getItem('app state')) {
+  initialState = JSON.parse(localStorage.getItem('app state'))
+} else if (auth.currentUser !== null) {
+  initialState = db.collection('users').doc(auth.currentUser.uid).appState;
+}
 
-// export default initialState;
-
-// localforage.getItem('initialState')
-//   .then(res => {
-//     if(res) {
-//       console.log(res)
-//     }
-//     else {
-//       localforage.setItem('initialState', initialState).then(() => {
-//         // localforage.setItem('isSaved', true)
-//       })
-//     }
-//   })
-//   .catch(err => console.log(err))
-
-// localStorage.setItem('initialState', `${initialState}`)
-
-localforage.getItem('app state')
-  .then(res => {
-    if (res) {
-      console.log(res)
-      return;
-    }
-    else {
-      console.log('About to set item')
-      localforage.setItem('app state', `${initialState}`).then(res => console.log(res))
-    }
-  })
-  .catch(err => console.log(err))
+export default initialState;

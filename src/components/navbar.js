@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import '../css/mdi/mdi.css'
 import '../css/nav-aside.css'
 import { connect } from 'react-redux'
+import {auth} from '../firebase/index'
 
 function Navbar() {
 
@@ -54,7 +55,7 @@ function Navbar() {
         <p className="hor-line" style={{ border: "1px solid var(--primary-color)", margin: "2rem 0" }}></p>
         <div className='side-nav-links'>
           <a className="side-nav-link" href="/pages/about">ABOUT</a>
-          <a className="side-nav-link auth-page" href="/pages/auth">LOGIN/SIGNUP</a>
+          <a className="side-nav-link auth-page" href="/pages/auth/signin">LOGIN/SIGNUP</a>
         </div>
       </div>
     )
@@ -70,7 +71,7 @@ function Navbar() {
   const SignedOutLinks = () => {
     return (
       <>
-        <a className="nav-link auth-page" href="/pages/auth">LOGIN/SIGNUP</a>
+        <a className="nav-link auth-page" href="/pages/auth/signin">LOGIN/SIGNUP</a>
         <i id="user-icon" className="material-icons">person_pin</i>
       </>
     )
@@ -86,7 +87,11 @@ function Navbar() {
         <div className="user-actions">
           <a className="nav-link" href="/pages/about">ABOUT</a>
           {/* <a  href = "/pages/donate">DONATE</a> */}
-
+          {
+            auth.currentUser !== null?
+              SignedInLinks():
+              SignedOutLinks()
+          }
         </div>
       </nav>
       <SideNav />

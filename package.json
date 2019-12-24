@@ -22,6 +22,7 @@
     "react-scripts": "3.0.1",
     "redux": "4.0.4",
     "redux-firestore": "^0.11.0",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {

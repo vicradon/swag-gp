@@ -35,6 +35,11 @@ main {
   grid-row: 2/-1;
   width: 75vw;
   margin: 2rem auto;
+  justify-content: center;
+}
+.auth-page {
+  grid-column: 1 / -1;
+  grid-row: 2/-1;
 }
 main section:nth-child(2){
   margin-bottom: 15vh;
