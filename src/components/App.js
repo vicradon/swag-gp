@@ -26,8 +26,8 @@ function App() {
           <Route path='/pages/about' component={About} />
           <Route path='/pages/auth/signin' component={SignIn} />
           <Route path='/pages/auth/signup' component={SignUp} />
-          {/* <Route path='/pages/auth/signout'component={SignOut} />
-          <Route path='/pages/auth/reset-password'component={ResetPassword} /> */}
+          <Route path='/pages/auth/signout'component={SignOut} />
+          <Route path='/pages/auth/reset-password'component={ResetPassword} />
         </Switch>
       </div>
     </BrowserRouter>

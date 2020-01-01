@@ -1,5 +1,3 @@
-import localforage from 'localforage'
-
 export function updateDetails(courses) {
   function gtv(grade) {
     switch (grade) {
@@ -368,16 +366,4 @@ export function snack(msg) {
   setTimeout(() => { 
     snackbar.className = snackbar.className.replace("show", ""); 
   }, 3000)
-}
-
-export function sendToBrowserStore(state){
-  // localforage.getItem('app state')
-  //   .then(res => {
-  //     if (res){
-        localforage.setItem('app state', state)
-    //   }
-    //   else {
-
-    //   }
-    // })
 }
