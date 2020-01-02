@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 
 function mapState(state) {
   return {
-    isSaved:state.sync.isSaved
+    // isSaved:state.sync.isSaved
   }
 }
 

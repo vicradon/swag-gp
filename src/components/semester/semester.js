@@ -11,8 +11,8 @@ import '../../css/position.css'
 import '../../css/style.css'
 import {connect} from 'react-redux'
 
-const stateProps = state => {
-  return {cgpa:state.cummulative.cgpa}
+const mapState = state => {
+  return {cgpa:state.data.cummulative.cgpa}
 }
 
 function Semester({id, name, level, courses, form, details, levelid, cgpa, editing}){
@@ -34,4 +34,4 @@ function Semester({id, name, level, courses, form, details, levelid, cgpa, editi
   )
 }
 
-export default connect(stateProps)(Semester);
+export default connect(mapState)(Semester);

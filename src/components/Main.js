@@ -7,8 +7,8 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
   return {
-    currentSemesters: state.currentLevel,
-    currentLevelId: state.currentLevelId
+    currentSemesters: state.data.currentLevel,
+    currentLevelId: state.data.currentLevelId
   }
 };
 
@@ -31,8 +31,8 @@ function Main({ currentSemesters }) {
       courses={semester.courses}
       form={semester.form}
       details={semester.details}
-      editing = {semester.editing}
-      levelid = {semester.levelid}
+      editing={semester.editing}
+      levelid={semester.levelid}
     />
   });
 

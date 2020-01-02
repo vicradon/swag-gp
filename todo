@@ -1,1 +1,4 @@
-1. Attach the necessary event listeners.
+1. Fix the auth isOnline bug
+2. Combine auth details from different signin methods
+3. Put the photo url in the image elem
+4. 

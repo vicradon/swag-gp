@@ -75,9 +75,9 @@ let initialState = {
 }
 
 if (localStorage.getItem('app state')) {
-  initialState = JSON.parse(localStorage.getItem('app state'))
+  initialState = JSON.parse(localStorage.getItem('app state')).data
 } else if (auth.currentUser !== null) {
-  initialState = db.collection('users').doc(auth.currentUser.uid).appState;
+  initialState = db.collection('users').doc(auth.currentUser.uid).appState.data;
 }
 
 export default initialState;

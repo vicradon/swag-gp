@@ -16,7 +16,7 @@ import {
 } from './utility-functions'
 
 
-function Reducer(state = initialState, action) {
+function dataReducer(state = initialState, action) {
   switch (action.type) {
     case "SET_CURRENT":
       return {
@@ -86,4 +86,4 @@ function Reducer(state = initialState, action) {
       return state
   }
 }
-export default Reducer;
+export default dataReducer;

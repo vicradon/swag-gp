@@ -2,9 +2,14 @@ import React, { useRef } from 'react'
 import '../css/mdi/mdi.css'
 import '../css/nav-aside.css'
 import { connect } from 'react-redux'
-import {auth} from '../firebase/index'
 
-function Navbar() {
+const mapState = state => {
+  return {
+    isOnline:state.auth.isOnline
+  };
+}
+
+function Navbar({isOnline}) {
 
   function openNav() {
     sideNav.current.classList.add('is-nav-open');
@@ -65,6 +70,7 @@ function Navbar() {
     return (
       <>
         <a className="nav-link logout-page" href="/pages/logout">LOGOUT</a>
+        <i id="user-icon" className="material-icons">person_pin</i>
       </>
     )
   }
@@ -83,14 +89,14 @@ function Navbar() {
           <i onClick={openNav} style={{ color: "white" }} className="material-icons">menu</i>
         </p>
 
-        <p id="swag-gp-logo">SWAG-GP</p>
+        <p id="swag-gp-logo"><a style = {{color:'var(--primary)', textDecoration:'none'}} href = '/'>SWAG-GP</a></p>
         <div className="user-actions">
           <a className="nav-link" href="/pages/about">ABOUT</a>
           {/* <a  href = "/pages/donate">DONATE</a> */}
           {
-            auth.currentUser !== null?
-              SignedInLinks():
-              SignedOutLinks()
+            isOnline?
+              <SignedInLinks />:
+              <SignedOutLinks />
           }
         </div>
       </nav>
@@ -99,11 +105,5 @@ function Navbar() {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    // auth: state.firebase.auth,
-    // profile: state.firebase.profile
-  }
-}
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapState)(Navbar)
