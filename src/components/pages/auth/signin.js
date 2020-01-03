@@ -3,9 +3,18 @@ import AuthLayout from '../AuthLayout'
 // import TwitterIcon from './twitter-icon'
 import firebase, { auth } from '../../../firebase/index'
 import { snack } from '../../../redux/utility-functions'
+import { connect } from 'react-redux'
+import { handleOnline } from '../../../redux/actions/authActions'
+import { useHistory } from 'react-router-dom'
 
 
-export default function SignIn() {
+const mapDispatch = {
+  handleOnline
+}
+
+function SignIn() {
+  const history = useHistory();
+
   const initialFormState = {
     email: '',
     password: ''
@@ -21,7 +30,8 @@ export default function SignIn() {
         console.log(cred)
         setFormData(initialFormState)
         snack("Login successful!")
-        window.location.href = '/'
+        handleOnline(true);
+        history.push('/')
       })
       .catch(err => {
         console.log(err)
@@ -30,14 +40,16 @@ export default function SignIn() {
   }
   const handleSignin = (provider) => {
     auth.signInWithPopup(provider)
-    .then(() => {
-      snack('Login succesful!')
-      window.location.href = '/'
-    })
-    .catch(err => {
-      console.log(err)
-      snack(err.message)
-    })
+      .then(() => {
+        snack('Login succesful!')
+        handleOnline(true);
+        console.log(auth.currentUser)
+        history.push('/')
+      })
+      .catch(err => {
+        console.log(err)
+        snack(err.message)
+      })
   }
   const handleGoogleSignin = (pr) => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -87,3 +99,5 @@ export default function SignIn() {
     </AuthLayout>
   )
 }
+
+export default connect(null, mapDispatch)(SignIn);

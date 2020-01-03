@@ -2,14 +2,19 @@ import React, { useRef } from 'react'
 import '../css/mdi/mdi.css'
 import '../css/nav-aside.css'
 import { connect } from 'react-redux'
-
+import { Link } from 'react-router-dom'
 const mapState = state => {
   return {
-    isOnline:state.auth.isOnline
+    isOnline: state.auth.isOnline
   };
 }
 
-function Navbar({isOnline}) {
+const mapDispatch = {
+  
+}
+
+function Navbar({ isOnline }) {
+  console.log(isOnline)
 
   function openNav() {
     sideNav.current.classList.add('is-nav-open');
@@ -47,11 +52,11 @@ function Navbar({isOnline}) {
 
     return (
       <div ref={sideNav} className="side-nav">
-        <div className = "close-side-nav">
-          <p className = 'close-button'>
-            <i onClick = {closeNav} className = "material-icons">close</i>
+        <div className="close-side-nav">
+          <p className='close-button'>
+            <i onClick={closeNav} className="material-icons">close</i>
           </p>
-        
+
         </div>
         <div className="user-details">
           <p className="username">Username</p>
@@ -59,8 +64,8 @@ function Navbar({isOnline}) {
         </div>
         <p className="hor-line" style={{ border: "1px solid var(--primary-color)", margin: "2rem 0" }}></p>
         <div className='side-nav-links'>
-          <a className="side-nav-link" href="/pages/about">ABOUT</a>
-          <a className="side-nav-link auth-page" href="/pages/auth/signin">LOGIN/SIGNUP</a>
+          <Link className="side-nav-link" to="/pages/about">ABOUT</Link>
+          <Link className="side-nav-link auth-page" to="/pages/auth/signin">LOGIN/SIGNUP</Link>
         </div>
       </div>
     )
@@ -69,7 +74,7 @@ function Navbar({isOnline}) {
   const SignedInLinks = () => {
     return (
       <>
-        <a className="nav-link logout-page" href="/pages/logout">LOGOUT</a>
+        <Link className="nav-link logout-page" to="/pages/logout">LOGOUT</Link>
         <i id="user-icon" className="material-icons">person_pin</i>
       </>
     )
@@ -77,7 +82,7 @@ function Navbar({isOnline}) {
   const SignedOutLinks = () => {
     return (
       <>
-        <a className="nav-link auth-page" href="/pages/auth/signin">LOGIN/SIGNUP</a>
+        <Link className="nav-link auth-page" to="/pages/auth/signin">LOGIN/SIGNUP</Link>
         <i id="user-icon" className="material-icons">person_pin</i>
       </>
     )
@@ -89,13 +94,13 @@ function Navbar({isOnline}) {
           <i onClick={openNav} style={{ color: "white" }} className="material-icons">menu</i>
         </p>
 
-        <p id="swag-gp-logo"><a style = {{color:'var(--primary)', textDecoration:'none'}} href = '/'>SWAG-GP</a></p>
+        <p id="swag-gp-logo"><Link style={{ color: 'var(--primary)', textDecoration: 'none' }} to='/'>SWAG-GP</Link></p>
         <div className="user-actions">
-          <a className="nav-link" href="/pages/about">ABOUT</a>
-          {/* <a  href = "/pages/donate">DONATE</a> */}
+          <Link className="nav-link" to="/pages/about">ABOUT</Link>
+          {/* <Link  to = "/pages/donate">DONATE</Link> */}
           {
-            isOnline?
-              <SignedInLinks />:
+            isOnline ?
+              <SignedInLinks /> :
               <SignedOutLinks />
           }
         </div>
@@ -106,4 +111,4 @@ function Navbar({isOnline}) {
 }
 
 
-export default connect(mapState)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar)
