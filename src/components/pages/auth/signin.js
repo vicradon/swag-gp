@@ -4,15 +4,15 @@ import AuthLayout from '../AuthLayout'
 import firebase, { auth } from '../../../firebase/index'
 import { snack } from '../../../redux/utility-functions'
 import { connect } from 'react-redux'
-import { handleOnline } from '../../../redux/actions/authActions'
+import { handleAuthState } from '../../../redux/actions/authActions'
 import { useHistory } from 'react-router-dom'
 
 
 const mapDispatch = {
-  handleOnline
+  handleAuthState
 }
 
-function SignIn() {
+function SignIn({handleAuthState}) {
   const history = useHistory();
 
   const initialFormState = {
@@ -30,7 +30,7 @@ function SignIn() {
         console.log(cred)
         setFormData(initialFormState)
         snack("Login successful!")
-        handleOnline(true);
+        handleAuthState(true);
         history.push('/')
       })
       .catch(err => {
@@ -42,8 +42,7 @@ function SignIn() {
     auth.signInWithPopup(provider)
       .then(() => {
         snack('Login succesful!')
-        handleOnline(true);
-        console.log(auth.currentUser)
+        handleAuthState(true);
         history.push('/')
       })
       .catch(err => {

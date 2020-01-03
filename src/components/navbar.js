@@ -3,18 +3,30 @@ import '../css/mdi/mdi.css'
 import '../css/nav-aside.css'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { auth } from '../firebase/index'
+import { useHistory } from 'react-router-dom'
+import { handleAuthState } from '../redux/actions/authActions'
 const mapState = state => {
   return {
-    isOnline: state.auth.isOnline
+    isLoggedIn: state.auth.isLoggedIn
   };
 }
 
 const mapDispatch = {
-  
+  handleAuthState
+
 }
 
-function Navbar({ isOnline }) {
-  console.log(isOnline)
+function Navbar({ isLoggedIn, handleAuthState }) {
+  const history = useHistory();
+
+  const signOut = () => {
+    auth.signOut()
+      .then(() => {
+        handleAuthState(false)
+        history.push('/pages/auth/signout')
+      })
+  }
 
   function openNav() {
     sideNav.current.classList.add('is-nav-open');
@@ -74,7 +86,7 @@ function Navbar({ isOnline }) {
   const SignedInLinks = () => {
     return (
       <>
-        <Link className="nav-link logout-page" to="/pages/logout">LOGOUT</Link>
+        <Link onClick={signOut} className="nav-link logout-page" to="/pages/logout">LOGOUT</Link>
         <i id="user-icon" className="material-icons">person_pin</i>
       </>
     )
@@ -99,7 +111,7 @@ function Navbar({ isOnline }) {
           <Link className="nav-link" to="/pages/about">ABOUT</Link>
           {/* <Link  to = "/pages/donate">DONATE</Link> */}
           {
-            isOnline ?
+            isLoggedIn ?
               <SignedInLinks /> :
               <SignedOutLinks />
           }

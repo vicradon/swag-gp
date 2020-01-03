@@ -1,34 +1,41 @@
-import { auth } from '../firebase/index'
-console.log(auth.currentUser)
-// let online = '';
+import { auth, db } from '../firebase/index'
+let loggedin = false;
 
-// auth.onAuthStateChanged(user => {
-//   if (user) {
-//     online = true
-//   }
-//   else {
-//     console.log("User logged out");
-//     online = false
-//   }
-// })
-// console.log(auth.currentUser)
+auth.onAuthStateChanged(user => {
+  if (user) {
+    loggedin = true
+  }
+  else {
+    console.log("User logged out");
+    loggedin = false
+  }
+})
 
-const initialState = {
-  isOnline: null//!!auth.currentUser.uid
+let initialState = {
+  isLoggedIn: loggedin
+}
+if (localStorage.getItem('app state')) {
+  initialState = JSON.parse(localStorage.getItem('app state')).auth
+} else if (auth.currentUser !== null) {
+  initialState = db.collection('users').doc(auth.currentUser.uid).appState.auth;
 }
 
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
-    case "HANDLE_ONLINE":
+    case "HANDLE_AUTH_STATE":
+      console.log({
+        ...state,
+        isLoggedIn: action.authState
+      })
       return {
         ...state,
-        isOnline: action.onlineState
-      }
-    case "TOGGLE_ONLINE":
+        isLoggedIn: action.authState
+      };
+    case "TOGGLE_AUTH_STATE":
       return {
         ...state,
-        isOnline: !state.isOnline
-      }
+        isLoggedIn: !state.authState
+      };
     default:
       return state
   }

@@ -1,12 +1,12 @@
-export function handleOnline(onlineState){
+export function handleAuthState(authState){
   return {
-    type:"HANDLE_ONLINE",
-    isOnline:onlineState
+    type:"HANDLE_AUTH_STATE",
+    authState:authState
   }
 }
 
-export function toggleOnline(){
+export function toggleAuthState(){
   return {
-    type:"TOGGLE_ONLINE"
+    type:"TOGGLE_AUTH_STATE"
   }
 }
