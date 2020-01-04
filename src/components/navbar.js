@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { auth } from '../firebase/index'
 import { useHistory } from 'react-router-dom'
 import { handleAuthState } from '../redux/actions/authActions'
+
 const mapState = state => {
   return {
     isLoggedIn: state.auth.isLoggedIn
@@ -24,6 +25,7 @@ function Navbar({ isLoggedIn, handleAuthState }) {
     auth.signOut()
       .then(() => {
         handleAuthState(false)
+        localStorage.removeItem('app state')
         history.push('/pages/auth/signout')
       })
   }

@@ -1,5 +1,3 @@
-import {auth, db} from '../firebase/index'
-
 let initialState = {
   levels: {
     1: [{
@@ -68,16 +66,42 @@ let initialState = {
     ctgp: null,
     // cgpa: 4.36,
     cgpa: null
-  },
-  sync: {
-    isSaved: true
   }
 }
 
 if (localStorage.getItem('app state')) {
   initialState = JSON.parse(localStorage.getItem('app state')).data
-} else if (auth.currentUser !== null) {
-  initialState = db.collection('users').doc(auth.currentUser.uid).appState.data;
 }
+// else {
+//   initialState = db.collection('users').doc(user.uid).appState.data;
+// }
+ 
 
-export default initialState;
+// function getCurrentUser(auth) {
+//   return new Promise((resolve, reject) => {
+//     const unsubscribe = auth.onAuthStateChanged(user => {
+//       unsubscribe();
+//       resolve(user);
+//     }, reject);
+//   });
+// }
+// export default getCurrentUser(auth)
+//   .then(user => {
+//     console.log(user)
+//     // if (localStorage.getItem(user.uid)) {
+//     //   initialState = JSON.parse(localStorage.getItem(user.uid)).data
+//     // }
+//     return initialState
+//   })
+
+// const user = getCurrentUser();
+// if (user) {
+//   if (localStorage.getItem(user.uid)) {
+//     initialState = JSON.parse(localStorage.getItem(user.uid)).data
+//   }
+//   else {
+//     initialState = db.collection('users').doc(user.uid).appState.data;
+//   }
+// }
+
+export default initialState

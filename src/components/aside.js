@@ -1,21 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import '../css/mdi/mdi.css'
 import '../css/nav-aside.css'
 import '../css/popup.css'
+import '../css/pulse.css'
 import SemesterMenu from './modals/sem-menu'
 import SummaryModal from './modals/summary-modal'
 import PopUp from './pop-up'
 import { disableScroll } from '../redux/utility-functions'
-// import localforage from 'localforage'
 import { connect } from 'react-redux'
+import store from '../redux/store'
+import { auth, db } from '../firebase'
 
-function mapState(state) {
-  return {
-    // isSaved:state.sync.isSaved
+function pulsateSaveButton(saveButton) {
+  if (auth.currentUser) {
+    saveButton.current.classList.add('orange')
   }
 }
 
-function Aside({ isSaved }) {
+function turnOffPulsation(saveButton) {
+  db.collection('users').doc(auth.currentUser.uid).set({
+    [`${auth.currentUser.uid}`]: JSON.parse(localStorage.getItem(auth.currentUser.uid))
+  })
+  .then(() => {
+    saveButton.current.classList.remove('orange')
+  })
+}
+
+function mapState(state) {
+  return state
+}
+
+function Aside() {
+  store.subscribe(() => pulsateSaveButton(saveButton));
+
+
+  const saveButton = useRef(null);
+
   const [semesterMenuActive, setSemesterMenuActive] = useState(false);
   const [summaryModalActive, setSummaryModalActive] = useState(false);
   const closeModal = (id) => {
@@ -73,11 +93,10 @@ function Aside({ isSaved }) {
       {
         setModal()
       }
-      {
-        isSaved ?
-          null :
-          <i style={{ fontSize: 35 }} id="save-changes" className="material-icons add-icon">save</i>
-      }
+
+
+      <i style={{ fontSize: 35 }} onClick={() => turnOffPulsation(saveButton)} ref={saveButton} id="save-changes" className="material-icons add-icon">save</i>
+
 
       <i onClick={() => { setSemesterMenuActive(true); disableScroll() }} style={{ fontSize: 35 }} id="expose-levels" className="material-icons add-icon">keyboard_arrow_right</i>
       <i onClick={() => { setSummaryModalActive(true); disableScroll() }} style={{ fontSize: 35 }} id="expose-summary" className="material-icons add-icon">school</i>

@@ -5,17 +5,19 @@ import store from './redux/store'
 import { Provider } from 'react-redux'
 import './styles.css'
 import * as serviceWorker from './serviceWorker.js';
-import { auth, db } from './firebase/index';
+import firebase, { auth, db } from './firebase/index';
+import { snack } from "./redux/utility-functions";
+
+// auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+//   .catch(error => {
+//     snack(error.message)
+//   })
 
 function sendToBrowserStore(state) {
   localStorage.setItem('app state', JSON.stringify(state))
-  if (auth.currentUser !== null) {
-    db.collection('users').doc(auth.currentUser.uid).set({ 
-      appState: JSON.parse(localStorage.getItem('app state')) 
-    })
-  }
-  else {
-    console.log('Anonymous user')
+  if (auth.currentUser) {
+    console.log(auth.currentUser)
+    localStorage.setItem(auth.currentUser.uid, JSON.stringify(state))
   }
 }
 

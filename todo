@@ -1,4 +1,4 @@
-1. Fix the auth isOnline bug
-2. Combine auth details from different signin methods
-3. Put the photo url in the image elem
-4. 
+Let the app get data when it refreshes
+Fix the auth isOnline bug
+Combine auth details from different signin methods
+Put the photo url in the image elem
