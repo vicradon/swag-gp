@@ -1,4 +1,5 @@
 Let the app get data when it refreshes
-Fix the auth isOnline bug
 Combine auth details from different signin methods
 Put the photo url in the image elem
+
+When the user logs in, get his state from localStorage

@@ -36,6 +36,16 @@ export default function authReducer(state = initialState, action) {
         ...state,
         isLoggedIn: !state.authState
       };
+    case "GET_USER_DETAILS":
+      return {
+        ...state,
+        userDetails:action.details
+      };
+    case "SET_USER_STATE":
+      return {
+        ...state,
+        data:action.state.data
+      };
     default:
       return state
   }

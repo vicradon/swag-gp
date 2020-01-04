@@ -12,9 +12,9 @@ export function updateDetails(courses) {
   let tnu_arr1 = courses.map(x => x.units);
   let tgp_arr1 = courses.map(x => gtv(x.grade) * x.units);
 
-  let tnu = '';
-  let tgp = '';
-  let gpa = '';
+  let tnu;
+  let tgp;
+  let gpa;
   const noc = courses.length;
 
   if (tnu_arr1.length && tgp_arr1.length) {

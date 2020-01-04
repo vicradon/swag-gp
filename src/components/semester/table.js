@@ -2,9 +2,9 @@ import React from 'react'
 import Course from "./course";
 
 export default function Table({ courses, semesterid, levelid, editing }) {
-  const course_components = courses.map(x => {
+  const course_components = courses.map((x, index) => {
     return <Course
-      key={x.id}
+      key={index}
       id={x.id}
       name={x.name}
       grade={x.grade}

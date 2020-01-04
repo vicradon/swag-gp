@@ -4,15 +4,17 @@ import AuthLayout from '../AuthLayout'
 import firebase, { auth } from '../../../firebase/index'
 import { snack } from '../../../redux/utility-functions'
 import { connect } from 'react-redux'
-import { handleAuthState } from '../../../redux/actions/authActions'
+import { handleAuthState, getUserDetails, setUserState } from '../../../redux/actions/authActions'
 import { useHistory } from 'react-router-dom'
 
 
 const mapDispatch = {
-  handleAuthState
+  handleAuthState,
+  getUserDetails,
+  setUserState
 }
 
-function SignIn({handleAuthState}) {
+function SignIn({ handleAuthState, getUserDetails, setUserState }) {
   const history = useHistory();
 
   const initialFormState = {
@@ -31,6 +33,10 @@ function SignIn({handleAuthState}) {
         setFormData(initialFormState)
         snack("Login successful!")
         handleAuthState(true);
+        getUserDetails({
+          photoUrl: cred.user.photoURL,
+          displayName: cred.user.displayName
+        })
         history.push('/')
       })
       .catch(err => {
@@ -40,9 +46,16 @@ function SignIn({handleAuthState}) {
   }
   const handleSignin = (provider) => {
     auth.signInWithPopup(provider)
-      .then(() => {
+      .then(cred => {
         snack('Login succesful!')
         handleAuthState(true);
+        const details = {
+          photoUrl: cred.user.photoURL,
+          displayName: cred.user.displayName
+        }
+        console.log(details)
+        getUserDetails(details)
+        setUserState(localStorage.getItem(cred.user.uid))
         history.push('/')
       })
       .catch(err => {

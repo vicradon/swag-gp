@@ -9,7 +9,9 @@ import { handleAuthState } from '../redux/actions/authActions'
 
 const mapState = state => {
   return {
-    isLoggedIn: state.auth.isLoggedIn
+    isLoggedIn: state.auth.isLoggedIn,
+    photoUrl: state.auth.userDetails.photoUrl,
+    displayName:state.auth.userDetails.displayName
   };
 }
 
@@ -18,7 +20,7 @@ const mapDispatch = {
 
 }
 
-function Navbar({ isLoggedIn, handleAuthState }) {
+function Navbar({ isLoggedIn, photoUrl, displayName, handleAuthState }) {
   const history = useHistory();
 
   const signOut = () => {
@@ -73,8 +75,16 @@ function Navbar({ isLoggedIn, handleAuthState }) {
 
         </div>
         <div className="user-details">
-          <p className="username">Username</p>
-          <i className="material-icons user-icon">person_pin</i>
+          {
+            displayName ?
+              <p className="username">{displayName}</p> :
+              <p className="username">Username</p>
+          }
+          {
+            photoUrl ?
+              <img style={{ width: "5rem", borderRadius: "50%" }} src={photoUrl} alt="gravater" /> :
+              <i id="user-icon" className="material-icons">person_pin</i>
+          }
         </div>
         <p className="hor-line" style={{ border: "1px solid var(--primary-color)", margin: "2rem 0" }}></p>
         <div className='side-nav-links'>
@@ -89,7 +99,11 @@ function Navbar({ isLoggedIn, handleAuthState }) {
     return (
       <>
         <Link onClick={signOut} className="nav-link logout-page" to="/pages/logout">LOGOUT</Link>
-        <i id="user-icon" className="material-icons">person_pin</i>
+        {
+          photoUrl ?
+            <img style={{ width: "3rem", borderRadius: "50%" }} src={photoUrl} alt="gravater" /> :
+            <i id="user-icon" className="material-icons">person_pin</i>
+        }
       </>
     )
   }
@@ -97,7 +111,6 @@ function Navbar({ isLoggedIn, handleAuthState }) {
     return (
       <>
         <Link className="nav-link auth-page" to="/pages/auth/signin">LOGIN/SIGNUP</Link>
-        <i id="user-icon" className="material-icons">person_pin</i>
       </>
     )
   }

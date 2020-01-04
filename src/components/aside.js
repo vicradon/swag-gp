@@ -11,28 +11,29 @@ import { connect } from 'react-redux'
 import store from '../redux/store'
 import { auth, db } from '../firebase'
 
-function pulsateSaveButton(saveButton) {
-  if (auth.currentUser) {
-    saveButton.current.classList.add('orange')
-  }
-}
-
-function turnOffPulsation(saveButton) {
-  db.collection('users').doc(auth.currentUser.uid).set({
-    [`${auth.currentUser.uid}`]: JSON.parse(localStorage.getItem(auth.currentUser.uid))
-  })
-  .then(() => {
-    saveButton.current.classList.remove('orange')
-  })
-}
 
 function mapState(state) {
   return state
 }
 
 function Aside() {
+  function pulsateSaveButton(saveButton) {
+    if (auth.currentUser !== null) {
+      if (saveButton.current !== null){
+        saveButton.current.classList.add('orange')
+      }
+    }
+  }
+  
+  function turnOffPulsation(saveButton) {
+    db.collection('users').doc(auth.currentUser.uid).set({
+      [`${auth.currentUser.uid}`]: JSON.parse(localStorage.getItem(auth.currentUser.uid))
+    })
+    .then(() => {
+      saveButton.current.classList.remove('orange')
+    })
+  }
   store.subscribe(() => pulsateSaveButton(saveButton));
-
 
   const saveButton = useRef(null);
 
