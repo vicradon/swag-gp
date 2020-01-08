@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import '../css/mdi/mdi.css'
 import '../css/nav-aside.css'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 function Navbar() {
 
@@ -81,10 +82,11 @@ function Navbar() {
         <p className="invisible">
           <i onClick={openNav} style={{ color: "white" }} className="material-icons">menu</i>
         </p>
+        <Link style = {{color:"inherit", textDecoration:"none"}} to = "/"><p id="swag-gp-logo">SWAG-GP</p></Link>
 
-        <p id="swag-gp-logo">SWAG-GP</p>
+        
         <div className="user-actions">
-          <a className="nav-link" href="/pages/about">ABOUT</a>
+          {/* <a className="nav-link" href="/pages/about">ABOUT</a> */}
           {/* <a  href = "/pages/donate">DONATE</a> */}
 
         </div>
