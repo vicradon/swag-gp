@@ -108,7 +108,7 @@ export function handleAdd(state, action) {
   const { semester } = getCnS(state, action);
   let newID = 0;
   if (semester.courses.length > 0) {
-    newID = semester.courses[semester.courses.length - 1].id + 1;
+    newID = semester.courses.map(x => x.id).sort((a, b) => b - a)[0] + 1;
   }
   else {
     newID = 1
