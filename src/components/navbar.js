@@ -8,16 +8,18 @@ import { useHistory } from 'react-router-dom'
 import { handleAuthState } from '../redux/actions/authActions'
 
 const mapState = state => {
+  // let photoUrl;
+  // if (state.auth) photoUrl = state.auth.userDetails.photoUrl;
   return {
     isLoggedIn: state.auth.isLoggedIn,
-    photoUrl: state.auth.userDetails.photoUrl,
-    displayName:state.auth.userDetails.displayName
+    photoUrl: '',
+    // displayName:state.auth.userDetails.displayName
+    displayName:''
   };
 }
 
 const mapDispatch = {
   handleAuthState
-
 }
 
 function Navbar({ isLoggedIn, photoUrl, displayName, handleAuthState }) {

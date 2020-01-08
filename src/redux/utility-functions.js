@@ -108,7 +108,7 @@ export function handleAdd(state, action) {
   const { semester } = getCnS(state, action);
   let newID = 0;
   if (semester.courses.length > 0) {
-    newID = semester.courses.map(x => x.id).sort((a, b) => b-a)[0] + 1;
+    newID = semester.courses.map(x => x.id).sort((a, b) => b - a)[0] + 1;
   }
   else {
     newID = 1
@@ -350,7 +350,7 @@ export function setCurrentUsingLevel(state, action) {
   }
 }
 
-export function arrangeLevel(level){
+export function arrangeLevel(level) {
   if (level[0].id < level[1].id) {
     return [level[0], level[1]]
   }
@@ -363,7 +363,16 @@ export function snack(msg) {
   const snackbar = document.querySelector('#snackbar');
   snackbar.textContent = msg;
   snackbar.className = "show";
-  setTimeout(() => { 
-    snackbar.className = snackbar.className.replace("show", ""); 
+  setTimeout(() => {
+    snackbar.className = snackbar.className.replace("show", "");
   }, 3000)
+}
+
+export function getCurrentUser(auth) {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      unsubscribe();
+      resolve(user);
+    }, reject);
+  });
 }
