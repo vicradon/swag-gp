@@ -10,4 +10,3 @@ The app features
 ```shell
 npm i
 ```
-

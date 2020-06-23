@@ -1,6 +1,0 @@
-1. Send all the app data to indexDB using localforage
-2. Set a variable in indexDB to track if the user has saved data
-3. If data isn't saved, set up a pulsating button
-4. Else remove the pulsating from the UI
-5. For auth, just use that library
-6. When the save button is clicked, data is sent to firestore and feedback is recieved by the user
