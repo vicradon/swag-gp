@@ -9,7 +9,14 @@ const AsideLinks = ({ activeButton, setActiveButton }) => {
       <AsideButton
         link="/"
         icon={FaTachometerAlt}
-        value="Dashboard"
+        value="Overview"
+        isActive={activeButton}
+        setActiveButton={setActiveButton}
+      />
+      <AsideButton
+        link="/levels"
+        icon={FaUsers}
+        value="Levels"
         isActive={activeButton}
         setActiveButton={setActiveButton}
       />
@@ -17,13 +24,6 @@ const AsideLinks = ({ activeButton, setActiveButton }) => {
         link="/profile"
         icon={FaUser}
         value="Profile"
-        isActive={activeButton}
-        setActiveButton={setActiveButton}
-      />
-      <AsideButton
-        link="/smes"
-        icon={FaUsers}
-        value="SMEs"
         isActive={activeButton}
         setActiveButton={setActiveButton}
       />

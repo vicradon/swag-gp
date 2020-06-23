@@ -7,11 +7,12 @@ import Settings from './Components/Settings';
 import NotFound from './Components/NotFound';
 
 import Dashboard from './Dashboard';
-import SMEs from './SMEs';
+import Levels from './Levels';
 import Profile from './Profile';
 
 import customTheme from './utils/theme';
-
+import { Auth0Provider } from '../react-auth0-spa';
+import onRedirectCallback from './utils/on_redirect_callback';
 
 const ScrollToTop = ({ children, location }) => {
   React.useEffect(() => window.scrollTo(0, 0), [location.pathname]);
@@ -24,7 +25,7 @@ const App = () => {
       <Router>
         <ScrollToTop path="/">
           <Dashboard path="/" />
-          <SMEs path="/smes" />
+          <Levels path="/levels" />
           <Profile path="/profile" />
           <Settings path="/settings" />
           <NotFound default />
@@ -34,12 +35,19 @@ const App = () => {
   );
 
   return (
-    <ThemeProvider theme={customTheme}>
-      <ColorModeProvider>
+    <Auth0Provider
+      domain={process.env.REACT_APP_DOMAIN}
+      client_id={process.env.REACT_APP_CLIENT_ID}
+      redirect_uri={window.location.origin}
+      onRedirectCallback={onRedirectCallback}
+    >
+      <ThemeProvider theme={customTheme}>
+        <ColorModeProvider>
           <CSSReset />
           <MainApp />
-      </ColorModeProvider>
-    </ThemeProvider>
+        </ColorModeProvider>
+      </ThemeProvider>
+    </Auth0Provider>
   );
 };
 

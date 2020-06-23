@@ -1,7 +1,7 @@
 import React from "react";
 import { Drawer, DrawerOverlay, DrawerContent } from "@chakra-ui/core";
 import PropTypes from 'prop-types';
-import Aside from "./Aside/Aside";
+import Aside from "./Aside";
 
 const CustomDrawer = ({ isOpen, onClose }) => {
   return (

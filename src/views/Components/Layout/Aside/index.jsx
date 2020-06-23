@@ -2,14 +2,16 @@ import React from 'react';
 import { Box, Flex, Text, LightMode, CloseButton, Grid } from '@chakra-ui/core';
 import PropTypes from 'prop-types';
 
-import { FaSignOutAlt, FaCog } from 'react-icons/fa';
+import { FaSignOutAlt, FaCog, FaSignInAlt } from 'react-icons/fa';
 import AsideButton from './AsideButton';
 import AsideLinks from './AsideLinks';
-import signOut from '../../../http/sign_out';
 // import bg from '../../images/sidebar-2.jpg';
 
+import { useAuth0 } from '../../../../react-auth0-spa';
 
 const Aside = ({ width, closeButton, onClose }) => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
   const [activeButton, setActiveButton] = React.useState(window.location.pathname);
   return (
     <Box
@@ -44,10 +46,31 @@ const Aside = ({ width, closeButton, onClose }) => {
             isActive={activeButton}
             setActiveButton={setActiveButton}
           />
-          <Grid onClick={() => signOut()} cursor="pointer" rounded="md" p="10px" alignContent="center" templateColumns="1fr 4fr">
-            <Box color="gray.600" w="20px" h="20px" alignSelf="center" as={FaSignOutAlt} />
-            <Text>Sign out</Text>
-          </Grid>
+          {isAuthenticated ? (
+            <Grid
+              onClick={logout}
+              cursor="pointer"
+              rounded="md"
+              p="10px"
+              alignContent="center"
+              templateColumns="1fr 4fr"
+            >
+              <Box color="gray.600" w="20px" h="20px" alignSelf="center" as={FaSignOutAlt} />
+              <Text>Sign out</Text>
+            </Grid>
+          ) : (
+            <Grid
+              onClick={loginWithRedirect}
+              cursor="pointer"
+              rounded="md"
+              p="10px"
+              alignContent="center"
+              templateColumns="1fr 4fr"
+            >
+              <Box color="gray.600" w="20px" h="20px" alignSelf="center" as={FaSignInAlt} />
+              <Text>Login</Text>
+            </Grid>
+          )}
         </Box>
       </Grid>
     </Box>

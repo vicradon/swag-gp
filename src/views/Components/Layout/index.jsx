@@ -2,7 +2,7 @@ import React from 'react';
 import Media from 'react-media';
 import { Box, useColorMode } from '@chakra-ui/core';
 import PropTypes from 'prop-types';
-import Aside from './Aside/Aside';
+import Aside from './Aside';
 import NavBar from './NavBar';
 
 const Layout = ({ children }) => {

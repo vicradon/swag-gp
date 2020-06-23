@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -15,9 +15,8 @@ import {
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { get } from '../utils/easy-storage';
 import updateAccountDetails from '../http/update_account_details';
-import getUserDetails from '../http/get_user_details';
+// import getUserDetails from '../http/get_user_details';
 
 const ProfileHead = () => {
   const [profileComplete] = useState(false);
@@ -60,33 +59,33 @@ const ProfileForm = () => {
     colors: { primary }
   } = theme;
 
-  const { name, email, phone, bio, address } = get('smefund-user');
+  // const { name, email, phone, bio, address } = get('smefund-user');
 
   const [formState, alterFormState] = useState({
-    name,
-    email,
-    phone,
-    bio,
-    address
+    name: "dummy name",
+    email: "test@email.com",
+    phone: +2349044892483,
+    bio: "stuff",
+    address: "some address"
   });
 
-  useEffect(() => {
-    (async () => {
-      const { _id: id } = get('smefund-user');
-      const token = get('token');
-      const userDetails = await getUserDetails(id, token);
-      if (userDetails.status === 200) {
-        const values = userDetails.data.data;
-        alterFormState({
-          name: values.name,
-          email: values.email,
-          phone: values.phone,
-          bio: values.bio,
-          address: values.address
-        });
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const { _id: id } = get('smefund-user');
+  //     const token = get('token');
+  //     const userDetails = await getUserDetails(id, token);
+  //     if (userDetails.status === 200) {
+  //       const values = userDetails.data.data;
+  //       alterFormState({
+  //         name: values.name,
+  //         email: values.email,
+  //         phone: values.phone,
+  //         bio: values.bio,
+  //         address: values.address
+  //       });
+  //     }
+  //   })();
+  // }, []);
 
   const [wasAltered, setWasAltered] = useState(false);
 
