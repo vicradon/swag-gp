@@ -6,7 +6,7 @@ import {
 // listen to the browser history
 // const history = createHistory(window)
 
-const onRedirectCallback = (appState) => {
+const onRedirectCallback = () => {
   navigate('/')
   // history.push(
   //   appState && appState.targetUrl

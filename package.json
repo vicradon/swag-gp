@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "date-fns": "^2.0.0-beta.5",
     "emotion-theming": "^10.0.27",
+    "faunadb": "^2.14.2",
     "formik": "^2.1.4",
     "password-validator": "^5.0.3",
     "prop-types": "^15.7.2",

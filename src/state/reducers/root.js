@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
-import main from './main';
 import resize from './resize';
-import auth from './auth';
+// import db from './db';
 
-const rootReducer = combineReducers({ main, resize, auth });
+const rootReducer = combineReducers({ resize });
 export default rootReducer;

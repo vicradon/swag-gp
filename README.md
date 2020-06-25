@@ -1,12 +1,14 @@
-# gpa-calc-react
-A GPA calculator built using CRA
+# SWAG-GP
+A GPA calculator for college students
 
-The app features 
+# Features
 1. CGPA calculation
 2. Cloud Storage
 3. PWA features
+4. Mobile App
 
-# Installation
+# Getting started
+## Installation
 ```shell
 npm i
 ```

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider, ColorModeProvider, CSSReset } from '@chakra-ui/core';
 import { Router } from '@reach/router';
+import { useDispatch } from 'react-redux';
 
 import Layout from './Components/Layout';
 import Settings from './Components/Settings';
@@ -11,7 +12,7 @@ import Levels from './Levels';
 import Profile from './Profile';
 
 import customTheme from './utils/theme';
-import { Auth0Provider } from '../react-auth0-spa';
+import { Auth0Provider, useAuth0 } from '../react-auth0-spa';
 import onRedirectCallback from './utils/on_redirect_callback';
 
 const ScrollToTop = ({ children, location }) => {
@@ -20,19 +21,27 @@ const ScrollToTop = ({ children, location }) => {
 };
 
 const App = () => {
-  const MainApp = () => (
-    <Layout>
-      <Router>
-        <ScrollToTop path="/">
-          <Dashboard path="/" />
-          <Levels path="/levels" />
-          <Profile path="/profile" />
-          <Settings path="/settings" />
-          <NotFound default />
-        </ScrollToTop>
-      </Router>
-    </Layout>
-  );
+  const MainApp = () => {
+    const { user, isAuthenticated, loading } = useAuth0();
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+      dispatch({ type: 'FETCH_APP_STATE', payload: { loading, user, isAuthenticated } });
+    });
+    return (
+      <Layout>
+        <Router>
+          <ScrollToTop path="/">
+            <Dashboard path="/" />
+            <Levels path="/levels" />
+            <Profile path="/profile" />
+            <Settings path="/settings" />
+            <NotFound default />
+          </ScrollToTop>
+        </Router>
+      </Layout>
+    );
+  };
 
   return (
     <Auth0Provider

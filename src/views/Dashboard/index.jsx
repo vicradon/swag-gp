@@ -1,20 +1,20 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { Flex, Text, Box } from '@chakra-ui/core';
-import { useDispatch } from 'react-redux';
+// import { useSelector } from 'react-redux';
 // import { useAuth0 } from '../../react-auth0-spa';
 
 import SummaryCards from './SummaryCards';
 
 const AdminDashboard = () => {
-  // const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
-  const dispatch = useDispatch();
-  React.useEffect(() => {
-    dispatch({ type: 'FETCH_USER_DETAILS' });
-  });
+  // const { user, isAuthenticated, loading } = useAuth0();
+  // const userFromState = useSelector((state) => state.db)
+  // console.log(userFromState)
   return (
     <Box>
       <Flex justify="space-between">
         <Text fontSize="2xl">Dashboard</Text>
+        {/* <p>{!loading && userFromState.name}</p> */}
       </Flex>
       <SummaryCards />
     </Box>
