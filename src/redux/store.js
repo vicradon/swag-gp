@@ -1,12 +1,14 @@
 import { createStore, combineReducers } from "redux";
 import dataReducer from "./data-reducer";
-import authReducer from './auth-reducer';
+import authReducer from "./auth-reducer";
 
 const rootReducer = combineReducers({
   data: dataReducer,
-  auth: authReducer
-})
+  auth: authReducer,
+});
 
-const store = createStore(rootReducer)
+const persistedState = localStorage.getItem("reduxState")
+  ? JSON.parse(localStorage.getItem("reduxState"))
+  : {};
 
-export default store;
+export default createStore(rootReducer, persistedState);

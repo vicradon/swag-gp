@@ -3,3 +3,4 @@ package-lock.json
 .gitignore
 not_to_be_seen
 build
+.env
