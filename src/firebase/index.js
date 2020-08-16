@@ -3,7 +3,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
-  apiKey: "AIzaSyDum2gqVIqFyD2oAIkuTFblPdqS56ORjEw",
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: "swag-gp.firebaseapp.com",
   databaseURL: "https://swag-gp.firebaseio.com",
   projectId: "swag-gp",
