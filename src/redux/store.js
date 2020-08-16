@@ -1,6 +1,12 @@
-import { createStore, compose, applyMiddleware } from "redux";
-import Reducer from "./reducer";
+import { createStore, combineReducers } from "redux";
+import dataReducer from "./data-reducer";
+import authReducer from './auth-reducer';
 
-const store = createStore(Reducer)
+const rootReducer = combineReducers({
+  data: dataReducer,
+  auth: authReducer
+})
+
+const store = createStore(rootReducer)
 
 export default store;

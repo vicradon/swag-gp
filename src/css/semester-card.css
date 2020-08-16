@@ -1,5 +1,6 @@
 :root {
   --primary-light:rgba(45, 145, 185, 0.8);
+  --anim-time:600ms;
 }
 .semester-card {
   padding: 0.5rem;
@@ -27,6 +28,28 @@
 .delete-course{
   color: lightcoral;
   cursor: pointer;
+}
+
+
+.pulse {
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  box-shadow: 0 0 0 0 #f0f0f0, 0 0 0 0 var(--primary-light);
+  transform: translate3d(0, 0, 0);
+  
+  animation: pulse 1.25s infinite cubic-bezier(0.26, 0.33, 0, 1);
+  -webkit-transition: var(--anim-time) 600ms ease-in-out;
+  -moz-transition: var(--anim-time) 600ms ease-in-out;
+  -ms-transition: var(--anim-time) 600ms ease-in-out;
+  -o-transition: var(--anim-time) 600ms ease-in-out;
+  transition: var(--anim-time) 600ms ease-in-out;
+}
+@keyframes pulse {
+  to {
+    box-shadow: 0 0 0 12px transparent, 0 0 0 18px rgba(227, 115, 14, 0);
+  }
 }
 
 @media(max-width:450px){

@@ -1,4 +1,4 @@
-import initialState from './initial-state'
+import initialState from './initial-state';
 import {
   handleCummulative,
   handleEdit,
@@ -14,13 +14,15 @@ import {
   arrangeLevel
 } from './utility-functions'
 
-function Reducer(state = initialState, action) {
+
+export default function dataReducer(state = initialState, action) {
   switch (action.type) {
     case "SET_CURRENT":
       return {
         ...state,
         currentLevel: state.levels[action.id],
       };
+
 
     case 'DELETE_COURSE':
       return handleCummulative(handlePosition(
@@ -77,12 +79,11 @@ function Reducer(state = initialState, action) {
 
     case 'SET_CURRENT_USING_LEVEL':
       return (
-        // handleCummulative(
         setCurrentUsingLevel(state, action)
-        // )
       )
+    case "START_APP":
+      return action.newState
     default:
       return state
   }
 }
-export default Reducer;

@@ -12,6 +12,7 @@
   "dependencies": {
     "firebase": "^7.5.2",
     "localforage": "^1.7.3",
+    "on-change": "^1.6.2",
     "prop-types": "^15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
@@ -21,6 +22,7 @@
     "react-scripts": "3.0.1",
     "redux": "4.0.4",
     "redux-firestore": "^0.11.0",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {

@@ -100,3 +100,10 @@ export function setCurrentUsingLevel(level){
     level:level
   }
 }
+
+export function startApp(newState){
+  return {
+    newState:newState,
+    type:'START_APP'
+  }
+}

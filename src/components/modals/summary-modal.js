@@ -24,8 +24,8 @@ export function getLevelsDetails(state){
 }
 
 const mapState = state => {
-  const levelsDetails = getLevelsDetails(state);
-  return { levelsDetails, cgpa:state.cummulative.cgpa }
+  const levelsDetails = getLevelsDetails(state.data);
+  return { levelsDetails, cgpa:state.data.cummulative.cgpa }
 }
 function getLevelCummulative(levObj){
   let ctnu = null; let ctgp = null;

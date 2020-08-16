@@ -3,8 +3,36 @@ import '../css/mdi/mdi.css'
 import '../css/nav-aside.css'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { auth } from '../firebase/index'
+import { useHistory } from 'react-router-dom'
+import { handleAuthState } from '../redux/actions/authActions'
 
-function Navbar() {
+const mapState = state => {
+  // let photoUrl;
+  // if (state.auth) photoUrl = state.auth.userDetails.photoUrl;
+  return {
+    isLoggedIn: state.auth.isLoggedIn,
+    photoUrl: '',
+    // displayName:state.auth.userDetails.displayName
+    displayName:''
+  };
+}
+
+const mapDispatch = {
+  handleAuthState
+}
+
+function Navbar({ isLoggedIn, photoUrl, displayName, handleAuthState }) {
+  const history = useHistory();
+
+  const signOut = () => {
+    auth.signOut()
+      .then(() => {
+        handleAuthState(false)
+        localStorage.removeItem('app state')
+        history.push('/pages/auth/signout')
+      })
+  }
 
   function openNav() {
     sideNav.current.classList.add('is-nav-open');
@@ -42,20 +70,28 @@ function Navbar() {
 
     return (
       <div ref={sideNav} className="side-nav">
-        <div className = "close-side-nav">
-          <p className = 'close-button'>
-            <i onClick = {closeNav} className = "material-icons">close</i>
+        <div className="close-side-nav">
+          <p className='close-button'>
+            <i onClick={closeNav} className="material-icons">close</i>
           </p>
-        
+
         </div>
         <div className="user-details">
-          <p className="username">Username</p>
-          <i className="material-icons user-icon">person_pin</i>
+          {
+            displayName ?
+              <p className="username">{displayName}</p> :
+              <p className="username">Username</p>
+          }
+          {
+            photoUrl ?
+              <img style={{ width: "5rem", borderRadius: "50%" }} src={photoUrl} alt="gravater" /> :
+              <i id="user-icon" className="material-icons">person_pin</i>
+          }
         </div>
         <p className="hor-line" style={{ border: "1px solid var(--primary-color)", margin: "2rem 0" }}></p>
         <div className='side-nav-links'>
-          <a className="side-nav-link" href="/pages/about">ABOUT</a>
-          <a className="side-nav-link auth-page" href="/pages/auth">LOGIN/SIGNUP</a>
+          <Link className="side-nav-link" to="/pages/about">ABOUT</Link>
+          <Link className="side-nav-link auth-page" to="/pages/auth/signin">LOGIN/SIGNUP</Link>
         </div>
       </div>
     )
@@ -64,15 +100,19 @@ function Navbar() {
   const SignedInLinks = () => {
     return (
       <>
-        <a className="nav-link logout-page" href="/pages/logout">LOGOUT</a>
+        <Link onClick={signOut} className="nav-link logout-page" to="/pages/logout">LOGOUT</Link>
+        {
+          photoUrl ?
+            <img style={{ width: "3rem", borderRadius: "50%" }} src={photoUrl} alt="gravater" /> :
+            <i id="user-icon" className="material-icons">person_pin</i>
+        }
       </>
     )
   }
   const SignedOutLinks = () => {
     return (
       <>
-        <a className="nav-link auth-page" href="/pages/auth">LOGIN/SIGNUP</a>
-        <i id="user-icon" className="material-icons">person_pin</i>
+        <Link className="nav-link auth-page" to="/pages/auth/signin">LOGIN/SIGNUP</Link>
       </>
     )
   }
@@ -84,11 +124,15 @@ function Navbar() {
         </p>
         <Link style = {{color:"inherit", textDecoration:"none"}} to = "/"><p id="swag-gp-logo">SWAG-GP</p></Link>
 
-        
+        <p id="swag-gp-logo"><Link style={{ color: 'var(--primary)', textDecoration: 'none' }} to='/'>SWAG-GP</Link></p>
         <div className="user-actions">
-          {/* <a className="nav-link" href="/pages/about">ABOUT</a> */}
-          {/* <a  href = "/pages/donate">DONATE</a> */}
-
+          <Link className="nav-link" to="/pages/about">ABOUT</Link>
+          {/* <Link  to = "/pages/donate">DONATE</Link> */}
+          {
+            isLoggedIn ?
+              <SignedInLinks /> :
+              <SignedOutLinks />
+          }
         </div>
       </nav>
       <SideNav />
@@ -96,11 +140,5 @@ function Navbar() {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    // auth: state.firebase.auth,
-    // profile: state.firebase.profile
-  }
-}
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar)

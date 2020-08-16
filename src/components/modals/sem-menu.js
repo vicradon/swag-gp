@@ -8,8 +8,8 @@ import { revertScroll } from '../../redux/utility-functions';
 
 const mapState = state => {
   return {
-    levelsDetails: getLevelsDetails(state),
-    activeLevel: state.currentLevel[0].level
+    levelsDetails: getLevelsDetails(state.data),
+    activeLevel: state.data.currentLevel[0].level
   }
 }
 const dispatch = {

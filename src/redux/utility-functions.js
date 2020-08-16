@@ -12,9 +12,9 @@ export function updateDetails(courses) {
   let tnu_arr1 = courses.map(x => x.units);
   let tgp_arr1 = courses.map(x => gtv(x.grade) * x.units);
 
-  let tnu = '';
-  let tgp = '';
-  let gpa = '';
+  let tnu;
+  let tgp;
+  let gpa;
   const noc = courses.length;
 
   if (tnu_arr1.length && tgp_arr1.length) {
@@ -350,11 +350,29 @@ export function setCurrentUsingLevel(state, action) {
   }
 }
 
-export function arrangeLevel(level){
+export function arrangeLevel(level) {
   if (level[0].id < level[1].id) {
     return [level[0], level[1]]
   }
   else {
     return [level[1], level[0]]
   }
+}
+
+export function snack(msg) {
+  const snackbar = document.querySelector('#snackbar');
+  snackbar.textContent = msg;
+  snackbar.className = "show";
+  setTimeout(() => {
+    snackbar.className = snackbar.className.replace("show", "");
+  }, 3000)
+}
+
+export function getCurrentUser(auth) {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      unsubscribe();
+      resolve(user);
+    }, reject);
+  });
 }

@@ -1,4 +1,4 @@
-const initialState = {
+let initialState = {
   levels: {
     1: [{
       id: 1,
@@ -69,4 +69,39 @@ const initialState = {
   }
 }
 
-export default initialState;
+if (localStorage.getItem('app state')) {
+  initialState = JSON.parse(localStorage.getItem('app state')).data
+}
+// else {
+//   initialState = db.collection('users').doc(user.uid).appState.data;
+// }
+ 
+
+// function getCurrentUser(auth) {
+//   return new Promise((resolve, reject) => {
+//     const unsubscribe = auth.onAuthStateChanged(user => {
+//       unsubscribe();
+//       resolve(user);
+//     }, reject);
+//   });
+// }
+// export default getCurrentUser(auth)
+//   .then(user => {
+//     console.log(user)
+//     // if (localStorage.getItem(user.uid)) {
+//     //   initialState = JSON.parse(localStorage.getItem(user.uid)).data
+//     // }
+//     return initialState
+//   })
+
+// const user = getCurrentUser();
+// if (user) {
+//   if (localStorage.getItem(user.uid)) {
+//     initialState = JSON.parse(localStorage.getItem(user.uid)).data
+//   }
+//   else {
+//     initialState = db.collection('users').doc(user.uid).appState.data;
+//   }
+// }
+
+export default initialState

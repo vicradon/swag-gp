@@ -44,9 +44,9 @@ textarea {
   outline: none;
 }
 
-textarea:focus, input:focus {
+/* textarea:focus, input:focus {
   border-color: transparent !important;
-}
+} */
 
 /* ------------------------------------ */
 button {
@@ -61,4 +61,19 @@ button:hover {
 
 iframe {
 	border: none !important;
+}
+
+.auth-btn {
+	cursor: pointer;
+}
+.toggle-password {
+	border-right: 1px solid var(--primary-color);
+	border-top: 1px solid var(--primary-color);
+	border-bottom: 1px solid var(--primary-color);
+	padding: 1px 0.5rem;
+	color: var(--primary-color);
+	cursor: pointer;
+}
+.password-input {
+	border-right: none !important;
 }
