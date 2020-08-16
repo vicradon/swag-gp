@@ -1,72 +1,83 @@
-import React, { useState } from 'react'
-import AuthLayout from '../AuthLayout'
-// import TwitterIcon from './twitter-icon'
-import firebase, { auth } from '../../../firebase/index'
-import { snack } from '../../../redux/utility-functions'
-import { connect } from 'react-redux'
-import { handleAuthState, getUserDetails, setUserState } from '../../../redux/actions/authActions'
-import { useHistory } from 'react-router-dom'
-
+import React, { useState } from "react";
+import AuthLayout from "../AuthLayout";
+import firebase, { auth } from "../../../firebase/index";
+import { snack } from "../../../redux/utility-functions";
+import { connect } from "react-redux";
+import {
+  handleAuthState,
+  getUserDetails,
+  setUserState,
+} from "../../../redux/actions/authActions";
+import { useHistory } from "react-router-dom";
 
 const mapDispatch = {
   handleAuthState,
   getUserDetails,
-  setUserState
-}
+  setUserState,
+};
 
 function SignIn({ handleAuthState, getUserDetails, setUserState }) {
+  React.useEffect(() => {
+    auth.getRedirectResult().then(function (result) {
+      var user = result.user;
+      console.log(user);
+    });
+  }, []);
+  
   const history = useHistory();
 
   const initialFormState = {
-    email: '',
-    password: ''
-  }
-  const [formData, setFormData] = useState(initialFormState)
-  const handleInput = event => {
-    setFormData({ ...formData, [event.target.name]: event.target.value })
-  }
-  const handleSubmit = event => {
+    email: "",
+    password: "",
+  };
+  const [formData, setFormData] = useState(initialFormState);
+  const handleInput = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+  const handleSubmit = (event) => {
     event.preventDefault();
-    auth.signInWithEmailAndPassword(formData.email, formData.password)
-      .then(cred => {
-        console.log(cred)
-        setFormData(initialFormState)
-        snack("Login successful!")
+    auth
+      .signInWithEmailAndPassword(formData.email, formData.password)
+      .then((credentials) => {
+        setFormData(initialFormState);
+        snack("Login successful!");
         handleAuthState(true);
         getUserDetails({
-          photoUrl: cred.user.photoURL,
-          displayName: cred.user.displayName
-        })
-        history.push('/')
+          photoUrl: credentials.user.photoURL,
+          displayName: credentials.user.displayName,
+        });
+        history.push("/");
       })
-      .catch(err => {
-        console.log(err)
-        snack(err.message)
-      })
-  }
-  const handleSignin = (provider) => {
-    auth.signInWithPopup(provider)
-      .then(cred => {
-        snack('Login succesful!')
-        handleAuthState(true);
-        const details = {
-          photoUrl: cred.user.photoURL,
-          displayName: cred.user.displayName
-        }
-        console.log(details)
-        getUserDetails(details)
-        setUserState(localStorage.getItem(cred.user.uid))
-        history.push('/')
-      })
-      .catch(err => {
-        console.log(err)
-        snack(err.message)
-      })
-  }
-  const handleGoogleSignin = (pr) => {
+      .catch((err) => {
+        console.log(err);
+        snack(err.message);
+      });
+  };
+
+  const handleGoogleSignin = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    handleSignin(provider)
-  }
+    auth
+      .signInWithRedirect(provider)
+      .then((credentials) => {
+        console.log({ credentials });
+        localStorage.setItem("credentials", JSON.stringify(credentials));
+
+        // snack('Login succesful!')
+        // handleAuthState(true);
+        // const details = {
+        //   photoUrl: credentials.user.photoURL,
+        //   displayName: credentials.user.displayName
+        // }
+        // console.log(details)
+        // getUserDetails(details)
+        // setUserState(localStorage.getItem(credentials.user.uid))
+        // history.push('/')
+      })
+      .catch((err) => {
+        console.log(err);
+        snack(err.message);
+      });
+  };
 
   return (
     <AuthLayout>
@@ -77,9 +88,15 @@ function SignIn({ handleAuthState, getUserDetails, setUserState }) {
           <div className="auth-buttons">
             <div onClick={handleGoogleSignin} className="auth-btn">
               <div className="auth-icon-wrapper">
-                <img alt="Google logo" className="auth-icon-svg" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+                <img
+                  alt="Google logo"
+                  className="auth-icon-svg"
+                  src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                />
               </div>
-              <p className="btn-text"><b>Google</b></p>
+              <p className="btn-text">
+                <b>Google</b>
+              </p>
             </div>
           </div>
         </div>
@@ -87,22 +104,44 @@ function SignIn({ handleAuthState, getUserDetails, setUserState }) {
         <form onSubmit={handleSubmit}>
           <label>
             <p>Email</p>
-            <input required onChange={handleInput} name='email' value={formData.email} type="email" />
+            <input
+              required
+              onChange={handleInput}
+              name="email"
+              value={formData.email}
+              type="email"
+            />
           </label>
           <label>
             <p>Password</p>
-            <input required onChange={handleInput} name='password' value={formData.password} type="password" />
+            <input
+              required
+              onChange={handleInput}
+              name="password"
+              value={formData.password}
+              type="password"
+            />
           </label>
-          <button className="signin-form__submit" >Submit</button>
+          <button className="signin-form__submit">Submit</button>
         </form>
 
         <div className="signin-form__misc">
-          <p>Need an account? <a href='./signup' className="signin-form__misc--link" >Sign Up</a></p>
-          <p>Forgot Password? <a href='./reset-password' className="signin-form__misc--link" >Reset it</a></p>
+          <p>
+            Need an account?{" "}
+            <a href="./signup" className="signin-form__misc--link">
+              Sign Up
+            </a>
+          </p>
+          <p>
+            Forgot Password?{" "}
+            <a href="./reset-password" className="signin-form__misc--link">
+              Reset it
+            </a>
+          </p>
         </div>
       </div>
     </AuthLayout>
-  )
+  );
 }
 
 export default connect(null, mapDispatch)(SignIn);
