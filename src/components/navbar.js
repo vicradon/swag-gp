@@ -40,30 +40,6 @@ function Navbar({ isLoggedIn, photoUrl, displayName, handleAuthState }) {
   function closeNav() {
     sideNav.current.classList.remove('is-nav-open');
   }
-  /* DO NOT DELETE THIS COMMENT! */
-
-  // const bodyClickClose = () => {
-  //   const body = document.querySelector('body');
-  //   body.addEventListener('click', event => {
-  //     // const a = (stuff) => event.target.classList.contains(stuff);
-  //     // if (!(
-  //     //   a('side-menu') ||
-  //     //   a('close-menu-cont') ||`
-  //     //   a('user-details') ||
-  //     //   a('user-icon') ||
-  //     //   a('hor-line') ||
-  //     //   a('username') ||
-  //     //   a('side-menu-links')
-  //     // )) closeNav();
-  //     console.log(event.target.style.zIndex)
-
-  //     if (event.target.tagName === 'main'){
-  //       console.log(event.target)
-  //       closeNav()
-  //     }
-  //   })
-  // }
-  // bodyClickClose();
   const sideNav = useRef(null);
 
   const SideNav = () => {
@@ -112,7 +88,7 @@ function Navbar({ isLoggedIn, photoUrl, displayName, handleAuthState }) {
   const SignedOutLinks = () => {
     return (
       <>
-        <Link className="nav-link auth-page" to="/pages/auth/signin">LOGIN/SIGNUP</Link>
+        <Link className="nav-link auth-page" to="/login">LOGIN</Link>
       </>
     )
   }
@@ -124,10 +100,8 @@ function Navbar({ isLoggedIn, photoUrl, displayName, handleAuthState }) {
         </p>
         <Link style = {{color:"inherit", textDecoration:"none"}} to = "/"><p id="swag-gp-logo">SWAG-GP</p></Link>
 
-        <p id="swag-gp-logo"><Link style={{ color: 'var(--primary)', textDecoration: 'none' }} to='/'>SWAG-GP</Link></p>
         <div className="user-actions">
-          <Link className="nav-link" to="/pages/about">ABOUT</Link>
-          {/* <Link  to = "/pages/donate">DONATE</Link> */}
+          <Link className="nav-link" to="/about">ABOUT</Link>
           {
             isLoggedIn ?
               <SignedInLinks /> :

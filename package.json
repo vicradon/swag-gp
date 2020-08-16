@@ -1,13 +1,13 @@
 {
-  "name": "gpa-calc",
+  "name": "swag-gp",
   "version": "1.0.0",
-  "description": "",
+  "description": "A gpa calculator",
   "keywords": [
     "swag-gp",
     "pwa"
   ],
   "main": "src/index.js",
-  "author": "Chukwujama Osinachi",
+  "author": "Osinachi Chukwujama",
   "license": "MIT",
   "dependencies": {
     "firebase": "^7.5.2",
