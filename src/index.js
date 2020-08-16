@@ -5,13 +5,7 @@ import store from './redux/store'
 import { Provider } from 'react-redux'
 import './styles.css'
 import * as serviceWorker from './serviceWorker.js';
-import firebase, { auth, db } from './firebase/index';
-import { snack } from "./redux/utility-functions";
-
-// auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-//   .catch(error => {
-//     snack(error.message)
-//   })
+import  { auth } from './firebase/index';
 
 function sendToBrowserStore(state) {
   localStorage.setItem('app state', JSON.stringify(state))

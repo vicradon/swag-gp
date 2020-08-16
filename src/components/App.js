@@ -3,7 +3,7 @@ import Navbar from "./navbar";
 import Aside from "./aside";
 import Main from './Main'
 import About from './pages/About'
-import SignIn from './pages/auth/signin'
+import Login from './pages/auth/login'
 import SignUp from './pages/auth/signup'
 import SignOut from './pages/auth/signout'
 import ResetPassword from './pages/auth/resetpassword'
@@ -23,11 +23,11 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path='/' component={MainApp} />
-          <Route path='/pages/about' component={About} />
-          <Route path='/pages/auth/signin' component={SignIn} />
-          <Route path='/pages/auth/signup' component={SignUp} />
-          <Route path='/pages/auth/signout'component={SignOut} />
-          <Route path='/pages/auth/reset-password'component={ResetPassword} />
+          <Route path='/about' component={About} />
+          <Route path='/login' component={Login} />
+          <Route path='/signup' component={SignUp} />
+          <Route path='/signout'component={SignOut} />
+          <Route path='/reset-password'component={ResetPassword} />
         </Switch>
       </div>
     </BrowserRouter>

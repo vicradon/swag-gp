@@ -121,7 +121,7 @@ export default function SignUp() {
         </form>
 
         <div className="signin-form__misc">
-          <p>Already have an account? <a href='./signin' className="signin-form__misc--link" >Log In</a></p>
+          <p>Already have an account? <a href='./signin' className="signin-form__misc--link" >Login</a></p>
         </div>
       </div>
     </AuthLayout>
