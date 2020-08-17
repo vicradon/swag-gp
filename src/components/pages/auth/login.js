@@ -10,26 +10,22 @@ import {
 } from "../../../redux/actions/authActions";
 import { useHistory } from "react-router-dom";
 
-const mapDispatch = {
-  handleAuthState,
-  getUserDetails,
-  setUserState,
-};
+function Login({ handleAuthState, getUserDetails, setUserState }) {
+  const history = useHistory();
 
-function SignIn({ handleAuthState, getUserDetails, setUserState }) {
   React.useEffect(() => {
-    auth.getRedirectResult().then(function (result) {
-      var user = result.user;
-      console.log(user);
+    auth.getRedirectResult().then((result) => {
+      if (result.user) {
+        history.push("/");
+      }
     });
   }, []);
-  
-  const history = useHistory();
 
   const initialFormState = {
     email: "",
     password: "",
   };
+
   const [formData, setFormData] = useState(initialFormState);
   const handleInput = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -56,27 +52,10 @@ function SignIn({ handleAuthState, getUserDetails, setUserState }) {
 
   const handleGoogleSignin = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth
-      .signInWithRedirect(provider)
-      .then((credentials) => {
-        console.log({ credentials });
-        localStorage.setItem("credentials", JSON.stringify(credentials));
-
-        // snack('Login succesful!')
-        // handleAuthState(true);
-        // const details = {
-        //   photoUrl: credentials.user.photoURL,
-        //   displayName: credentials.user.displayName
-        // }
-        // console.log(details)
-        // getUserDetails(details)
-        // setUserState(localStorage.getItem(credentials.user.uid))
-        // history.push('/')
-      })
-      .catch((err) => {
-        console.log(err);
-        snack(err.message);
-      });
+    auth.signInWithRedirect(provider).catch((err) => {
+      console.error(err);
+      snack(err.message);
+    });
   };
 
   return (
@@ -144,4 +123,10 @@ function SignIn({ handleAuthState, getUserDetails, setUserState }) {
   );
 }
 
-export default connect(null, mapDispatch)(SignIn);
+const mapDispatch = {
+  setUserState,
+  getUserDetails,
+  handleAuthState,
+};
+
+export default connect(null, mapDispatch)(Login);

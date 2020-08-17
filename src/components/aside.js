@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react'
-import '../css/mdi/mdi.css'
 import '../css/nav-aside.css'
 import '../css/popup.css'
 import '../css/pulse.css'
