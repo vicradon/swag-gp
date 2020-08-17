@@ -19,7 +19,7 @@ function Login({ handleAuthState, getUserDetails, setUserState }) {
         history.push("/");
       }
     });
-  }, []);
+  }, [history]);
 
   const initialFormState = {
     email: "",

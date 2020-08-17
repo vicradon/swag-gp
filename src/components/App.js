@@ -34,7 +34,7 @@ const App = () => {
         dispatch({ type: "SET_AUTH_DETAILS", payload: authState });
       }
     });
-  }, []);
+  }, [dispatch]);
   return (
     <BrowserRouter>
       <div className="container">
