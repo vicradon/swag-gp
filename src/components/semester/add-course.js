@@ -1,30 +1,27 @@
 import React, { useState } from 'react'
 import '../../css/semester-form-card.css'
 import { handleCourseAdd } from '../../redux/actions'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
-const dispatchProps = {
-  handleCourseAdd
-}
-
-function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
-  const [data, setData] = useState(form);
+function AddCourse({ form, semesterId, levelId }) {
+  const dispatch = useDispatch()
+  const [courseDetails, setCourseDetails] = useState(form);
 
   const handleInputChange = event => {
     const { name, value } = event.target
-    setData({ ...data, [name]: value })
+    setCourseDetails({ ...courseDetails, [name]: value })
   }
 
   const handleReset = event => {
     event.preventDefault();
-    setData(form)
+    setCourseDetails(form)
   }
 
   const handleAdd = event => {
     event.preventDefault();
-    if (data.name.trim().length !== 0 && data.grade.length !== 0 && data.grade !== "Select Grade" && data.units > 0 && data.units <= 10) {
-      handleCourseAdd(data, semesterid, levelid);
-      setData(form)
+    if (courseDetails.name.trim().length !== 0 && courseDetails.grade.length !== 0 && courseDetails.grade !== "Select Grade" && courseDetails.units > 0 && courseDetails.units <= 10) {
+      dispatch(handleCourseAdd(courseDetails, semesterId, levelId))
+      setCourseDetails(form)
     }
   }
   return (
@@ -35,7 +32,7 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
             type="text"
             className="semester-form-input"
             placeholder="Course Name"
-            value={data.name}
+            value={courseDetails.name}
             name="name"
             onChange={handleInputChange}
           />
@@ -43,7 +40,7 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
         <label>
           <select
             onChange={handleInputChange}
-            value={data.grade}
+            value={courseDetails.grade}
             name="grade"
           >
             <option>Select Grade</option>
@@ -62,7 +59,7 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
             className="semester-form-input"
             placeholder="Units"
             onChange={handleInputChange}
-            value={data.units}
+            value={courseDetails.units}
             name="units"
           />
         </label>
@@ -76,4 +73,4 @@ function AddCourse({ form, semesterid, levelid, handleCourseAdd }) {
   )
 }
 
-export default connect(null, dispatchProps)(AddCourse);
+export default AddCourse;
