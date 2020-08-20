@@ -1,18 +1,17 @@
 import React from "react";
 import Course from "./course";
 
-export default function Table({ courses, semester, level, editing }) {
-  const course_components = courses.map((course, index) => {
+export default function Table({ courses, semester, level }) {
+  const course_components = courses.map((course) => {
     return (
       <Course
-        key={index}
+        key={course.id}
         id={course.id}
         name={course.name}
         grade={course.grade}
         units={course.units}
-        semesterid={semester}
-        levelid={level}
-        editing={editing}
+        semester={semester}
+        level={level}
       />
     );
   });

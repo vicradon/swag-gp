@@ -5,13 +5,16 @@ export function setCurrent(id) {
   };
 }
 
-export function editCourse(courseid, semesterid, levelid) {
+export function fillEditForm(id, name, grade, units, semester, level) {
   return {
-    type: "EDIT_COURSE",
+    type: "FILL_EDIT_FORM",
     payload: {
-      courseid: courseid,
-      semesterid: semesterid,
-      levelid: levelid,
+      id,
+      name,
+      grade,
+      units,
+      semester,
+      level,
     },
   };
 }
@@ -36,24 +39,10 @@ export function addCourse(course, semester, level) {
     },
   };
 }
-export function updateCourse(data, semesterid, levelid) {
+export function updateCourse(course) {
   return {
     type: "UPDATE_COURSE",
-    payload: {
-      data: data,
-      semesterid: semesterid,
-      levelid: levelid,
-    },
-  };
-}
-
-export function cancelEdit(semesterid, levelid) {
-  return {
-    type: "CANCEL_EDIT",
-    payload: {
-      semesterid: semesterid,
-      levelid: levelid,
-    },
+    payload: { course },
   };
 }
 
@@ -105,5 +94,14 @@ export function startApp(newState) {
   return {
     newState: newState,
     type: "START_APP",
+  };
+}
+
+export function toggleEditing(bool) {
+  return {
+    type: "TOGGLE_EDITING",
+    payload: {
+      isEditing: bool,
+    },
   };
 }

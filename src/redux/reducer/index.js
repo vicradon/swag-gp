@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import levelsReducer from "./levels-reducer";
 import authReducer from "./auth-reducer";
-import activeComponentsReducer from "./active-components-reducer";
+import componentActivity from "./component-activity-reducer";
 
 const rootReducer = combineReducers({
   levels: levelsReducer,
   auth: authReducer,
-  activeComponents: activeComponentsReducer
+  componentActivity: componentActivity
 });
 
 export default rootReducer;

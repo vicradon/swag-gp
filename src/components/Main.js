@@ -21,8 +21,8 @@ import { useSelector } from "react-redux";
 const Main = () => {
   const { semesters, activeLevel } = useSelector((state) => {
     return {
-      activeLevel: state.activeComponents.activeLevel,
-      semesters: state.levels[state.activeComponents.activeLevel],
+      activeLevel: state.componentActivity.activeLevel,
+      semesters: state.levels[state.componentActivity.activeLevel],
     };
   });
 

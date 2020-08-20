@@ -14,9 +14,25 @@ export class StudentGpa {
   };
   pointSystem = 5;
 
-  addCourse(name, grade, units, semester, level) {
-    this.levels[level][semester]["courses"].push({ name, grade, units:Number(units) });
-  }
+  addCourse = (name, grade, units, semester, level) => {
+    this.levels[level][semester]["courses"].push({
+      name,
+      grade,
+      units: Number(units),
+      id: Math.random() * Math.random() * Date.now(),
+    });
+  };
+
+  updateCourse = (course) => {
+    const { id, name, grade, units, level, semester } = course;
+    const semesterInStore = this.levels[level][semester];
+    const courseInStore = semesterInStore["courses"].find(
+      (course) => course.id === id
+    );
+    const index = semesterInStore["courses"].indexOf(courseInStore);
+    const newCourse = { ...courseInStore, name, grade, units };
+    semesterInStore["courses"][index] = newCourse;
+  };
 
   gradeValue(rawGrade) {
     if (!rawGrade) throw new Error("Grade not specified");

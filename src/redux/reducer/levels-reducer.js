@@ -13,6 +13,10 @@ const studentGpaReducer = (state = studentGpa.levels, action) => {
       studentGpa.addCourse(name, grade, units, semester, level);
       return studentGpa.levels;
     }
+    case "UPDATE_COURSE": {
+      studentGpa.updateCourse(action.payload.course)
+      return studentGpa.levels
+    }
     default: {
       return state;
     }

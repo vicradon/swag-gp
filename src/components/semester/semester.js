@@ -4,7 +4,7 @@ import EditCourse from "./edit-course";
 import Table from "./table";
 import Summary from "./summary";
 import SemesterActions from "./semester-actions";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import "../../css/semester-card.css";
 import "../../css/semester-grade-table.css";
 import "../../css/semester-form-card.css";
@@ -16,6 +16,7 @@ import "../../css/style.css";
 // }
 
 function Semester({ name, level, courses }) {
+  const isEditing = useSelector((state) => state.componentActivity.isEditing);
   return (
     <section className="semester-card">
       <div className="semester-details">
@@ -23,23 +24,13 @@ function Semester({ name, level, courses }) {
         <p>{level} level</p>
       </div>
 
-      {/* {editing ? (
-        <EditCourse form={form} semesterId={id} levelId={level} />
+      {isEditing ? (
+        <EditCourse />
       ) : (
-        
-      )} */}
+        <AddCourse className="semester-form" semester={name} level={level} />
+      )}
 
-      <AddCourse
-        className="semester-form"
-        semester={name}
-        level={level}
-      />
-
-      <Table
-        courses={courses}
-        semester={name}
-        level={level}
-      />
+      <Table courses={courses} semester={name} level={level} />
       {/* <Summary details={details} cgpa={cgpa} />
       <SemesterActions semestername={name} semesterid={id} levelid={levelid} /> */}
     </section>
