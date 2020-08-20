@@ -1,15 +1,4 @@
-export class StudentGpa {
-  get semesterTemplate () {
-    return {
-      courses: [],
-      cumulative: {
-        grade_point_average: 0,
-        number_of_courses: 0,
-        grade_point: 0,
-        units: 0,
-      },
-    };
-  }
+class StudentGpa {
   levels = {
     "100": {
       semester1: { ...this.semesterTemplate },
@@ -49,6 +38,8 @@ export class StudentGpa {
     this.levels[level][semester] = { ...this.semesterTemplate };
   };
 
+  addLevel = () => {};
+
   gradeValue(rawGrade) {
     if (!rawGrade) throw new Error("Grade not specified");
     const grade = rawGrade.toUpperCase();
@@ -72,27 +63,7 @@ export class StudentGpa {
         throw new Error("Unknown grade");
     }
   }
-  get studentCumulative() {
-    let totalGradePoint = 0;
-    let totalUnits = 0;
-    Object.keys(this.levels).forEach((level) => {
-      let levelTotalGradePoint = 0;
-      let levelTotalUnits = 0;
-      Object.keys(this.levels[level]).forEach((semester) => {
-        const semesterCummulative = this.semesterCummulative(
-          this.levels[level][semester]
-        );
-        levelTotalGradePoint += semesterCummulative.total_grade_point;
-        levelTotalUnits += semesterCummulative.units;
-      });
-      totalGradePoint += levelTotalGradePoint;
-      totalUnits += levelTotalUnits;
-    });
-    return {
-      total_units: totalUnits,
-      total_grade_point: totalGradePoint,
-    };
-  }
+
   semesterCummulative = (semester) => {
     let number_of_courses = 0;
     let units = 0;
@@ -120,6 +91,39 @@ export class StudentGpa {
       this.studentCumulative.total_grade_point /
         this.studentCumulative.total_units || 0,
   };
+
+  get studentCumulative() {
+    let totalGradePoint = 0;
+    let totalUnits = 0;
+    Object.keys(this.levels).forEach((level) => {
+      let levelTotalGradePoint = 0;
+      let levelTotalUnits = 0;
+      Object.keys(this.levels[level]).forEach((semester) => {
+        const semesterCummulative = this.semesterCummulative(
+          this.levels[level][semester]
+        );
+        levelTotalGradePoint += semesterCummulative.total_grade_point;
+        levelTotalUnits += semesterCummulative.units;
+      });
+      totalGradePoint += levelTotalGradePoint;
+      totalUnits += levelTotalUnits;
+    });
+    return {
+      total_units: totalUnits,
+      total_grade_point: totalGradePoint,
+    };
+  }
+  get semesterTemplate() {
+    return {
+      courses: [],
+      cumulative: {
+        grade_point_average: 0,
+        number_of_courses: 0,
+        grade_point: 0,
+        units: 0,
+      },
+    };
+  }
 }
 
 export default StudentGpa;
