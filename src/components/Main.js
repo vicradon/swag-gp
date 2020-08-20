@@ -3,6 +3,7 @@ import Semester from "./semester/semester";
 // import store from '../redux/store'
 // import { setCurrent } from '../redux/actions'
 import { useSelector } from "react-redux";
+import AddSemesterButton from "./semester/AddSemesterButton";
 
 // const mapStateToProps = state => {
 //   return {
@@ -10,7 +11,6 @@ import { useSelector } from "react-redux";
 //     currentLevelId: state.data.currentLevelId
 //   }
 // };
-
 // const mapDispatchToProps = {
 //   setCurrent
 // };
@@ -28,14 +28,16 @@ const Main = () => {
 
   return (
     <main>
-      {Object.keys(semesters).map((semester) => {
+      {Object.keys(semesters).map((semester, index) => {
         return (
-          <Semester
-            key={`${semester}`}
-            level={activeLevel}
-            name={semester}
-            courses={semesters[semester].courses}
-          />
+          <React.Fragment key={`${semester}${index}${activeLevel}`}>
+            <Semester
+              level={activeLevel}
+              name={semester}
+              courses={semesters[semester].courses}
+            />
+            <AddSemesterButton semesterPosition={index} level={activeLevel} />
+          </React.Fragment>
         );
       })}
     </main>

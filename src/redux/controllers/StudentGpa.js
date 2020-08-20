@@ -1,15 +1,18 @@
 export class StudentGpa {
+  get semesterTemplate () {
+    return {
+      courses: [],
+      cumulative: {
+        grade_point_average: 0,
+        number_of_courses: 0,
+        grade_point: 0,
+        units: 0,
+      },
+    };
+  }
   levels = {
     "100": {
-      semester1: {
-        courses: [],
-        cumulative: {
-          grade_point_average: 0,
-          number_of_courses: 0,
-          grade_point: 0,
-          units: 0,
-        },
-      },
+      semester1: { ...this.semesterTemplate },
     },
   };
   pointSystem = 5;
@@ -40,6 +43,10 @@ export class StudentGpa {
       (course) => course.id === id
     );
     semesterInStore["courses"].splice(courseIndex, 1);
+  };
+
+  addSemester = (level, semester = "semester2") => {
+    this.levels[level][semester] = { ...this.semesterTemplate };
   };
 
   gradeValue(rawGrade) {
