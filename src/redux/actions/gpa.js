@@ -18,13 +18,13 @@ export function fillEditForm(id, name, grade, units, semester, level) {
     },
   };
 }
-export function deleteCourse(courseid, semesterid, levelid) {
+export function deleteCourse(id, semester, level) {
   return {
     type: "DELETE_COURSE",
     payload: {
-      courseid: courseid,
-      semesterid: semesterid,
-      levelid: levelid,
+      id,
+      semester,
+      level,
     },
   };
 }

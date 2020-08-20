@@ -34,6 +34,14 @@ export class StudentGpa {
     semesterInStore["courses"][index] = newCourse;
   };
 
+  deleteCourse = (id, semester, level) => {
+    const semesterInStore = this.levels[level][semester];
+    const courseIndex = semesterInStore["courses"].findIndex(
+      (course) => course.id === id
+    );
+    semesterInStore["courses"].splice(courseIndex, 1);
+  };
+
   gradeValue(rawGrade) {
     if (!rawGrade) throw new Error("Grade not specified");
     const grade = rawGrade.toUpperCase();
