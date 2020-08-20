@@ -1,40 +1,41 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { editCourse, deleteCourse } from '../../redux/actions'
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fillEditForm, deleteCourse, toggleEditing } from "../../redux/actions/gpa";
 
-const dispatch = {
-  editCourse,
-  deleteCourse
-}
-
-function Course({ id, name, grade, units, semesterid, levelid, editCourse, deleteCourse, editing }) {
-  const handleEdit = (event) => {
-    if (!editing) {
-      const course = event.target.parentNode.parentNode;
-      const courseid = id;
-      const semesterid = course.dataset.semesterid;
-      const levelid = course.dataset.levelid;
-      editCourse(courseid, semesterid, levelid)
+function Course({ id, name, grade, units, semester, level }) {
+  const dispatch = useDispatch();
+  const isEditing = useSelector((state) => state.componentActivity.isEditing);
+  const handleEdit = () => {
+    if (!isEditing) {
+      dispatch(toggleEditing(true))
+      dispatch(fillEditForm(id, name, grade, units, semester, level));
     }
-  }
-  const handleDelete = event => {
-    const course = event.target.parentNode.parentNode;
-    const courseid = id;
-    const semesterid = course.dataset.semesterid;
-    const levelid = course.dataset.levelid;
-    deleteCourse(courseid, semesterid, levelid)
-  }
+  };
+  const handleDelete = () => {
+    if (!isEditing) {
+      dispatch(deleteCourse(id, semester, level));
+    }
+  };
   return (
-    <div data-semesterid={semesterid} data-levelid={levelid} data-id={id} className="row">
+    <div
+      data-semester={semester}
+      data-levelid={level}
+      data-id={id}
+      className="row"
+    >
       <p className="cell">{name}</p>
       <p className="cell">{grade}</p>
       <p className="cell">{units}</p>
       <p className="cell">
-        <i onClick={handleEdit} className="material-icons edit-course">edit</i>
-        <i onClick={handleDelete} className="material-icons delete-course">delete</i>
+        <i onClick={handleEdit} className="material-icons edit-course">
+          edit
+        </i>
+        <i onClick={handleDelete} className="material-icons delete-course">
+          delete
+        </i>
       </p>
     </div>
-  )
+  );
 }
 
-export default connect(null, dispatch)(Course);
+export default Course;

@@ -17,9 +17,6 @@
   margin: 0;
   padding: 0;
 }
-.row:hover{
-  opacity: 0.8;
-}
 .row .cell {
   font-size: 15px;
   line-height: 1.2;

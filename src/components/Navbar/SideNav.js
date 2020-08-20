@@ -9,7 +9,6 @@ const SideNav = ({
   photoURL,
   signOut,
 }) => {
-  console.log({ photoURL });
   return (
     <div ref={sideNav} className="side-nav">
       <div className="close-side-nav">
