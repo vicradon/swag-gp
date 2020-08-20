@@ -15,31 +15,32 @@ import "../../css/style.css";
 //   return { cgpa: state.data.cummulative.cgpa }
 // }
 
-function Semester({
-  id,
-  name,
-  level,
-  courses,
-  form,
-  details,
-  levelid,
-  cgpa,
-  editing,
-}) {
+function Semester({ name, level, courses }) {
   return (
-    <section dataid={id} className="semester-card">
-      hey
-      {/* <div className="semester-details">
+    <section className="semester-card">
+      <div className="semester-details">
         <p>{name}</p>
-        <p>{level}</p>
+        <p>{level} level</p>
       </div>
-      {editing ?
-        <EditCourse form={form} semesterid={id} levelid={levelid} /> :
-        <AddCourse className="semester-form" form={form} semesterid={id} levelid={levelid} />
-      }
 
-      <Table courses={courses} semesterid={id} levelid={levelid} editing={editing} />
-      <Summary details={details} cgpa={cgpa} />
+      {/* {editing ? (
+        <EditCourse form={form} semesterId={id} levelId={level} />
+      ) : (
+        
+      )} */}
+
+      <AddCourse
+        className="semester-form"
+        semester={name}
+        level={level}
+      />
+
+      <Table
+        courses={courses}
+        semester={name}
+        level={level}
+      />
+      {/* <Summary details={details} cgpa={cgpa} />
       <SemesterActions semestername={name} semesterid={id} levelid={levelid} /> */}
     </section>
   );

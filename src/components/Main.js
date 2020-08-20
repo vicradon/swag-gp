@@ -19,19 +19,23 @@ import { useSelector } from "react-redux";
 // store.dispatch(setCurrent(currentLevelId));
 
 const Main = () => {
-  const { semesters } = useSelector((state) => {
+  const { semesters, activeLevel } = useSelector((state) => {
     return {
+      activeLevel: state.activeComponents.activeLevel,
       semesters: state.levels[state.activeComponents.activeLevel],
     };
   });
-
-  console.log(semesters);
 
   return (
     <main>
       {Object.keys(semesters).map((semester) => {
         return (
-          <Semester key={`${semester}`} courses={semesters[semester].courses} />
+          <Semester
+            key={`${semester}`}
+            level={activeLevel}
+            name={semester}
+            courses={semesters[semester].courses}
+          />
         );
       })}
     </main>

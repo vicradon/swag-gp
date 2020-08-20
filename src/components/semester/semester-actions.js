@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../../css/semester-form-card.css'
 import PopUp from '../pop-up';
-import { handleUpdateSemesterDetails, deleteSemester } from '../../redux/actions';
+import { handleUpdateSemesterDetails, deleteSemester } from '../../redux/actions/gpa';
 import { connect } from 'react-redux'
 import { disableScroll, revertScroll } from '../../redux/utility-functions';
 

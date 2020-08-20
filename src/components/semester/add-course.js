@@ -1,40 +1,35 @@
-import React, { useState } from 'react'
-import '../../css/semester-form-card.css'
-import { handleCourseAdd } from '../../redux/actions'
-import { useDispatch } from 'react-redux'
+import React, { useState } from "react";
+import "../../css/semester-form-card.css";
+import { addCourse } from "../../redux/actions/gpa";
+import { useDispatch } from "react-redux";
 
-function AddCourse({ form, semesterId, levelId }) {
-  const dispatch = useDispatch()
-  const [courseDetails, setCourseDetails] = useState(form);
+const AddCourse = ({ semester, level }) => {
+  const dispatch = useDispatch();
+  const defaultFormState = { courseName: "course 1", grade: "A", units: "4" };
+  const [courseDetails, setCourseDetails] = useState(defaultFormState);
 
-  const handleInputChange = event => {
-    const { name, value } = event.target
-    setCourseDetails({ ...courseDetails, [name]: value })
-  }
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCourseDetails({ ...courseDetails, [name]: value });
+  };
 
-  const handleReset = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    setCourseDetails(form)
-  }
-
-  const handleAdd = event => {
-    event.preventDefault();
-    if (courseDetails.name.trim().length !== 0 && courseDetails.grade.length !== 0 && courseDetails.grade !== "Select Grade" && courseDetails.units > 0 && courseDetails.units <= 10) {
-      dispatch(handleCourseAdd(courseDetails, semesterId, levelId))
-      setCourseDetails(form)
-    }
-  }
+    dispatch(addCourse(courseDetails, semester, level));
+    setCourseDetails(defaultFormState);
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="input-select">
-        <label className = "full-width">
+        <label className="full-width">
           <input
             type="text"
             className="semester-form-input"
             placeholder="Course Name"
-            value={courseDetails.name}
-            name="name"
+            value={courseDetails.courseName}
+            name="courseName"
             onChange={handleInputChange}
+            required={true}
           />
         </label>
         <label>
@@ -42,8 +37,9 @@ function AddCourse({ form, semesterId, levelId }) {
             onChange={handleInputChange}
             value={courseDetails.grade}
             name="grade"
+            required={true}
           >
-            <option>Select Grade</option>
+            <option disabled>Select Grade</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
@@ -61,16 +57,18 @@ function AddCourse({ form, semesterId, levelId }) {
             onChange={handleInputChange}
             value={courseDetails.units}
             name="units"
+            required={true}
           />
         </label>
       </div>
 
       <div className="form-actions">
-        <button onClick={handleReset} type="submit" className="semester-button reset-form">Reset</button>
-        <button onClick={handleAdd} className="semester-button add-course">Add</button>
+        <button type="submit" className="semester-button add-course">
+          Add
+        </button>
       </div>
     </form>
-  )
-}
+  );
+};
 
 export default AddCourse;

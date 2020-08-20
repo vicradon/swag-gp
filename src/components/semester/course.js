@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { editCourse, deleteCourse } from '../../redux/actions'
+import { editCourse, deleteCourse } from '../../redux/actions/gpa'
 
 const dispatch = {
   editCourse,

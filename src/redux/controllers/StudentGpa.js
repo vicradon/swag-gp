@@ -15,7 +15,7 @@ export class StudentGpa {
   pointSystem = 5;
 
   addCourse(name, grade, units, semester, level) {
-    this.levels[level][semester]["courses"].push({ name, grade, units });
+    this.levels[level][semester]["courses"].push({ name, grade, units:Number(units) });
   }
 
   gradeValue(rawGrade) {

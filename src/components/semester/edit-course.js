@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../../css/semester-form-card.css'
-import { updateCourse, cancelEdit } from '../../redux/actions'
+import { updateCourse, cancelEdit } from '../../redux/actions/gpa'
 import { connect } from 'react-redux'
 
 const dispatchProps = {
@@ -8,19 +8,19 @@ const dispatchProps = {
   cancelEdit
 }
 
-function EditCourse({ form, semesterid, levelid, updateCourse, cancelEdit }) {
-  const [data, setData] = useState(form);
+function EditCourse({ course, semesterid, levelid, updateCourse, cancelEdit }) {
+  const [courseData, setCourseData] = useState(course);
 
   const baseState = { name: '', grade: '', units: '' }
 
   const handleInputChange = event => {
     const { name, value } = event.target
-    setData({ ...data, [name]: value })
+    setCourseData({ ...courseData, [name]: value })
   }
 
   const handleReset = event => {
     event.preventDefault();
-    setData(baseState);
+    setCourseData(baseState);
   }
 
   const handleCancel = event => {
@@ -29,9 +29,9 @@ function EditCourse({ form, semesterid, levelid, updateCourse, cancelEdit }) {
   }
   const handleUpdate = event => {
     event.preventDefault();
-    if (data.name.trim().length !== 0 && data.grade.length !== 0 && data.grade !== "Select Grade" && data.units > 0 && data.units <= 10) {
-      updateCourse(data, semesterid, levelid);
-      setData(baseState)
+    if (courseData.name.trim().length !== 0 && courseData.grade.length !== 0 && courseData.grade !== "Select Grade" && courseData.units > 0 && courseData.units <= 10) {
+      updateCourse(courseData, semesterid, levelid);
+      setCourseData(baseState)
     }
   }
   return (
@@ -43,14 +43,14 @@ function EditCourse({ form, semesterid, levelid, updateCourse, cancelEdit }) {
             type="text"
             className="semester-form-input"
             placeholder="Course Name"
-            value={data.name}
+            value={courseData.name}
             name="name"
             onChange={handleInputChange}
           />
         </label>
 
         <label>
-          <select onChange={handleInputChange} value={data.grade} name="grade" id="grade-select">
+          <select onChange={handleInputChange} value={courseData.grade} name="grade" id="grade-select">
             <option>Select Grade</option>
             <option value="A">A</option>
             <option value="B">B</option>
@@ -68,7 +68,7 @@ function EditCourse({ form, semesterid, levelid, updateCourse, cancelEdit }) {
             className="semester-form-input"
             placeholder="Credits"
             onChange={handleInputChange}
-            value={data.units}
+            value={courseData.units}
             name="units"
           />
         </label>
