@@ -2,6 +2,7 @@ const initialState = {
   activeLevel: 100,
   isEditing: false,
   courseBeingEdited: {},
+  semesterBeingEdited: ""
 };
 
 const componentActivityReducer = (state = initialState, action) => {
@@ -16,6 +17,7 @@ const componentActivityReducer = (state = initialState, action) => {
       return {
         ...state,
         isEditing: action.payload.isEditing,
+        semesterBeingEdited: action.payload.semester
       };
     }
     case "FILL_EDIT_FORM": {
@@ -30,6 +32,12 @@ const componentActivityReducer = (state = initialState, action) => {
           grade,
           units,
         },
+      };
+    }
+    case "SET_REDUX_STORE_DATA": {
+      return {
+        ...state,
+        ...action.payload.data.componentActivity,
       };
     }
     default: {

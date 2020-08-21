@@ -16,7 +16,13 @@ import "../../css/style.css";
 // }
 
 function Semester({ name, level, courses }) {
-  const isEditing = useSelector((state) => state.componentActivity.isEditing);
+  const { isEditing, semesterBeingEdited } = useSelector((state) => {
+    return {
+      isEditing: state.componentActivity.isEditing,
+      semesterBeingEdited: state.componentActivity.semesterBeingEdited,
+    };
+  });
+
   return (
     <section className="semester-card">
       <div className="semester-details">
@@ -24,7 +30,7 @@ function Semester({ name, level, courses }) {
         <p>{level} level</p>
       </div>
 
-      {isEditing ? (
+      {isEditing && semesterBeingEdited === name ? (
         <EditCourse />
       ) : (
         <AddCourse className="semester-form" semester={name} level={level} />
