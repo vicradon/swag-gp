@@ -7,7 +7,7 @@ function Course({ id, name, grade, units, semester, level }) {
   const isEditing = useSelector((state) => state.componentActivity.isEditing);
   const handleEdit = () => {
     if (!isEditing) {
-      dispatch(toggleEditing(true))
+      dispatch(toggleEditing(true, semester))
       dispatch(fillEditForm(id, name, grade, units, semester, level));
     }
   };

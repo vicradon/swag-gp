@@ -97,11 +97,12 @@ export function startApp(newState) {
   };
 }
 
-export function toggleEditing(bool) {
+export function toggleEditing(bool, semester) {
   return {
     type: "TOGGLE_EDITING",
     payload: {
       isEditing: bool,
+      semester
     },
   };
 }

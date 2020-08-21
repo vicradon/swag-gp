@@ -26,6 +26,10 @@ const studentGpaReducer = (state = studentGpa.levels, action) => {
       studentGpa.addSemester(action.payload.level);
       return studentGpa.levels;
     }
+    case "SET_REDUX_STORE_DATA": {
+      studentGpa.levelsData = action.payload.data.levels;
+      return studentGpa.levels
+    }
     default: {
       return state;
     }

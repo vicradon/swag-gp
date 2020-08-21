@@ -40,6 +40,7 @@ class StudentGpa {
 
   addLevel = () => {};
 
+
   gradeValue(rawGrade) {
     if (!rawGrade) throw new Error("Grade not specified");
     const grade = rawGrade.toUpperCase();
@@ -123,6 +124,9 @@ class StudentGpa {
         units: 0,
       },
     };
+  }
+  set levelsData(data){
+    this.levels = data
   }
 }
 
