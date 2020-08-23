@@ -1,9 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import useWindowSize from "../hooks/useWindowSize";
 import { db } from "../firebase";
+import { FaSave, FaExchangeAlt } from "react-icons/fa";
+import LevelChangeModal from "./modals/LevelChangeModal";
 
 const Aside = () => {
-  const [unsavedChanges, toggleUnsavedChanges] = React.useState(false);
+  const size = useWindowSize();
+  const [levelChangeModalOpen, setLevelChanageModalOpen] = React.useState(
+    false
+  );
 
   const { authenticated, uid, componentActivity, levels } = useSelector(
     (state) => {
@@ -23,21 +29,19 @@ const Aside = () => {
         .set({ componentActivity, levels })
         .then(() => {
           console.log("saved");
-          toggleUnsavedChanges(false);
+          // toggleUnsavedChanges(false);
         });
     }
   };
 
   return (
     <aside>
-      <i
-        style={{ fontSize: 35 }}
-        onClick={handleSave}
-        id="save-changes"
-        className={`material-icons add-icon ${unsavedChanges && "orange"}`}
-      >
-        save
-      </i>
+      {levelChangeModalOpen && <LevelChangeModal closeModal={() => setLevelChanageModalOpen(false)} />}
+      <FaSave size={size.width > 600 ? 30 : 20} onClick={handleSave} />
+      <FaExchangeAlt
+        size={size.width > 600 ? 30 : 20}
+        onClick={() => setLevelChanageModalOpen(true)}
+      />
     </aside>
   );
 };

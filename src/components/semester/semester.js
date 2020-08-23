@@ -9,7 +9,6 @@ import "../../css/semester-card.css";
 import "../../css/semester-grade-table.css";
 import "../../css/semester-form-card.css";
 import "../../css/position.css";
-import "../../css/style.css";
 
 // const mapState = state => {
 //   return { cgpa: state.data.cummulative.cgpa }

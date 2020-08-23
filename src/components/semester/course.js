@@ -1,13 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fillEditForm, deleteCourse, toggleEditing } from "../../redux/actions/gpa";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import {
+  fillEditForm,
+  deleteCourse,
+  toggleEditing,
+} from "../../redux/actions/gpa";
 
 function Course({ id, name, grade, units, semester, level }) {
   const dispatch = useDispatch();
   const isEditing = useSelector((state) => state.componentActivity.isEditing);
   const handleEdit = () => {
     if (!isEditing) {
-      dispatch(toggleEditing(true, semester))
+      dispatch(toggleEditing(true, semester));
       dispatch(fillEditForm(id, name, grade, units, semester, level));
     }
   };
@@ -27,12 +32,8 @@ function Course({ id, name, grade, units, semester, level }) {
       <p className="cell">{grade}</p>
       <p className="cell">{units}</p>
       <p className="cell">
-        <i onClick={handleEdit} className="material-icons edit-course">
-          edit
-        </i>
-        <i onClick={handleDelete} className="material-icons delete-course">
-          delete
-        </i>
+        <FaEdit onClick={handleEdit} className="edit-course" />
+        <FaTrash onClick={handleDelete} className="delete-course" />
       </p>
     </div>
   );

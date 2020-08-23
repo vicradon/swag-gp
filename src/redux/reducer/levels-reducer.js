@@ -28,7 +28,19 @@ const studentGpaReducer = (state = studentGpa.levels, action) => {
     }
     case "SET_REDUX_STORE_DATA": {
       studentGpa.levelsData = action.payload.data.levels;
-      return studentGpa.levels
+      return studentGpa.levels;
+    }
+    case "SWITCH_LEVEL": {
+      studentGpa.checkOrAddLevel(action.payload.level);
+      return studentGpa.levels;
+    }
+    case "ADD_NEXT_LEVEL": {
+      studentGpa.addNextLevel();
+      return studentGpa.levels;
+    }
+    case "DELETE_LEVEL": {
+      studentGpa.deleteLevel(action.payload.level);
+      return studentGpa.levels;
     }
     default: {
       return state;
