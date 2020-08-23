@@ -9,10 +9,13 @@ import SignedInLinks from "./SignedInLinks";
 import SideNav from "./SideNav";
 
 const Navbar = () => {
-  const {
-    authenticated,
-    userDetails: { photoURL, displayName },
-  } = useSelector((state) => state.auth);
+  const { authenticated, photoURL, displayName } = useSelector((state) => {
+    return {
+      authenticated: state.auth.authenticated,
+      photoURL: state.auth.photoURL,
+      displayName: state.auth.displayName,
+    };
+  });
   const history = useHistory();
 
   const signOut = () => {

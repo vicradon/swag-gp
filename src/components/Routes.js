@@ -32,6 +32,9 @@ const Routes = () => {
         authState.authenticated = true;
         authState.userDetails = user.providerData[0];
         dispatch({ type: "SET_AUTH_DETAILS", payload: authState });
+      } else {
+        authState.authenticated = false;
+        dispatch({ type: "SET_AUTH_DETAILS", payload: authState });
       }
     });
   }, [dispatch]);

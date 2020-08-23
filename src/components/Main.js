@@ -17,7 +17,7 @@ const Main = () => {
   } = useSelector((state) => {
     return {
       authenticated: state.auth.authenticated,
-      uid: state.auth.userDetails.uid,
+      uid: state.auth.userDetails && state.auth.userDetails.uid,
       activeLevel: state.componentActivity.activeLevel,
       semesters: state.levels[state.componentActivity.activeLevel],
       levels: state.levels,
@@ -39,8 +39,9 @@ const Main = () => {
           usersRef.doc(uid).set({ levels, componentActivity });
         }
       });
+    } else {
+      setFetching(false);
     }
-    // }, []);
   }, [authenticated, uid, levels, componentActivity, dispatch]);
 
   React.useEffect(() => {
@@ -60,18 +61,19 @@ const Main = () => {
     <Loader />
   ) : (
     <main>
-      {Object.keys(semesters).map((semester) => {
-        return (
-          <React.Fragment key={`${semester}${Math.random()}`}>
+      <React.Fragment>
+        {Object.keys(semesters).map((semester) => {
+          return (
             <Semester
+              key={semester}
               level={activeLevel}
               name={semester}
               courses={semesters[semester].courses}
             />
-            <AddSemesterButton level={activeLevel} />
-          </React.Fragment>
-        );
-      })}
+          );
+        })}
+        <AddSemesterButton level={activeLevel} semestersLength={Object.keys(semesters).length} />
+      </React.Fragment>
     </main>
   );
 };
