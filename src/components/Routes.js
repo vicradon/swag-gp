@@ -11,10 +11,8 @@ import LogOut from "./pages/auth/LogOut";
 import ResetPassword from "./pages/auth/resetpassword";
 import { auth } from "../firebase";
 
-import "../css/style.css";
-import "../css/mdi/mdi.css";
+import "../css/reset.css";
 import "../css/position.css";
-import "../css/pop-ups.css";
 
 const AsideMain = () => (
   <>

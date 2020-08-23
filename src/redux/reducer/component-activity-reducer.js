@@ -2,7 +2,7 @@ const initialState = {
   activeLevel: 100,
   isEditing: false,
   courseBeingEdited: {},
-  semesterBeingEdited: ""
+  semesterBeingEdited: "",
 };
 
 const componentActivityReducer = (state = initialState, action) => {
@@ -17,7 +17,7 @@ const componentActivityReducer = (state = initialState, action) => {
       return {
         ...state,
         isEditing: action.payload.isEditing,
-        semesterBeingEdited: action.payload.semester
+        semesterBeingEdited: action.payload.semester,
       };
     }
     case "FILL_EDIT_FORM": {
@@ -38,6 +38,18 @@ const componentActivityReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload.data.componentActivity,
+      };
+    }
+    case "SWITCH_LEVEL": {
+      return {
+        ...state,
+        activeLevel: action.payload.level,
+      };
+    }
+    case "DELETE_LEVEL": {
+      return {
+        ...state,
+        activeLevel: Number(action.payload.level) - 100,
       };
     }
     default: {

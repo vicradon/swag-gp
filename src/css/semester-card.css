@@ -22,7 +22,7 @@
 
 .edit-course {
   color: var(--primary-light);
-  margin-right: 0.2rem;
+  margin-right: 1rem;
   cursor: pointer;
 }
 .delete-course{

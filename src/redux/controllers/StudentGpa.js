@@ -3,6 +3,12 @@ class StudentGpa {
     "100": {
       semester1: { ...this.semesterTemplate },
     },
+    "200": {
+      semester1: { ...this.semesterTemplate },
+    },
+    "300": {
+      semester1: { ...this.semesterTemplate },
+    },
   };
   pointSystem = 5;
 
@@ -40,7 +46,24 @@ class StudentGpa {
 
   addLevel = () => {};
 
+  checkOrAddLevel = (level) => {
+    if (!this.levels[level]) {
+      this.levels[level] = {
+        semester1: { ...this.semesterTemplate },
+      };
+    }
+  };
 
+  addNextLevel = () => {
+    const previousHighest = Math.max(...Object.keys(this.levels));
+    this.levels[Number(previousHighest) + 100] = {
+      semester1: { ...this.semesterTemplate },
+    };
+  };
+
+  deleteLevel = (level) => {
+    delete(this.levels[level])
+  }
   gradeValue(rawGrade) {
     if (!rawGrade) throw new Error("Grade not specified");
     const grade = rawGrade.toUpperCase();
@@ -125,8 +148,11 @@ class StudentGpa {
       },
     };
   }
-  set levelsData(data){
-    this.levels = data
+  get availableLevels(){
+    return Object.keys(this.levels)
+  }
+  set levelsData(data) {
+    this.levels = data;
   }
 }
 

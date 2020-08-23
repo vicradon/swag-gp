@@ -5,7 +5,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 8;
+  z-index: 3;
   height: 100%;
 }
 .overlay {
@@ -14,7 +14,7 @@
   left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 8;
+  z-index: 3;
   height: 100%;
 }
 
@@ -26,7 +26,7 @@
   position: relative;
   max-width: 420px;
   margin: 10% auto;
-  z-index: 9;
+  z-index: 4;
 }
 
 .loading-text {

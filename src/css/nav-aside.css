@@ -1,16 +1,20 @@
 :root {
-  --nav-color:#fff;
-  --hover-color:#ddd;
-  --hover-font-size:15px;
-  --hover-icon-font-size:2.3rem;
-  --primary-color:#2d92b9;
+  --nav-color: #fff;
+  --hover-color: #ddd;
+  --hover-font-size: 15px;
+  --hover-icon-font-size: 2.3rem;
 }
 aside {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   margin-top: 2rem;
-  background-color:var(--primary-color) !important ;
+  background-color: var(--primary) !important ;
   border-top: 6.5px solid #277ea0;
+  padding-top: 1rem !important;
+}
+aside svg {
+  margin: 1rem 0;
 }
 .close-menu-cont {
   display: flex;
@@ -20,7 +24,6 @@ aside {
 .add-icon {
   cursor: pointer;
   margin: 1rem 0;
-
 }
 nav {
   display: flex;
@@ -32,7 +35,7 @@ nav * {
   cursor: pointer;
 }
 #swag-gp-logo {
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   background-color: var(--nav-color);
   font-size: 1.3rem;
   color: rgba(45, 145, 185, 0.8);
@@ -42,7 +45,8 @@ nav * {
   font-size: 2rem;
   color: var(--nav-color);
 }
-#user-icon:hover, #show-chart:hover {
+#user-icon:hover,
+#show-chart:hover {
   color: var(--hover-color);
 }
 .user-actions {
@@ -66,17 +70,17 @@ nav * {
 }
 :root {
   --side-nav-width: 70vw;
-  --negative-width:-70vw;
+  --negative-width: -70vw;
 }
 .side-nav {
   position: fixed;
-  z-index: 5;
+  z-index: 2;
   height: 100% !important;
   width: var(--side-nav-width);
   background-color: white !important;
   text-align: left;
   overflow: auto;
-  transition: margin .5s;
+  transition: margin 0.5s;
   margin-left: var(--negative-width) !important;
 }
 .side-nav.is-nav-open {
@@ -99,7 +103,7 @@ nav * {
 }
 .user-icon {
   font-size: 5rem;
-  color: var(--primary-color);
+  color: var(--primary);
 }
 .side-nav-links {
   padding: 0 1rem;
@@ -113,7 +117,7 @@ nav * {
   margin: 0.5rem 0;
 }
 
-@media (max-width:700px){
+@media (max-width: 700px) {
   aside {
     display: flex;
     flex-direction: row;
@@ -122,9 +126,13 @@ nav * {
     border-top: none;
     position: fixed !important;
     bottom: 0 !important;
+    padding-top: 0 !important;
+  }
+  aside svg {
+    margin: 0 1rem;
   }
 }
-@media(max-width:450px){
+@media (max-width: 450px) {
   .user-actions {
     display: none;
   }
