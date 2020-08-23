@@ -9,7 +9,7 @@ const Aside = () => {
     (state) => {
       return {
         authenticated: state.auth.authenticated,
-        uid: state.auth.userDetails.uid,
+        uid: state.auth.userDetails && state.auth.userDetails.uid,
         levels: state.levels,
         componentActivity: state.componentActivity,
       };
