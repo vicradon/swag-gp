@@ -9,12 +9,12 @@ import "../../css/semester-grade-table.css";
 import "../../css/semester-form-card.css";
 import "../../css/position.css";
 
-function Semester({ name, level, courses }) {
+function Semester({ name, level, courses, cumulative }) {
   const { isEditing, semesterBeingEdited } = useSelector((state) => {
     return {
       isEditing: state.componentActivity.isEditing,
       semesterBeingEdited: state.componentActivity.semesterBeingEdited,
-      cumulative: state.levels.cumulative
+      cumulative: state.studentDetails.cumulative,
     };
   });
 
@@ -33,7 +33,7 @@ function Semester({ name, level, courses }) {
 
       <Table courses={courses} semester={name} level={level} />
 
-      <Summary />
+      <Summary cumulative={cumulative} />
     </section>
   );
 }

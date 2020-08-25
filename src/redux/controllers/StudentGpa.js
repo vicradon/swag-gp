@@ -1,19 +1,92 @@
 class StudentGpa {
-  levels = {
-    "100": {
-      semester1: { ...this.semesterTemplate },
+  studentDetails = {
+    levels: {
+      "100": {
+        semester1: { ...this.semesterTemplate },
+      },
+      "200": {
+        semester1: { ...this.semesterTemplate },
+      },
+      "300": {
+        semester1: { ...this.semesterTemplate },
+      },
     },
-    "200": {
-      semester1: { ...this.semesterTemplate },
+    pointSystem:5,
+    gradeValue(rawGrade, pointSystem) {
+      if (!rawGrade) throw new Error("Grade not specified");
+      const grade = rawGrade.toUpperCase();
+      switch (grade) {
+        case "A": {
+          return pointSystem === 5 ? 5 : 4;
+        }
+        case "B": {
+          return pointSystem === 5 ? 4 : 3;
+        }
+        case "C": {
+          return pointSystem === 5 ? 3 : 2;
+        }
+        case "D": {
+          return pointSystem === 5 ? 2 : 1;
+        }
+        case "F": {
+          return pointSystem === 5 ? 0 : 0;
+        }
+        default:
+          throw new Error("Unknown grade");
+      }
     },
-    "300": {
-      semester1: { ...this.semesterTemplate },
+    get cumulative() {
+      const getSemesterCummulative = (semester) => {
+        let number_of_courses = 0;
+        let units = 0;
+        let total_grade_point = 0;
+        semester.courses &&
+          semester.courses.forEach((course) => {
+            units += course.units;
+            number_of_courses++;
+            total_grade_point += this.gradeValue(course.grade, this.pointSystem) * course.units;
+          });
+
+        const grade_point_average = Number(
+          (total_grade_point / units).toFixed(2)
+        );
+
+        return {
+          number_of_courses,
+          units,
+          total_grade_point,
+          grade_point_average,
+        };
+      };
+      let totalGradePoint = 0;
+      let totalUnits = 0;
+      Object.keys(this.levels).forEach((level) => {
+        let levelTotalGradePoint = 0;
+        let levelTotalUnits = 0;
+        Object.keys(this.levels[level]).forEach((semester) => {
+          const semesterCummulative = getSemesterCummulative(
+            this.levels[level][semester]
+          );
+          levelTotalGradePoint += semesterCummulative.total_grade_point;
+          levelTotalUnits += semesterCummulative.units;
+        });
+        totalGradePoint += levelTotalGradePoint;
+        totalUnits += levelTotalUnits;
+      });
+      return {
+        total_units: totalUnits,
+        total_grade_point: totalGradePoint,
+        grade_point_average: isNaN(
+          Number((totalGradePoint / totalUnits).toFixed(2))
+        )
+          ? 0
+          : Number((totalGradePoint / totalUnits).toFixed(2))
+      };
     },
   };
-  pointSystem = 5;
 
   addCourse = (name, grade, units, semester, level) => {
-    this.levels[level][semester]["courses"].push({
+    this.studentDetails.levels[level][semester]["courses"].push({
       name,
       grade,
       units: Number(units),
@@ -23,7 +96,7 @@ class StudentGpa {
 
   updateCourse = (course) => {
     const { id, name, grade, units, level, semester } = course;
-    const semesterInStore = this.levels[level][semester];
+    const semesterInStore = this.studentDetails.levels[level][semester];
     const courseInStore = semesterInStore["courses"].find(
       (course) => course.id === id
     );
@@ -33,7 +106,7 @@ class StudentGpa {
   };
 
   deleteCourse = (id, semester, level) => {
-    const semesterInStore = this.levels[level][semester];
+    const semesterInStore = this.studentDetails.levels[level][semester];
     const courseIndex = semesterInStore["courses"].findIndex(
       (course) => course.id === id
     );
@@ -41,114 +114,60 @@ class StudentGpa {
   };
 
   addSemester = (level, semester = "semester2") => {
-    this.levels[level][semester] = { ...this.semesterTemplate };
+    this.studentDetails.levels[level][semester] = { ...this.semesterTemplate };
   };
 
   addLevel = () => {};
 
   checkOrAddLevel = (level) => {
-    if (!this.levels[level]) {
-      this.levels[level] = {
+    if (!this.studentDetails.levels[level]) {
+      this.studentDetails.levels[level] = {
         semester1: { ...this.semesterTemplate },
       };
     }
   };
 
   addNextLevel = () => {
-    const previousHighest = Math.max(...Object.keys(this.levels));
-    this.levels[Number(previousHighest) + 100] = {
+    const previousHighest = Math.max(
+      ...Object.keys(this.studentDetails.levels)
+    );
+    this.studentDetails.levels[Number(previousHighest) + 100] = {
       semester1: { ...this.semesterTemplate },
     };
   };
 
   deleteLevel = (level) => {
-    delete this.levels[level];
+    delete this.studentDetails.levels[level];
   };
-  gradeValue(rawGrade) {
-    if (!rawGrade) throw new Error("Grade not specified");
-    const grade = rawGrade.toUpperCase();
-    switch (grade) {
-      case "A": {
-        return this.pointSystem === 5 ? 5 : 4;
-      }
-      case "B": {
-        return this.pointSystem === 5 ? 4 : 3;
-      }
-      case "C": {
-        return this.pointSystem === 5 ? 3 : 2;
-      }
-      case "D": {
-        return this.pointSystem === 5 ? 2 : 1;
-      }
-      case "F": {
-        return this.pointSystem === 5 ? 0 : 0;
-      }
-      default:
-        throw new Error("Unknown grade");
-    }
-  }
 
-  semesterCummulative = (semester) => {
-    let number_of_courses = 0;
-    let units = 0;
-    let total_grade_point = 0;
-    semester.courses &&
-      semester.courses.forEach((course) => {
-        units += course.units;
-        number_of_courses++;
-        total_grade_point += this.gradeValue(course.grade) * course.units;
-      });
-
-    const grade_point_average = Number((total_grade_point / units).toFixed(2));
-
-    return {
-      number_of_courses,
-      units,
-      total_grade_point,
-      grade_point_average,
-    };
-  };
-  get cumulative() {
-    return {
-      total_units: this.studentCumulative.total_units,
-      total_grade_point: this.studentCumulative.total_grade_point,
-      grade_point_average:
-        this.studentCumulative.total_grade_point /
-          this.studentCumulative.total_units || 0,
-    };
-  }
-
-  get studentCumulative() {
-    let totalGradePoint = 0;
-    let totalUnits = 0;
-    Object.keys(this.levels).forEach((level) => {
-      let levelTotalGradePoint = 0;
-      let levelTotalUnits = 0;
-      Object.keys(this.levels[level]).forEach((semester) => {
-        const semesterCummulative = this.semesterCummulative(
-          this.levels[level][semester]
-        );
-        levelTotalGradePoint += semesterCummulative.total_grade_point;
-        levelTotalUnits += semesterCummulative.units;
-      });
-      totalGradePoint += levelTotalGradePoint;
-      totalUnits += levelTotalUnits;
-    });
-    return {
-      total_units: totalUnits,
-      total_grade_point: totalGradePoint,
-    };
-  }
   get semesterTemplate() {
     return {
       courses: [],
-      cumulative: {
-        grade_point_average: 0,
-        number_of_courses: 0,
-        grade_point: 0,
-        units: 0,
-      },
-      get supposedCumulative() {
+      pointSystem: 5,
+      cumulative() {
+        const gradeValue = (rawGrade, pointSystem) => {
+          if (!rawGrade) throw new Error("Grade not specified");
+          const grade = rawGrade.toUpperCase();
+          switch (grade) {
+            case "A": {
+              return pointSystem === 5 ? 5 : 4;
+            }
+            case "B": {
+              return pointSystem === 5 ? 4 : 3;
+            }
+            case "C": {
+              return pointSystem === 5 ? 3 : 2;
+            }
+            case "D": {
+              return pointSystem === 5 ? 2 : 1;
+            }
+            case "F": {
+              return pointSystem === 5 ? 0 : 0;
+            }
+            default:
+              throw new Error("Unknown grade");
+          }
+        };
         let number_of_courses = 0;
         let units = 0;
         let total_grade_point = 0;
@@ -156,7 +175,7 @@ class StudentGpa {
           this.courses.forEach((course) => {
             units += course.units;
             number_of_courses++;
-            total_grade_point += this.gradeValue(course.grade) * course.units;
+            total_grade_point += gradeValue(course.grade, this.pointSystem) * course.units;
           });
 
         const grade_point_average = isNaN(
@@ -174,10 +193,10 @@ class StudentGpa {
     };
   }
   get availableLevels() {
-    return Object.keys(this.levels);
+    return Object.keys(this.studentDetails.levels);
   }
   set levelsData(data) {
-    this.levels = data;
+    this.studentDetails.levels = data;
   }
 }
 
