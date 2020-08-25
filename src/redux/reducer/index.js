@@ -1,14 +1,12 @@
 import { combineReducers } from "redux";
-import levelsReducer from "./levels-reducer";
+import studentDetailsReducer from "./student-details-reducer";
 import authReducer from "./auth-reducer";
 import componentActivity from "./component-activity-reducer";
-import cumulativeReducer from "./cumulative-reducer";
 
 const rootReducer = combineReducers({
-  levels: levelsReducer,
+  studentDetails: studentDetailsReducer,
   auth: authReducer,
   componentActivity: componentActivity,
-  cumulative: cumulativeReducer
 });
 
 export default rootReducer;

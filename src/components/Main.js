@@ -19,8 +19,8 @@ const Main = () => {
       authenticated: state.auth.authenticated,
       uid: state.auth.userDetails && state.auth.userDetails.uid,
       activeLevel: state.componentActivity.activeLevel,
-      semesters: state.levels[state.componentActivity.activeLevel],
-      levels: state.levels,
+      semesters: state.studentDetails.levels[state.componentActivity.activeLevel],
+      levels: state.studentDetails.levels,
       componentActivity: state.componentActivity,
     };
   });
@@ -63,13 +63,13 @@ const Main = () => {
     <main>
       <React.Fragment>
         {Object.keys(semesters).map((semester) => {
-          // console.log(semesters[semester].supposedCumulative)
           return (
             <Semester
               key={semester}
               level={activeLevel}
               name={semester}
               courses={semesters[semester].courses}
+              cumulative={semesters[semester].cumulative()}
             />
           );
         })}

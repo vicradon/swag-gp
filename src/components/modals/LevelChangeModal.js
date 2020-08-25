@@ -6,7 +6,7 @@ const LevelChangeModal = ({ closeModal }) => {
   const dispatch = useDispatch();
   const { activeLevel, levels } = useSelector((state) => ({
     activeLevel: state.componentActivity.activeLevel,
-    levels: Object.keys(state.levels),
+    levels: Object.keys(state.studentDetails.levels),
   }));
 
   const handleAddNextLevel = () => {
