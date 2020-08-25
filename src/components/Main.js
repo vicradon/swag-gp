@@ -63,6 +63,7 @@ const Main = () => {
     <main>
       <React.Fragment>
         {Object.keys(semesters).map((semester) => {
+          // console.log(semesters[semester].supposedCumulative)
           return (
             <Semester
               key={semester}

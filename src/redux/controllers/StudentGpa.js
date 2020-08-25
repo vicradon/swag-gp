@@ -62,8 +62,8 @@ class StudentGpa {
   };
 
   deleteLevel = (level) => {
-    delete(this.levels[level])
-  }
+    delete this.levels[level];
+  };
   gradeValue(rawGrade) {
     if (!rawGrade) throw new Error("Grade not specified");
     const grade = rawGrade.toUpperCase();
@@ -108,13 +108,15 @@ class StudentGpa {
       grade_point_average,
     };
   };
-  cummulative = {
-    total_units: this.studentCumulative.total_units,
-    total_grade_point: this.studentCumulative.total_grade_point,
-    grade_point_average:
-      this.studentCumulative.total_grade_point /
-        this.studentCumulative.total_units || 0,
-  };
+  get cumulative() {
+    return {
+      total_units: this.studentCumulative.total_units,
+      total_grade_point: this.studentCumulative.total_grade_point,
+      grade_point_average:
+        this.studentCumulative.total_grade_point /
+          this.studentCumulative.total_units || 0,
+    };
+  }
 
   get studentCumulative() {
     let totalGradePoint = 0;
@@ -146,10 +148,33 @@ class StudentGpa {
         grade_point: 0,
         units: 0,
       },
+      get supposedCumulative() {
+        let number_of_courses = 0;
+        let units = 0;
+        let total_grade_point = 0;
+        this.courses &&
+          this.courses.forEach((course) => {
+            units += course.units;
+            number_of_courses++;
+            total_grade_point += this.gradeValue(course.grade) * course.units;
+          });
+
+        const grade_point_average = isNaN(
+          Number((total_grade_point / units).toFixed(2))
+        )
+          ? 0
+          : Number((total_grade_point / units).toFixed(2));
+        return {
+          number_of_courses,
+          units,
+          total_grade_point,
+          grade_point_average,
+        };
+      },
     };
   }
-  get availableLevels(){
-    return Object.keys(this.levels)
+  get availableLevels() {
+    return Object.keys(this.levels);
   }
   set levelsData(data) {
     this.levels = data;

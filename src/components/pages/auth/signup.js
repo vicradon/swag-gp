@@ -1,83 +1,101 @@
-import React, { useState, useRef } from 'react'
-import firebase, { auth, db } from '../../../firebase/index'
-import AuthLayout from '../AuthLayout'
+import React, { useState, useRef } from "react";
+import firebase, { auth, db } from "../../../firebase/index";
+import AuthLayout from "../AuthLayout";
 // import TwitterIcon from './twitter-icon'
-import { snack } from '../../../redux/utility-functions'
+import { snack } from "../../../redux/utility-functions";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function SignUp() {
   const initialState = {
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: ''
-  }
-  const [formData, setFormData] = useState(initialState)
-  const handleInput = event => {
-    setFormData({ ...formData, [event.target.name]: event.target.value })
-  }
-  const handleSubmit = event => {
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+  };
+  const [formData, setFormData] = useState(initialState);
+  const handleInput = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+  const [passwordType, setPasswordType] = React.useState("password");
+  const handleSubmit = (event) => {
     event.preventDefault();
-    auth.createUserWithEmailAndPassword(formData.email, formData.password)
+    auth
+      .createUserWithEmailAndPassword(formData.email, formData.password)
       .then(() => {
         const user = auth.currentUser;
-        return db.collection('users').doc(user.uid).set({
-          profile: {
-            displayName: `${formData.firstname} ${formData.lastname}`
-          }
-        }).catch(err => console.log("Error occured while saving user data", err))
+        return db
+          .collection("users")
+          .doc(user.uid)
+          .set({
+            profile: {
+              displayName: `${formData.firstname} ${formData.lastname}`,
+            },
+          })
+          .catch((err) =>
+            console.log("Error occured while saving user data", err)
+          );
       })
       .then(() => {
-        setFormData(initialState)
-        snack('Sign up successful')
-        window.location.href = '/'
-
+        setFormData(initialState);
+        snack("Sign up successful");
+        window.location.href = "/";
       })
-      .catch(err => {
-        console.log(err)
-        snack(err.message)
-      })
-  }
+      .catch((err) => {
+        console.log(err);
+        snack(err.message);
+      });
+  };
   const togglePasswordVisibility = () => {
-    passwordField.current.type === 'password' ?
-      passwordField.current.type = 'text' :
-      passwordField.current.type = 'password'
-  }
-  const passwordField = useRef(null)
+    if (passwordType === "password") {
+      setPasswordType("text");
+    } else {
+      setPasswordType("password");
+    }
+  };
+  const passwordField = useRef(null);
 
   const handleSignups = (provider) => {
-    auth.signInWithPopup(provider).then(result => {
+    auth.signInWithPopup(provider).then((result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
       // const token = result.credential.accessToken;
       // The signed-in user info.
       const user = result.user;
 
-      db.collection('users').doc(user.uid).set({
-        profile: {
-          displayName: user.displayName,
-          photoURL: user.photoURL
-        }
-      }).then(() => {
-        snack("Sign up successful")
-        window.location.href = '/'
-
-      }).catch(err => {
-        snack(err.message)
-        throw new Error(err.message)
-      })
-    })
-  }
+      db.collection("users")
+        .doc(user.uid)
+        .set({
+          profile: {
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+        })
+        .then(() => {
+          snack("Sign up successful");
+          window.location.href = "/";
+        })
+        .catch((err) => {
+          snack(err.message);
+          throw new Error(err.message);
+        });
+    });
+  };
 
   const handleGoogleSignup = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    handleSignups(provider)
-  }
-  // const handleTwitterSignup = () => {
-  //   const provider = new firebase.auth.TwitterAuthProvider();
-  //   handleSignups(provider)
-  // }
+    handleSignups(provider);
+  };
 
   return (
     <AuthLayout>
+      <style>
+        {`
+          .password-eye {
+            border: 1px solid var(--primary);
+            border-left: 0;
+            padding: 3.5px 0;
+          }
+        `}
+      </style>
       <div className="signin-form">
         <h3>Create a Swag-GP account</h3>
         <div className="oauth">
@@ -85,45 +103,83 @@ export default function SignUp() {
           <div className="auth-buttons">
             <div onClick={handleGoogleSignup} className="auth-btn">
               <div className="auth-icon-wrapper">
-                <img className="auth-icon-svg" alt="Google logo" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+                <img
+                  className="auth-icon-svg"
+                  alt="Google logo"
+                  src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                />
               </div>
-              <p className="btn-text"><b>Sign up with Google</b></p>
+              <p className="btn-text">
+                <b>Sign up with Google</b>
+              </p>
             </div>
-
-            {/* DO NOT DELETE THIS COMMENT! */}
-            {/* <div onClick={handleTwitterSignup} className="auth-btn">
-              <div className="auth-icon-wrapper">
-                <TwitterIcon />
-              </div>
-              <p className="btn-text"><b>Sign up with Twitter</b></p>
-            </div> */}
           </div>
         </div>
         <h4>Or do it the old fashioned way</h4>
         <form onSubmit={handleSubmit}>
           <label>
             <p>First Name</p>
-            <input name="firstname" onChange={handleInput} required value={formData.firstname} type="text" />
+            <input
+              name="firstname"
+              onChange={handleInput}
+              required
+              value={formData.firstname}
+              type="text"
+            />
           </label>
           <label>
             <p>Last Name</p>
-            <input name="lastname" onChange={handleInput} required value={formData.lastname} type="text" />
+            <input
+              name="lastname"
+              onChange={handleInput}
+              required
+              value={formData.lastname}
+              type="text"
+            />
           </label>
           <label>
             <p>Email</p>
-            <input name="email" onChange={handleInput} required value={formData.email} type="email" />
+            <input
+              name="email"
+              onChange={handleInput}
+              required
+              value={formData.email}
+              type="email"
+            />
           </label>
           <label>
             <p>Password</p>
-            <p style={{ display: 'flex', alignItems: 'center' }}><input ref={passwordField} className="password-input" name="password" onChange={handleInput} required value={formData.password} type="password" /><i onClick={togglePasswordVisibility} className="toggle-password material-icons">remove_red_eye</i></p>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <input
+                ref={passwordField}
+                className="password-input"
+                name="password"
+                onChange={handleInput}
+                required
+                value={formData.password}
+                type={passwordType}
+              />
+              <div className="password-eye">
+                {passwordType === 'password' ? (
+                  <FaEye onClick={togglePasswordVisibility} />
+                ) : (
+                  <FaEyeSlash onClick={togglePasswordVisibility} />
+                )}
+              </div>
+            </div>
           </label>
-          <button className="signin-form__submit" >Submit</button>
+          <button className="signin-form__submit">Submit</button>
         </form>
 
         <div className="signin-form__misc">
-          <p>Already have an account? <a href='./signin' className="signin-form__misc--link" >Login</a></p>
+          <p>
+            Already have an account?{" "}
+            <a href="./signin" className="signin-form__misc--link">
+              Login
+            </a>
+          </p>
         </div>
       </div>
     </AuthLayout>
-  )
+  );
 }

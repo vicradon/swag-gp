@@ -1,5 +1,6 @@
 import React from "react";
 import "../../css/about.css";
+import { FaEnvelope } from "react-icons/fa";
 
 const About = () => {
   return (
@@ -18,10 +19,11 @@ const About = () => {
         <p>Wanna chat, talk or give me a job? </p>
         <button className="about-contact-button">
           <a
-            style={{ textDecoration: "none", color: "inherit" }}
+            style={{ textDecoration: "none", color: "inherit", display:'flex', alignItems:"center", justifyContent: "space-between" }}
             href="mailto:vicraph7@gmail.com"
           >
-            Email Me
+            <FaEnvelope />
+            <span>Email Me</span>
           </a>
         </button>
       </div>

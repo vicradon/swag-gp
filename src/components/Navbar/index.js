@@ -7,6 +7,7 @@ import { auth } from "../../firebase/index";
 import SignedOutLinks from "./SignedOutLinks";
 import SignedInLinks from "./SignedInLinks";
 import SideNav from "./SideNav";
+import { FaBars } from "react-icons/fa";
 
 const Navbar = () => {
   const { authenticated, photoURL, displayName } = useSelector((state) => {
@@ -37,13 +38,7 @@ const Navbar = () => {
     <>
       <nav>
         <p className="invisible">
-          <i
-            onClick={openNav}
-            style={{ color: "white" }}
-            className="material-icons"
-          >
-            menu
-          </i>
+          <FaBars style={{ color: "white" }} onClick={openNav} />
         </p>
         <Link style={{ color: "inherit", textDecoration: "none" }} to="/">
           <p id="swag-gp-logo">SWAG-GP</p>
