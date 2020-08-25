@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaUser, FaTimes } from "react-icons/fa";
 
 const SideNav = ({
   sideNav,
@@ -13,9 +14,7 @@ const SideNav = ({
     <div ref={sideNav} className="side-nav">
       <div className="close-side-nav">
         <p className="close-button">
-          <i onClick={closeNav} className="material-icons">
-            close
-          </i>
+          <FaTimes onClick={closeNav} />
         </p>
       </div>
       <div className="user-details">
@@ -26,14 +25,12 @@ const SideNav = ({
             alt="gravater"
           />
         ) : (
-          <i id="user-icon" className="material-icons">
-            person_pin
-          </i>
+          <FaUser style={{color:'#333'}} size={60} />
         )}
         {displayName ? (
           <p className="username">{displayName}</p>
         ) : (
-          <p className="username">Username</p>
+          <p className="username">Anonymous</p>
         )}
       </div>
       <p
@@ -41,7 +38,7 @@ const SideNav = ({
         style={{ border: "1px solid var(--primary-color)", margin: "2rem 0" }}
       ></p>
       <div className="side-nav-links">
-        <Link className="side-nav-link" to="/about">
+        <Link onClick={() => closeNav()} className="side-nav-link" to="/about">
           ABOUT
         </Link>
         {authenticated ? (

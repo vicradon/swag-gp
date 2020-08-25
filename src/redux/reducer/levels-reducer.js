@@ -1,6 +1,6 @@
 import StudentGpa from "../controllers/StudentGpa";
 
-const studentGpa = new StudentGpa();
+export const studentGpa = new StudentGpa();
 
 const studentGpaReducer = (state = studentGpa.levels, action) => {
   switch (action.type) {
