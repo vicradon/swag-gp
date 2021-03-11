@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 
 import "../../css/nav-aside.css";
-import { auth } from "../../firebase/index";
+// import { auth } from "../../firebase/index";
 import SignedOutLinks from "./SignedOutLinks";
 import SignedInLinks from "./SignedInLinks";
 import SideNav from "./SideNav";
@@ -20,10 +20,10 @@ const Navbar = () => {
   const history = useHistory();
 
   const signOut = () => {
-    auth.signOut().then(() => {
-      localStorage.removeItem("app state");
-      history.push("/signout");
-    });
+    // auth.signOut().then(() => {
+    //   localStorage.removeItem("app state");
+    //   history.push("/signout");
+    // });
   };
 
   function openNav() {

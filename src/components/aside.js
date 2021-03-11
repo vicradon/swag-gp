@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import useWindowSize from "../hooks/useWindowSize";
-import { db } from "../firebase";
+// import { db } from "../firebase";
 import { FaSave, FaExchangeAlt } from "react-icons/fa";
 import LevelChangeModal from "./modals/LevelChangeModal";
 
@@ -24,19 +24,21 @@ const Aside = () => {
 
   const handleSave = () => {
     if (authenticated) {
-      db.collection("users")
-        .doc(uid)
-        .set({ componentActivity, levels })
-        .then(() => {
-          console.log("saved");
-          // toggleUnsavedChanges(false);
-        });
+      // db.collection("users")
+      //   .doc(uid)
+      //   .set({ componentActivity, levels })
+      //   .then(() => {
+      //     console.log("saved");
+      //     // toggleUnsavedChanges(false);
+      //   });
     }
   };
 
   return (
     <aside>
-      {levelChangeModalOpen && <LevelChangeModal closeModal={() => setLevelChanageModalOpen(false)} />}
+      {levelChangeModalOpen && (
+        <LevelChangeModal closeModal={() => setLevelChanageModalOpen(false)} />
+      )}
       <FaSave size={size.width > 600 ? 30 : 20} onClick={handleSave} />
       <FaExchangeAlt
         size={size.width > 600 ? 30 : 20}
