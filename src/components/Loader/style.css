@@ -1,0 +1,35 @@
+.main_loader {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  height: 100%;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 3;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  max-width: 420px;
+  margin: 10% auto;
+  z-index: 4;
+}
+
+.loading-text {
+  color: #1e4a86;
+  font-size: 12px;
+}

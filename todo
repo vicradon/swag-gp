@@ -1,5 +1,0 @@
-Let the app get data when it refreshes
-Combine auth details from different signin methods
-Put the photo url in the image elem
-
-When the user logs in, get his state from localStorage

@@ -1,0 +1,6 @@
+.left_button {
+  border-radius: 500px 0 0 500px !important;
+}
+.right_button {
+  border-radius: 0 500px 500px 0 !important;
+}

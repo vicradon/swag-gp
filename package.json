@@ -1,43 +1,51 @@
 {
-  "name": "gpa-calc",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [
-    "swag-gp",
-    "pwa"
-  ],
-  "main": "src/index.js",
-  "author": "Chukwujama Osinachi",
-  "license": "MIT",
+  "name": "swag-gp",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "firebase": "^7.5.2",
-    "localforage": "^1.7.3",
-    "on-change": "^1.6.2",
-    "prop-types": "^15.7.2",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
-    "react-redux": "^7.1.3",
-    "react-redux-firebase": "^3.0.5",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.0.1",
-    "redux": "4.0.4",
-    "redux-firestore": "^0.11.0",
-    "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0"
-  },
-  "devDependencies": {
-    "typescript": "3.3.3"
+    "@emotion/react": "^11.1.5",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.7.1",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "intro.js": "^3.3.1",
+    "moment": "^2.29.1",
+    "node-sass": "^5.0.0",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.3",
+    "react-date-picker": "^8.0.7",
+    "react-dom": "^17.0.1",
+    "react-loader-spinner": "^4.0.0",
+    "react-loading-skeleton": "^2.2.0",
+    "react-notify-toast": "^0.5.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.2",
+    "uuid": "^8.3.2",
+    "web-vitals": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

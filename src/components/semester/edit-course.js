@@ -1,57 +1,54 @@
-import React, { useState } from 'react'
-import '../../css/semester-form-card.css'
-import { updateCourse, cancelEdit } from '../../redux/actions'
-import { connect } from 'react-redux'
+import React, { useState } from "react";
+import "../../css/semester-form-card.css";
+import { updateCourse, toggleEditing } from "../../redux/actions/gpa";
+import { useSelector, useDispatch } from "react-redux";
 
-const dispatchProps = {
-  updateCourse,
-  cancelEdit
-}
+function EditCourse() {
+  const dispatch = useDispatch();
+  const courseBeingEdited = useSelector(
+    (state) => state.componentActivity.courseBeingEdited
+  );
+  const [course, setCourse] = useState(courseBeingEdited);
 
-function EditCourse({ form, semesterid, levelid, updateCourse, cancelEdit }) {
-  const [data, setData] = useState(form);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCourse({ ...course, [name]: value });
+  };
 
-  const baseState = { name: '', grade: '', units: '' }
-
-  const handleInputChange = event => {
-    const { name, value } = event.target
-    setData({ ...data, [name]: value })
-  }
-
-  const handleReset = event => {
+  const handleCancel = (event) => {
     event.preventDefault();
-    setData(baseState);
-  }
-
-  const handleCancel = event => {
+    dispatch(toggleEditing(false));
+  };
+  const handleUpdate = (event) => {
     event.preventDefault();
-    cancelEdit(semesterid, levelid);
-  }
-  const handleUpdate = event => {
-    event.preventDefault();
-    if (data.name.trim().length !== 0 && data.grade.length !== 0 && data.grade !== "Select Grade" && data.units > 0 && data.units <= 10) {
-      updateCourse(data, semesterid, levelid);
-      setData(baseState)
-    }
-  }
+    dispatch(updateCourse(course));
+    dispatch(toggleEditing(false));
+  };
   return (
-    <form>
+    <form onSubmit={handleUpdate}>
       <div className="input-select">
-        <label className = "full-width">
+        <label className="full-width">
           <input
             id="semester-form-course"
             type="text"
             className="semester-form-input"
             placeholder="Course Name"
-            value={data.name}
+            value={course.name}
             name="name"
             onChange={handleInputChange}
+            required={true}
           />
         </label>
 
         <label>
-          <select onChange={handleInputChange} value={data.grade} name="grade" id="grade-select">
-            <option>Select Grade</option>
+          <select
+            onChange={handleInputChange}
+            value={course.grade}
+            name="grade"
+            id="grade-select"
+            required={true}
+          >
+            <option disabled>Select Grade</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
@@ -68,19 +65,30 @@ function EditCourse({ form, semesterid, levelid, updateCourse, cancelEdit }) {
             className="semester-form-input"
             placeholder="Credits"
             onChange={handleInputChange}
-            value={data.units}
+            value={course.units}
             name="units"
+            required={true}
           />
         </label>
       </div>
 
       <div className="form-actions">
-        <button onClick={handleReset} type="submit" className="semester-button reset-form">Reset</button>
-        <button onClick={handleUpdate} className="semester-button update-form">Update</button>
-        <button onClick={handleCancel} className="semester-button cancel-edit">Cancel</button>
+        <button
+          type="submit"
+          className="semester-button update-form"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="semester-button cancel-edit"
+        >
+          Cancel
+        </button>
       </div>
     </form>
-  )
+  );
 }
 
-export default connect(null, dispatchProps)(EditCourse);
+export default EditCourse;

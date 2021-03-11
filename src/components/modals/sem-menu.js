@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import '../../css/pop-ups.css'
 import { connect } from 'react-redux'
 import { getLevelsDetails } from './summary-modal';
-import { addNewLevel, handleLevelChange, setCurrentUsingLevel } from '../../redux/actions';
+import { addNewLevel, handleLevelChange, setCurrentUsingLevel } from '../../redux/actions/gpa';
 import { revertScroll } from '../../redux/utility-functions';
 
 

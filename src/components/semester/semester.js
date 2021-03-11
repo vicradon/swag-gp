@@ -1,37 +1,41 @@
-import React from 'react'
-import AddCourse from './add-course'
-import EditCourse from './edit-course'
-import Table from './table'
-import Summary from './summary'
-import SemesterActions from './semester-actions'
-import { connect } from 'react-redux'
-import '../../css/semester-card.css'
-import '../../css/semester-grade-table.css'
-import '../../css/semester-form-card.css'
-import '../../css/position.css'
-import '../../css/style.css'
+import React from "react";
+import AddCourse from "./add-course";
+import EditCourse from "./edit-course";
+import Table from "./table";
+import Summary from "./summary";
+import { useSelector } from "react-redux";
+import "../../css/semester-card.css";
+import "../../css/semester-grade-table.css";
+import "../../css/semester-form-card.css";
+import "../../css/position.css";
 
-const mapState = state => {
-  return { cgpa: state.data.cummulative.cgpa }
-}
+function Semester({ name, level, courses, cumulative }) {
+  const { isEditing, semesterBeingEdited } = useSelector((state) => {
+    return {
+      isEditing: state.componentActivity.isEditing,
+      semesterBeingEdited: state.componentActivity.semesterBeingEdited,
+      cumulative: state.studentDetails.cumulative,
+    };
+  });
 
-function Semester({ id, name, level, courses, form, details, levelid, cgpa, editing }) {
   return (
-    <section dataid={id} className="semester-card">
+    <section className="semester-card">
       <div className="semester-details">
         <p>{name}</p>
-        <p>{level}</p>
+        <p>{level} level</p>
       </div>
-      {editing ?
-        <EditCourse form={form} semesterid={id} levelid={levelid} /> :
-        <AddCourse className="semester-form" form={form} semesterid={id} levelid={levelid} />
-      }
 
-      <Table courses={courses} semesterid={id} levelid={levelid} editing={editing} />
-      <Summary details={details} cgpa={cgpa} />
-      <SemesterActions semestername={name} semesterid={id} levelid={levelid} />
+      {isEditing && semesterBeingEdited === name ? (
+        <EditCourse />
+      ) : (
+        <AddCourse className="semester-form" semester={name} level={level} />
+      )}
+
+      <Table courses={courses} semester={name} level={level} />
+
+      <Summary cumulative={cumulative} />
     </section>
-  )
+  );
 }
 
-export default connect(mapState)(Semester);
+export default Semester;
