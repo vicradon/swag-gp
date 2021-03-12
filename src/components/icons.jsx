@@ -9,6 +9,8 @@ import gpa from "../assets/icons/package.svg";
 import edit from "../assets/icons/edit.svg";
 import trash from "../assets/icons/trash.svg";
 
+import LevelsSvg from "../assets/icons/BarChart";
+
 export default {
   levels,
   profile,
@@ -20,4 +22,5 @@ export default {
   gpa,
   edit,
   trash,
+  LevelsSvg,
 };

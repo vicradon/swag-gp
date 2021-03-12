@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Button, Form, Table } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import AddSemesterButton from "../../components/semester/AddSemesterButton";
 import MainTemplate from "../../templates/Main/Main";
 import styles from "./styles.module.css";
 import icons from "../../components/icons.jsx";
+
 const Home = () => {
   const [selectedSemester, setSelectedSemester] = useState(1);
 
@@ -52,7 +51,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="mb-4 bg-white shadow-sm rounded">
+      <div className="mb-4 bg-white shadow-sm rounded border">
         <Table striped borderless hover responsive>
           <thead>
             <tr>
@@ -85,7 +84,7 @@ const Home = () => {
         </Table>
       </div>
 
-      <div className="d-flex justify-content-between p-4 align-items-center bg-white shadow-sm rounded mb-4">
+      <div className="d-flex justify-content-between p-4 align-items-center bg-white shadow-sm rounded mb-4 border">
         <div className="d-flex align-items-center">
           <div>
             <img src={icons.courses} alt="courses" />
