@@ -2,8 +2,8 @@ import useWindowSize from "../../hooks/useWindowSize";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { useState, useEffect, useRef } from "react";
 import Sidenav from "./Sidenav";
-import styles from "./styles.module.css";
-// import { css, jsx } from "@emotion/react";
+import Navbar from "./Navbar";
+import Drawer from "./Drawer";
 
 function Main({ children }) {
   const [sidenavOpen, setSidenavVisible] = useState(
@@ -21,18 +21,42 @@ function Main({ children }) {
     }
   }, [width]);
 
+  const mainChildrenMarginLeft = (() => {
+    if (width < 768) return 0;
+    return sidenavOpen ? 200 : 50;
+  })();
+
   return (
     <div>
-      <div className="position-fixed left-0">
-        <Sidenav
-          sidenavOpen={sidenavOpen}
-          setSidenavVisible={setSidenavVisible}
+      {width < 768 && (
+        <div className="fixed-top">
+          <Navbar
+            drawerVisible={drawerVisible}
+            setDrawerVisible={setDrawerVisible}
+          />
+        </div>
+      )}
+
+      {drawerVisible && (
+        <Drawer
+          drawerVisible={drawerVisible}
+          setDrawerVisible={setDrawerVisible}
         />
-      </div>
+      )}
+
+      {width > 768 && (
+        <div className="position-fixed left-0">
+          <Sidenav
+            sidenavOpen={sidenavOpen}
+            setSidenavVisible={setSidenavVisible}
+          />
+        </div>
+      )}
 
       <div
         style={{
-          marginLeft: `${sidenavOpen ? 200 : 50}px`,
+          marginLeft: `${mainChildrenMarginLeft}px`,
+          marginTop: `${width < 768 ? 50 : 0}px`,
           transition: "margin .2s",
         }}
         className="p-4"

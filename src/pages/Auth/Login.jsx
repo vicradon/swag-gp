@@ -7,19 +7,21 @@ import PulsatingSpinner from "../../components/PulsatingSpinner";
 
 function Login() {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const handleChange = ({ target }) => {
-    const { name, value } = target;
-    setFormData({ ...FormData, [name]: value });
-  };
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       setLoading(true);
-      const { data } = await maxios.post("/login", formData);
+      const { data: data1 } = await maxios.get("/");
+      const { data } = await maxios.post("/api/v1/login", {
+        email,
+        password,
+      });
+      console.log(data1);
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -35,8 +37,8 @@ function Login() {
           <Form.Label>Email address</Form.Label>
           <Form.Control
             name="email"
-            onChange={handleChange}
-            value={formData.email}
+            onChange={({ target }) => setEmail(target.value)}
+            value={email}
             type="email"
             placeholder="Enter email"
             required
@@ -48,8 +50,8 @@ function Login() {
           <Form.Control
             required
             name="password"
-            onChange={handleChange}
-            value={formData.password}
+            onChange={({ target }) => setPassword(target.value)}
+            value={password}
             type="password"
             placeholder="Password"
           />
