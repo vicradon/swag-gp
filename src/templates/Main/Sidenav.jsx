@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../components/AuthProvider";
 import { Button } from "react-bootstrap";
 
-function Sidenav({ sidenavOpen, setSidenavVisible }) {
+function Sidenav({ drawerVisible, sidenavOpen }) {
   const { height } = useWindowSize();
   const { pathname } = useLocation();
   const history = useHistory();
@@ -19,28 +19,21 @@ function Sidenav({ sidenavOpen, setSidenavVisible }) {
 
   return (
     <div
-      style={{ width: sidenavOpen ? "200px" : "50px" }}
+      style={{
+        width: "200px",
+        position: "fixed",
+        transform: drawerVisible ? "translateX(0px)" : "translateX(-200px)",
+        transition: "transform .3s",
+      }}
       className={`${styles.sidenav}`}
     >
-      <div
-        className={`${
-          sidenavOpen ? "px-4" : "px-2 d-flex justify-content-center"
-        } py-4 d-flex  align-items-baseline`}
-      >
-        <div>
-          <img
-            className="cursor-pointer"
-            onClick={() => setSidenavVisible(!sidenavOpen)}
-            src={icons.menu}
-            alt="menu"
-          />
-        </div>
-        {sidenavOpen && (
+      {sidenavOpen && (
+        <div className={`py-4 d-flex  align-items-baseline`}>
           <Link to="/" className="ml-4 text-white">
             SwagGP
           </Link>
-        )}
-      </div>
+        </div>
+      )}
 
       <div
         style={{ height: `${height - 70}px` }}
@@ -49,45 +42,43 @@ function Sidenav({ sidenavOpen, setSidenavVisible }) {
         <div className="flex-grow-1">
           <NavLink
             activeClassName="bg-primary"
-            className={`${
-              sidenavOpen ? "px-4" : "px-2 d-flex justify-content-center"
-            } py-4 d-flex  align-items-baseline text-white`}
+            className={`p-4 d-flex  align-items-baseline text-white`}
             to="/levels"
           >
             <div>
               <img src={icons.levels} alt="levels" />
             </div>
-            {sidenavOpen && <span className="ml-4">Levels</span>}
+            <span className="ml-4">Levels</span>
           </NavLink>
 
           {authState.isAuthenticated && (
             <NavLink
               activeClassName="bg-primary"
-              className={`${
-                sidenavOpen ? "px-4" : "px-2 d-flex justify-content-center"
-              } py-4 d-flex  align-items-baseline text-white`}
+              className={`p-4 d-flex  align-items-baseline text-white`}
               to="/profile"
             >
               <div>
                 <img src={icons.profile} alt="levels" />
               </div>
-              {sidenavOpen && <span className="ml-4">Profile</span>}
+              <span className="ml-4">Profile</span>
             </NavLink>
           )}
         </div>
         <div>
           {authState.isAuthenticated ? (
             <Button
-              className={`${
-                sidenavOpen ? "px-4" : "px-2"
-              } w-100 d-flex align-items-baseline text-white`}
+              className={`px-4 w-100 d-flex align-items-baseline text-white my-3`}
               onClick={handleLogout}
-              variant="danger"
+              variant="transparent"
             >
               <div>
-                <img src={icons.logout} alt="logout" />
+                <img
+                  className={styles.logoutIcon}
+                  src={icons.logout}
+                  alt="logout"
+                />
               </div>
-              {sidenavOpen && <span className="ml-4">Logout</span>}
+              <span className="ml-4">Logout</span>
             </Button>
           ) : (
             <NavLink
@@ -95,18 +86,14 @@ function Sidenav({ sidenavOpen, setSidenavVisible }) {
               to={
                 pathname.includes("register") ? "/auth/register" : "/auth/login"
               }
-              className={`${
-                sidenavOpen ? "px-4" : "px-2 ml-2"
-              } py-4 d-flex align-items-baseline  text-white`}
+              className={`p-4 d-flex align-items-baseline  text-white`}
             >
               <div>
                 <img src={icons.login} alt="login" />
               </div>
-              {sidenavOpen && (
-                <span className="ml-4">
-                  {pathname.includes("register") ? "Register" : "Login"}
-                </span>
-              )}
+              <span className="ml-4">
+                {pathname.includes("register") ? "Register" : "Login"}
+              </span>
             </NavLink>
           )}
         </div>

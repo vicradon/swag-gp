@@ -3,7 +3,6 @@ import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { useState, useEffect, useRef } from "react";
 import Sidenav from "./Sidenav";
 import Navbar from "./Navbar";
-import Drawer from "./Drawer";
 
 function Main({ children }) {
   const [sidenavOpen, setSidenavVisible] = useState(
@@ -18,12 +17,13 @@ function Main({ children }) {
     if (width !== undefined) {
       localStorage.setItem("window_width", width);
       setSidenavVisible(width > 768);
+      setDrawerVisible(width > 768);
     }
   }, [width]);
 
   const mainChildrenMarginLeft = (() => {
     if (width < 768) return 0;
-    return sidenavOpen ? 200 : 50;
+    return sidenavOpen ? 200 : 0;
   })();
 
   return (
@@ -37,21 +37,13 @@ function Main({ children }) {
         </div>
       )}
 
-      {drawerVisible && (
-        <Drawer
+      <div>
+        <Sidenav
           drawerVisible={drawerVisible}
+          sidenavOpen={sidenavOpen}
           setDrawerVisible={setDrawerVisible}
         />
-      )}
-
-      {width > 768 && (
-        <div className="position-fixed left-0">
-          <Sidenav
-            sidenavOpen={sidenavOpen}
-            setSidenavVisible={setSidenavVisible}
-          />
-        </div>
-      )}
+      </div>
 
       <div
         style={{

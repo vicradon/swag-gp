@@ -6,7 +6,11 @@ import colors from "../../utils/colors.js";
 function Navbar({ drawerVisible, setDrawerVisible }) {
   return (
     <div className="w-100 text-dark bg-dark p-3 shadow d-flex justify-content-between">
-      <img onClick={() => setDrawerVisible(true)} src={Icons.menu} alt="menu" />
+      <img
+        onClick={() => setDrawerVisible(!drawerVisible)}
+        src={Icons.menu}
+        alt="menu"
+      />
       <span className="text-white">SwagGP</span>
     </div>
   );
