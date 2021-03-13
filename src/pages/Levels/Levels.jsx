@@ -1,11 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, Table } from "react-bootstrap";
 import MainTemplate from "../../templates/Main/Main";
 import styles from "./styles.module.css";
 import icons from "../../components/icons.jsx";
+import CrudModal from "./CrudModal";
+import maxios from "../../utils/maxios";
+import { AuthContext } from "../../components/AuthProvider";
+import Loader from "../../components/Loader/Loader";
 
 const Home = () => {
   const [selectedSemester, setSelectedSemester] = useState(1);
+  const [courses, setCourses] = useState([]);
+  const [crudModalVisible, setCrudModalVisible] = useState(false);
+  const [createMode, setCreateMode] = useState(true);
+  const { authState } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(async () => {
+    try {
+      if (authState.isAuthenticated) {
+        const { data: courses } = await maxios.get("/api/v1/courses");
+        setCourses(courses);
+
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <MainTemplate>
@@ -52,36 +76,52 @@ const Home = () => {
       </div>
 
       <div className="mb-4 bg-white shadow-sm rounded border">
-        <Table striped borderless hover responsive>
-          <thead>
-            <tr>
-              <th className="text-primary">S/N</th>
-              <th className="text-primary">Title</th>
-              <th className="text-primary">Grade</th>
-              <th className="text-primary">Credit Load</th>
-              <th className="text-primary">Code</th>
-              <th className="text-primary">Actions</th>
-            </tr>
-          </thead>
+        <div className="d-flex justify-content-between align-items-center p-3">
+          <h5>Courses</h5>
+          <Button
+            className="d-flex justify-content-between align-items-center"
+            size="sm"
+            onClick={() => setCrudModalVisible(true)}
+          >
+            <span className="font-size-1-5rem">&#43;</span>
+            <span className="ml-2">Add Course</span>
+          </Button>
+        </div>
 
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Some Course</td>
-              <td>A</td>
-              <td>3</td>
-              <td>SOM 204</td>
-              <td>
-                <Button variant="transparent">
-                  <img width={20} src={icons.edit} alt="edit" />
-                </Button>
-                <Button variant="transparent">
-                  <img width={20} src={icons.trash} alt="delete" />
-                </Button>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
+        <Loader loading={loading} />
+
+        {!loading && (
+          <Table striped borderless hover responsive>
+            <thead>
+              <tr>
+                <th className="text-primary">S/N</th>
+                <th className="text-primary">Title</th>
+                <th className="text-primary">Grade</th>
+                <th className="text-primary">Credit Load</th>
+                <th className="text-primary">Code</th>
+                <th className="text-primary">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Some Course</td>
+                <td>A</td>
+                <td>3</td>
+                <td>SOM 204</td>
+                <td>
+                  <Button variant="transparent">
+                    <img width={20} src={icons.edit} alt="edit" />
+                  </Button>
+                  <Button variant="transparent">
+                    <img width={20} src={icons.trash} alt="delete" />
+                  </Button>
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        )}
       </div>
 
       <div className="d-flex justify-content-between p-4 align-items-center bg-white shadow-sm rounded mb-4 border">
@@ -104,6 +144,13 @@ const Home = () => {
           <span className="ml-2">4.43 GPA</span>
         </div>
       </div>
+
+      <CrudModal
+        createMode={createMode}
+        setCreateMode={setCreateMode}
+        crudModalVisible={crudModalVisible}
+        setCrudModalVisible={setCrudModalVisible}
+      />
     </MainTemplate>
   );
 };

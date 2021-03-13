@@ -1,8 +1,8 @@
 import React from "react";
-import  ReactLoader from "react-loader-spinner";
+import ReactLoader from "react-loader-spinner";
 import "./style.css";
 
-export default function Loader(props) {
+export default function GlobalLoader(props) {
   return (
     <div className="main_loader">
       <div className="overlay"></div>

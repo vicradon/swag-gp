@@ -37,13 +37,11 @@ function Main({ children }) {
         </div>
       )}
 
-      <div>
-        <Sidenav
-          drawerVisible={drawerVisible}
-          sidenavOpen={sidenavOpen}
-          setDrawerVisible={setDrawerVisible}
-        />
-      </div>
+      <Sidenav
+        drawerVisible={drawerVisible}
+        sidenavOpen={sidenavOpen}
+        setDrawerVisible={setDrawerVisible}
+      />
 
       <div
         style={{

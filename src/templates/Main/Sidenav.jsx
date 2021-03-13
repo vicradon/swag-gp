@@ -10,11 +10,13 @@ function Sidenav({ drawerVisible, sidenavOpen }) {
   const { height } = useWindowSize();
   const { pathname } = useLocation();
   const history = useHistory();
+  const { authDispatch } = useContext(AuthContext);
 
   const { authState } = useContext(AuthContext);
   const handleLogout = () => {
     localStorage.clear();
-    history.push("/");
+    authDispatch({ type: "UNAUTHENTICATE_USER" });
+    window.location.href = "/";
   };
 
   return (

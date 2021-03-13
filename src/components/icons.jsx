@@ -1,6 +1,7 @@
 import levels from "../assets/icons/bar-chart.svg";
 import profile from "../assets/icons/user.svg";
 import menu from "../assets/icons/menu.svg";
+import menuClose from "../assets/icons/times.svg";
 import login from "../assets/icons/login.svg";
 import logout from "../assets/icons/log-out.svg";
 import courses from "../assets/icons/book-open.svg";
@@ -15,6 +16,7 @@ export default {
   levels,
   profile,
   menu,
+  menuClose,
   login,
   logout,
   courses,

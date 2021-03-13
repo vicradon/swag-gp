@@ -1,28 +1,33 @@
 import { Button, Form } from "react-bootstrap";
 import MainTemplate from "../../templates/Main/Main";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import maxios from "../../utils/maxios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PulsatingSpinner from "../../components/PulsatingSpinner";
+import { AuthContext } from "../../components/AuthProvider";
 
 function Login() {
   const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { authDispatch } = useContext(AuthContext);
+  const history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
       setLoading(true);
-      const { data: data1 } = await maxios.get("/");
       const { data } = await maxios.post("/api/v1/login", {
         email,
         password,
       });
-      console.log(data1);
       setLoading(false);
+      authDispatch({
+        type: "AUTHENTICATE_USER",
+        payload: { token: data.token },
+      });
     } catch (error) {
       console.error(error);
       setLoading(false);

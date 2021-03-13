@@ -1,8 +1,15 @@
 import { createContext, useReducer } from "react";
+import maxios from "../utils/maxios";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "AUTHENTICATE_USER": {
+      localStorage.setItem("token", action.payload.token);
+      maxios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${action.payload.token}`;
+      window.location.href = "/";
+
       return {
         ...state,
         isAuthenticated: true,
