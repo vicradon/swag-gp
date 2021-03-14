@@ -30,7 +30,18 @@ const Home = () => {
     setCrudModalVisible(true);
   };
 
-  const handleDelete = (id) => {};
+  const handleDelete = async (id) => {
+    try {
+      const deletionResponse = await maxios.delete(`/api/v1/courses/${id}`);
+      setCourses(courses.filter((course) => course.id !== id));
+      setCumulative({
+        semester: deletionResponse.data.semester_cumulative,
+        overall: deletionResponse.data.cumulative,
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   useEffect(async () => {
     try {
