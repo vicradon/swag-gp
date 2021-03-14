@@ -5,36 +5,64 @@ import maxios from "../../utils/maxios";
 
 function CrudModal({
   createMode,
-  setCreateMode,
+  setCourseUpdated,
   crudModalVisible,
   setCrudModalVisible,
   editedCourseDetails,
-  semesterAndLevel,
+  setEditedCourseDetails,
+  selectedSemester,
+  selectedLevel,
+  setCumulative,
+  updateCourseTable,
 }) {
-  const [courseDetails, setCourseDetails] = useState({
+  const defaultCourseDetails = {
     title: "",
     credit_load: 3,
     code: "",
     grade: "A",
-  });
+  };
+
+  const [courseDetails, setCourseDetails] = useState(defaultCourseDetails);
   const [loading, setLoading] = useState(false);
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
-    setCourseDetails({ ...courseDetails, [name]: value });
+    if (createMode) {
+      setCourseDetails({ ...courseDetails, [name]: value });
+    } else {
+      setEditedCourseDetails({ ...editedCourseDetails, [name]: value });
+    }
   };
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      const { semester, level } = semesterAndLevel;
       if (createMode) {
-        const { data: course_res } = maxios.post("/api/v1/courses", {
+        const { data: course_res } = await maxios.post("/api/v1/courses", {
           ...courseDetails,
-          semester,
-          level,
+          semester: String(selectedSemester),
+          level: String(selectedLevel),
+        });
+        updateCourseTable(course_res.course);
+        setCumulative({
+          overall: course_res.cumulative,
+          semester: course_res.semester_cumulative,
         });
       } else {
+        const { data: course_res } = await maxios.patch(
+          `/api/v1/courses/${editedCourseDetails.id}`,
+          editedCourseDetails
+        );
+        setCourseUpdated(Math.random());
+        setCumulative({
+          overall: course_res.cumulative,
+          semester: course_res.semester_cumulative,
+        });
+        setCrudModalVisible(false);
       }
+      setCourseDetails(defaultCourseDetails);
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
   return (
@@ -47,12 +75,12 @@ function CrudModal({
         {createMode ? "Add New Course" : "Update Course"}
       </Modal.Title>
       <Modal.Body>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>Course Code</Form.Label>
             <Form.Control
               onChange={handleInputChange}
-              value={courseDetails.code}
+              value={createMode ? courseDetails.code : editedCourseDetails.code}
               name="code"
               required
               type="text"
@@ -63,9 +91,12 @@ function CrudModal({
             <Form.Label>Course Title</Form.Label>
             <Form.Control
               onChange={handleInputChange}
-              value={courseDetails.title}
+              value={
+                createMode
+                  ? courseDetails.title
+                  : editedCourseDetails.title || ""
+              }
               name="title"
-              required
               type="text"
               placeholder="e.g. Everyday Mathematics"
             />
@@ -74,7 +105,11 @@ function CrudModal({
             <Form.Label>Credit Load</Form.Label>
             <Form.Control
               onChange={handleInputChange}
-              value={courseDetails.credit_load}
+              value={
+                createMode
+                  ? courseDetails.credit_load
+                  : editedCourseDetails.credit_load
+              }
               name="credit_load"
               as="select"
               custom
@@ -93,7 +128,9 @@ function CrudModal({
             <Form.Label>Grade</Form.Label>
             <Form.Control
               onChange={handleInputChange}
-              value={courseDetails.grade}
+              value={
+                createMode ? courseDetails.grade : editedCourseDetails.grade
+              }
               name="grade"
               as="select"
               custom
