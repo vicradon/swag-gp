@@ -19,6 +19,7 @@ const Home = () => {
   const [cumulative, setCumulative] = useState({});
   const [editedCourseDetails, setEditedCourseDetails] = useState({});
   const [courseUpdated, setCourseUpdated] = useState(Math.random());
+  const [duration, setDuration] = useState(3);
   const updateCourseTable = (course) => {
     setCourses([...courses, course]);
   };
@@ -52,6 +53,9 @@ const Home = () => {
         const { data: cumulative } = await maxios.get(
           `/api/v1/cumulative?semester=${selectedSemester}&level=${selectedLevel}`
         );
+        const { data: profile } = await maxios.get("/api/v1/users/profile");
+
+        setDuration(profile.duration || 3);
 
         setCourses(courses);
         setCumulative({
@@ -82,9 +86,13 @@ const Home = () => {
             value={selectedLevel}
             onChange={({ target }) => setSelectedLevel(target.value)}
           >
-            <option value="100">100</option>
-            <option value="200">200</option>
-            <option value="300">300</option>
+            {Array(duration)
+              .fill(0)
+              .map((_, index) => (
+                <option key={index} value={(index + 1) * 100}>
+                  {(index + 1) * 100}
+                </option>
+              ))}
           </Form.Control>
         </Form.Group>
 

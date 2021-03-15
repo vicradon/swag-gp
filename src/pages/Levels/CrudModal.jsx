@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 import PulsatingSpinner from "../../components/PulsatingSpinner";
 import maxios from "../../utils/maxios";
@@ -21,6 +21,17 @@ function CrudModal({
     code: "",
     grade: "A",
   };
+  const [courseAddedMessage, setCourseAddedMessage] = useState("");
+  const [courseAdded, setCourseAdded] = useState(Math.random());
+
+  useEffect(() => {
+    setCourseAddedMessage("Course Created, add another");
+    const timeout = setTimeout(() => {
+      setCourseAddedMessage("");
+    }, 1500);
+
+    return () => clearTimeout(timeout);
+  }, [courseAdded]);
 
   const [courseDetails, setCourseDetails] = useState(defaultCourseDetails);
   const [loading, setLoading] = useState(false);
@@ -46,6 +57,7 @@ function CrudModal({
           overall: course_res.cumulative,
           semester: course_res.semester_cumulative,
         });
+        setCourseAdded(Math.random());
       } else {
         const { data: course_res } = await maxios.patch(
           `/api/v1/courses/${editedCourseDetails.id}`,
@@ -74,6 +86,7 @@ function CrudModal({
       <Modal.Title className="p-3">
         {createMode ? "Add New Course" : "Update Course"}
       </Modal.Title>
+      <span className="text-success text-center">{courseAddedMessage}</span>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
@@ -147,7 +160,11 @@ function CrudModal({
             <Button variant="primary" type="submit">
               <PulsatingSpinner loading={loading} />
 
-              {createMode ? "Add Course" : "Update Course"}
+              {createMode
+                ? courseAddedMessage
+                  ? courseAddedMessage
+                  : "Add Course"
+                : "Update Course"}
             </Button>
           </div>
         </Form>
