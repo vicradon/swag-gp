@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const maxios = axios.create({
-  baseURL: "http://localhost:3333",
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3333"
+      : "https://swag-gp-backend.osinachi.me",
 });
 
 maxios.defaults.headers.common["Content-Type"] = "application/json";
