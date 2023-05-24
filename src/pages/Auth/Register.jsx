@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import maxios from "../../utils/maxios";
 import { useContext, useState } from "react";
 import PulsatingSpinner from "../../components/PulsatingSpinner";
-import { AuthContext } from "../../components/AuthProvider";
+import { AuthContext } from "../../context/AuthProvider";
 
 function Register() {
   const [loading, setLoading] = useState(false);
